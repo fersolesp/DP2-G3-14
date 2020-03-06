@@ -78,3 +78,17 @@ ALTER TABLE authorities ADD CONSTRAINT fk_authorities_users FOREIGN KEY (usernam
 
 CREATE UNIQUE INDEX ix_auth_username ON authorities (username,authority);
 
+
+CREATE TABLE announcements (
+  id         INTEGER IDENTITY PRIMARY KEY,
+  name       VARCHAR(30),
+  description VARCHAR(50),
+  type_id    INTEGER NOT NULL,
+  owner_id   INTEGER NOT NULL,
+  canBeAdopted BOOLEAN NOT NULL,
+  petName VARCHAR(20)
+);
+ALTER TABLE announcements ADD CONSTRAINT fk_announcements_owners FOREIGN KEY (owner_id) REFERENCES owners (id);
+ALTER TABLE announcements ADD CONSTRAINT fk_announcements_types FOREIGN KEY (type_id) REFERENCES types (id);
+CREATE INDEX announcements_id ON announcements (id);
+
