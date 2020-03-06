@@ -41,4 +41,8 @@
         </c:forEach>
         </tbody>
     </table>
+    <spring:url value="/announcements/new" var="addUrl">
+        <spring:param name="ownerId" value="${owner.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Announcement</a>
 </petclinic:layout>

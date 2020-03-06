@@ -1,15 +1,20 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
+import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AnnouncementController {
 
 	@Autowired
-	private AnnouncementService announcementService;
+	private AnnouncementService	announcementService;
+
+	@Autowired
+	private PetService			petService;
 
 
 	@GetMapping()
@@ -38,24 +46,36 @@ public class AnnouncementController {
 		return vista;
 	}
 
-	@PostMapping(path = "/save")
-	public String salvarAnnouncement(@Valid final Announcement announcement, final BindingResult result, final ModelMap modelMap) {
-		String vista = "announcements/announcementsList";
-		if (result.hasErrors()) {
-			modelMap.addAttribute("announcement", announcement);
-			return "announcements/editAnnouncemet";
-		} else {
-			this.announcementService.save(announcement);
-			modelMap.addAttribute("message", "Announcement succesfully saved!");
-		}
-		return vista;
-	}
-
 	//	@GetMapping(path = "/update/{announcementId}")
 	//	public String actualizarAnnouncements(@PathParam("announcementId") final int announcementId, final ModelMap modelMap) {
 	//		String vista = "announcements/announcementsList";
 	//		modelMap.
 	//		return vista;
 	//	}
+
+	@GetMapping(path = "new")
+	public String createAnnouncement(final ModelMap modelMap) {
+		String view = "announcements/editAnnouncement";
+		modelMap.addAttribute("announcement", new Announcement());
+		return view;
+	}
+
+	@PostMapping(path = "save")
+	public String saveAnnouncement(@Valid final Announcement announcement, final BindingResult result, final ModelMap modelMap) {
+		String view = "announcements/listAnnouncements";
+		if (result.hasErrors()) {
+			modelMap.addAttribute("announcement", announcement);
+			return "announcements/editAnnouncement";
+		} else {
+			this.announcementService.saveAnnouncement(announcement);
+			modelMap.addAttribute("message", "Announcement successfully saved!");
+		}
+		return view;
+	}
+
+	@ModelAttribute("types")
+	public Collection<PetType> populatePetTypes() {
+		return this.petService.findPetTypes();
+	}
 
 }

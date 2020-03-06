@@ -19,7 +19,5 @@ public class Announcement extends NamedEntity {
 	@JoinColumn(name = "type_id")
 	private PetType	type;
 
-	@ManyToOne
-	@JoinColumn(name = "owner_id")
-	private Owner	owner;
+	private String	owner;
 }

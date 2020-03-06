@@ -62,6 +62,6 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-INSERT INTO ANNOUNCEMENT VALUES (1,'Anuncio1',true,'Hola','Fox',1,1);
-INSERT INTO ANNOUNCEMENT VALUES (2,'Anuncio2',true,'Hola','Fufu',2,3);
-INSERT INTO ANNOUNCEMENT VALUES (3,'Anuncio3',false,'Hola','Lulu',3,2);
+INSERT INTO ANNOUNCEMENT VALUES (1,'Anuncio1',true,'Hola','Alfonso Garrido','Fox',1);
+INSERT INTO ANNOUNCEMENT VALUES (2,'Anuncio2',true,'Hola','Ana Alonso','Fufu',3);
+INSERT INTO ANNOUNCEMENT VALUES (3,'Anuncio3',false,'Hola','Pedro Lopez','Lulu',2);
