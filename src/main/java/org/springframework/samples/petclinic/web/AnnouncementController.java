@@ -2,6 +2,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -41,7 +42,7 @@ public class AnnouncementController {
 	@GetMapping("/{announcementId}")
 	public String mostrarAnnouncement(final ModelMap modelMap, @PathVariable("announcementId") final int announcementId) {
 		String vista = "announcements/announcementDetails";
-		Announcement announcement = this.announcementService.findAnnouncementById(announcementId);
+		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 		modelMap.addAttribute("announcement", announcement);
 		return vista;
 	}
@@ -77,6 +78,19 @@ public class AnnouncementController {
 	@ModelAttribute("types")
 	public Collection<PetType> populatePetTypes() {
 		return this.petService.findPetTypes();
+	}
+
+	@GetMapping(path = "delete/{announcementId}")
+	public String deleteAnnouncement(@PathVariable("announcementId") final Integer announcementId, final ModelMap modelMap) {
+		String view = "redirect:/announcements";
+		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+		if (announcement.isPresent()) {
+			this.announcementService.deleteAnnouncement(announcement.get());
+			modelMap.addAttribute("message", "Announcement successfully deleted");
+		} else {
+			modelMap.addAttribute("message", "Announcement not found");
+		}
+		return view;
 	}
 
 }

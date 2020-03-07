@@ -2,6 +2,7 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -31,8 +32,8 @@ public class AnnouncementService {
 	}
 
 	@Transactional(readOnly = true)
-	public Announcement findAnnouncementById(final int announcementId) {
-		return this.announcementRepo.findById(announcementId).get();
+	public Optional<Announcement> findAnnouncementById(final int announcementId) {
+		return this.announcementRepo.findById(announcementId);
 	}
 
 	//	@Transactional
@@ -48,6 +49,11 @@ public class AnnouncementService {
 	@Transactional(readOnly = true)
 	public Collection<PetType> findPetTypes() throws DataAccessException {
 		return this.petRepo.findPetTypes();
+	}
+
+	@Transactional
+	public void deleteAnnouncement(final Announcement announcement) {
+		this.announcementRepo.delete(announcement);
 	}
 
 }
