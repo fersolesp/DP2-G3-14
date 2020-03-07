@@ -13,4 +13,5 @@ public interface AnnouncementRepository extends CrudRepository<Announcement, Int
 
 	@Override
 	Collection<Announcement> findAll() throws DataAccessException;
+
 }

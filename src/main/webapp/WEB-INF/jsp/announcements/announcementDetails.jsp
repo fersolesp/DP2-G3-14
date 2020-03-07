@@ -15,6 +15,10 @@
             <td><c:out value="${announcement.name}"/></td>
         </tr>
         <tr>
+            <th>Owner</th>
+            <td><c:out value="${announcement.owner}"/></td>
+        </tr>
+        <tr>
             <th>Pet name</th>
             <td><c:out value="${announcement.petName}"/></td>
         </tr>
@@ -31,5 +35,10 @@
             <td><c:out value="${announcement.type}"/></td>
         </tr>
     </table>
+    
+    <spring:url value="/announcements/delete/{announcementId}" var="announcementDeleteUrl">
+    	<spring:param name="announcementId" value="${announcement.id}"/>
+    </spring:url> 
+    <a href="${fn:escapeXml(announcementDeleteUrl)}">Delete Announcement</a> 
 
 </petclinic:layout>

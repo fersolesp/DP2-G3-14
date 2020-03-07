@@ -1,15 +1,21 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
+import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AnnouncementController {
 
 	@Autowired
-	private AnnouncementService announcementService;
+	private AnnouncementService	announcementService;
+
+	@Autowired
+	private PetService			petService;
 
 
 	@GetMapping()
@@ -33,21 +42,8 @@ public class AnnouncementController {
 	@GetMapping("/{announcementId}")
 	public String mostrarAnnouncement(final ModelMap modelMap, @PathVariable("announcementId") final int announcementId) {
 		String vista = "announcements/announcementDetails";
-		Announcement announcement = this.announcementService.findAnnouncementById(announcementId);
+		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 		modelMap.addAttribute("announcement", announcement);
-		return vista;
-	}
-
-	@PostMapping(path = "/save")
-	public String salvarAnnouncement(@Valid final Announcement announcement, final BindingResult result, final ModelMap modelMap) {
-		String vista = "announcements/announcementsList";
-		if (result.hasErrors()) {
-			modelMap.addAttribute("announcement", announcement);
-			return "announcements/editAnnouncemet";
-		} else {
-			this.announcementService.save(announcement);
-			modelMap.addAttribute("message", "Announcement succesfully saved!");
-		}
 		return vista;
 	}
 
@@ -57,5 +53,44 @@ public class AnnouncementController {
 	//		modelMap.
 	//		return vista;
 	//	}
+
+	@GetMapping(path = "new")
+	public String createAnnouncement(final ModelMap modelMap) {
+		String view = "announcements/editAnnouncement";
+		Announcement announcement = new Announcement();
+		modelMap.addAttribute("announcement", announcement);
+		return view;
+	}
+
+	@PostMapping(path = "save")
+	public String saveAnnouncement(@Valid final Announcement announcement, final BindingResult result, final ModelMap modelMap) {
+		String view = "redirect:/announcements";
+		if (result.hasErrors()) {
+			modelMap.addAttribute("announcement", announcement);
+			return "announcements/editAnnouncement";
+		} else {
+			this.announcementService.saveAnnouncement(announcement);
+			modelMap.addAttribute("message", "Announcement successfully saved!");
+		}
+		return view;
+	}
+
+	@ModelAttribute("types")
+	public Collection<PetType> populatePetTypes() {
+		return this.petService.findPetTypes();
+	}
+
+	@GetMapping(path = "delete/{announcementId}")
+	public String deleteAnnouncement(@PathVariable("announcementId") final Integer announcementId, final ModelMap modelMap) {
+		String view = "redirect:/announcements";
+		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+		if (announcement.isPresent()) {
+			this.announcementService.deleteAnnouncement(announcement.get());
+			modelMap.addAttribute("message", "Announcement successfully deleted");
+		} else {
+			modelMap.addAttribute("message", "Announcement not found");
+		}
+		return view;
+	}
 
 }
