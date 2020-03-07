@@ -2,7 +2,6 @@
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
@@ -16,7 +15,6 @@ public class Announcement extends NamedEntity {
 	private boolean	canBeAdopted;
 
 	@ManyToOne
-	@JoinColumn(name = "type_id")
 	private PetType	type;
 
 	private String	owner;

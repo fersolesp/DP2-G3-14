@@ -56,13 +56,14 @@ public class AnnouncementController {
 	@GetMapping(path = "new")
 	public String createAnnouncement(final ModelMap modelMap) {
 		String view = "announcements/editAnnouncement";
-		modelMap.addAttribute("announcement", new Announcement());
+		Announcement announcement = new Announcement();
+		modelMap.addAttribute("announcement", announcement);
 		return view;
 	}
 
 	@PostMapping(path = "save")
 	public String saveAnnouncement(@Valid final Announcement announcement, final BindingResult result, final ModelMap modelMap) {
-		String view = "announcements/listAnnouncements";
+		String view = "redirect:/announcements";
 		if (result.hasErrors()) {
 			modelMap.addAttribute("announcement", announcement);
 			return "announcements/editAnnouncement";

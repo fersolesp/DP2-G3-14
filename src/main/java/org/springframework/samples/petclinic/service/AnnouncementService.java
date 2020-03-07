@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.repository.AnnouncementRepository;
-import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ public class AnnouncementService {
 
 	private AnnouncementRepository	announcementRepo;
 	private PetRepository			petRepo;
-	private OwnerRepository			ownerRepo;
 
 
 	@Autowired
