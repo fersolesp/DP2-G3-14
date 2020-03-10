@@ -99,9 +99,10 @@ public class AnnouncementController {
 	}
 
 	@GetMapping("/{announcementId}/answers")
-	public String mostrarAnwers(final ModelMap modelMap, @PathVariable("announcementId") final int announcementId) {
+	public String mostrarAnwers(final ModelMap modelMap, @PathVariable("announcementId") final Integer announcementId) {
 		String vista = "answers/answersList";
-		Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcementId);
+		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+		Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
 		modelMap.addAttribute("answers", answers);
 		return vista;
 	}
