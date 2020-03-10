@@ -9,7 +9,7 @@
     <jsp:body>
         <h2>Announcements</h2>
 
-        <form:form modelAttribute="announcement" class="form-horizontal" action="/announcements/save">
+        <form:form modelAttribute="announcement" class="form-horizontal">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Title:" name="name"/>
                 <petclinic:inputField label="Pet Name:" name="petName"/>

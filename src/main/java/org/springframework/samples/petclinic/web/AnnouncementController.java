@@ -47,13 +47,6 @@ public class AnnouncementController {
 		return vista;
 	}
 
-	//	@GetMapping(path = "/update/{announcementId}")
-	//	public String actualizarAnnouncements(@PathParam("announcementId") final int announcementId, final ModelMap modelMap) {
-	//		String vista = "announcements/announcementsList";
-	//		modelMap.
-	//		return vista;
-	//	}
-
 	@GetMapping(path = "new")
 	public String createAnnouncement(final ModelMap modelMap) {
 		String view = "announcements/editAnnouncement";
@@ -62,7 +55,7 @@ public class AnnouncementController {
 		return view;
 	}
 
-	@PostMapping(path = "save")
+	@PostMapping(path = "new")
 	public String saveAnnouncement(@Valid final Announcement announcement, final BindingResult result, final ModelMap modelMap) {
 		String view = "redirect:/announcements";
 		if (result.hasErrors()) {
@@ -91,6 +84,27 @@ public class AnnouncementController {
 			modelMap.addAttribute("message", "Announcement not found");
 		}
 		return view;
+	}
+
+	@GetMapping(path = "/update/{announcementId}")
+	public String iniactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
+		String vista = "announcements/editAnnouncement";
+		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
+		modelMap.addAttribute("announcement", announcement);
+		return vista;
+	}
+
+	@PostMapping(path = "/update/{announcementId}")
+	public String postactualizarAnnouncements(@Valid final Announcement announcement, @PathVariable("announcementId") final int announcementId, final BindingResult results, final ModelMap modelMap) {
+		String vista = "announcements/announcementDetails";
+		if (results.hasErrors()) {
+			modelMap.addAttribute("announcement", announcement);
+			vista = "announcements/editAnnouncement";
+		} else {
+			announcement.setId(announcementId);
+			this.announcementService.saveAnnouncement(announcement);
+		}
+		return vista;
 	}
 
 }
