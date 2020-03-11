@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.repository.AnswerRepository;
@@ -36,4 +37,9 @@ public class AnswerService {
 	public Collection<Answer> findAnswerByAnnouncement(final Announcement announcement) {
 		return this.answerRepo.findAnswersByAnnouncement(announcement);
 	}
+
+	public void saveAnswer(final Answer answer) throws DataAccessException {
+		this.answerRepo.save(answer);
+	}
+
 }

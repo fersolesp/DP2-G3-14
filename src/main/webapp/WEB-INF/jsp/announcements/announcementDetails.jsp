@@ -36,7 +36,7 @@
         </tr>
     </table>
     
-    <spring:url value="/announcements/delete/{announcementId}" var="announcementDeleteUrl">
+     <spring:url value="/announcements/delete/{announcementId}" var="announcementDeleteUrl">
     	<spring:param name="announcementId" value="${announcement.id}"/>
     </spring:url> 
     <a href="${fn:escapeXml(announcementDeleteUrl)}" class="btn btn-default">Delete Announcement</a> 
@@ -46,4 +46,8 @@
     </spring:url> 
     <a href="${fn:escapeXml(announcementsAnswersUrl)}" class="btn btn-default">Answers</a>
 
+	<spring:url value="/announcements/{announcementId}/answer/new" var="newAnswerUrl">
+    	<spring:param name="announcementId" value="${announcement.id}"/>
+    </spring:url> 
+    <a href="${fn:escapeXml(newAnswerUrl)}" class="btn btn-default">Answer to the announcement</a>
 </petclinic:layout>
