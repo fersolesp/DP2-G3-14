@@ -16,7 +16,7 @@
     </jsp:attribute>
 
     <jsp:body>
-        <h2>Answer <c:out value="${usuario}"/></h2>
+        <h2>Answer to announcement: <c:out value="${announcement.name}"/></h2>
         
 
         <form:form modelAttribute="answer" class="form-horizontal" action="/announcements/${announcement.id}/answer/new">
