@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <th>Owner</th>
-            <td><c:out value="${announcement.owner}"/></td>
+            <td><c:out value="${announcement.owner.firstName} ${announcement.owner.lastName}"/></td>
         </tr>
         <tr>
             <th>Pet name</th>

@@ -8,9 +8,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
+import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -29,6 +33,9 @@ public class AnnouncementController {
 
 	@Autowired
 	private PetService			petService;
+
+	@Autowired
+	private OwnerService		ownerService;
 
 
 	@GetMapping()
@@ -62,6 +69,10 @@ public class AnnouncementController {
 			modelMap.addAttribute("announcement", announcement);
 			return "announcements/editAnnouncement";
 		} else {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String userName = authentication.getName();
+			Owner owner = this.ownerService.findOwnerByUserName(userName);
+			announcement.setOwner(owner);
 			this.announcementService.saveAnnouncement(announcement);
 			modelMap.addAttribute("message", "Announcement successfully saved!");
 		}
@@ -90,7 +101,11 @@ public class AnnouncementController {
 	public String iniactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
 		String vista = "announcements/editAnnouncement";
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
+		Owner owner = announcement.getOwner();
+		org.springframework.samples.petclinic.model.User user = owner.getUser();
+		String userName = user.getUsername();
 		modelMap.addAttribute("announcement", announcement);
+		modelMap.addAttribute("user", userName);
 		return vista;
 	}
 
@@ -101,6 +116,10 @@ public class AnnouncementController {
 			modelMap.addAttribute("announcement", announcement);
 			vista = "announcements/editAnnouncement";
 		} else {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String userName = authentication.getName();
+			Owner owner = this.ownerService.findOwnerByUserName(userName);
+			announcement.setOwner(owner);
 			announcement.setId(announcementId);
 			this.announcementService.saveAnnouncement(announcement);
 		}
