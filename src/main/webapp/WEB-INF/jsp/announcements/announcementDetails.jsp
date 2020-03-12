@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <th>Owner</th>
-            <td><c:out value="${announcement.owner}"/></td>
+            <td><c:out value="${announcement.owner.firstName} ${announcement.owner.lastName}"/></td>
         </tr>
         <tr>
             <th>Pet name</th>
@@ -35,6 +35,12 @@
             <td><c:out value="${announcement.type}"/></td>
         </tr>
     </table>
+    
+    <spring:url value="/announcements/update/{announcementId}" var="announcementUpdateUrl">
+    	<spring:param name="announcementId" value="${announcement.id}"/>
+    </spring:url> 
+    <a href="${fn:escapeXml(announcementUpdateUrl)}">Update Announcement</a> 
+    
     
     <spring:url value="/announcements/delete/{announcementId}" var="announcementDeleteUrl">
     	<spring:param name="announcementId" value="${announcement.id}"/>
