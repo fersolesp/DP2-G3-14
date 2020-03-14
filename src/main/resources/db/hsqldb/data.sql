@@ -84,3 +84,19 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO ANNOUNCEMENT VALUES (1,'Anuncio1',true,'Hola','Fox',1,1);
 INSERT INTO ANNOUNCEMENT VALUES (2,'Anuncio2',true,'Hola','Fufu',2,3);
 INSERT INTO ANNOUNCEMENT VALUES (3,'Anuncio3',false,'Hola','Lulu',3,2);
+
+INSERT INTO TRAINER VALUES (1,'Adolfo Fernandez Ruiz');
+INSERT INTO TRAINER VALUES (2,'Laura Rio Caballero');
+INSERT INTO TRAINER VALUES (3,'Pedro Suarez García');
+
+INSERT INTO PAYMENT VALUES(1,'Payment1',25.00,'2020-05-03');
+INSERT INTO PAYMENT VALUES(2,'Payment2',25.00,'2020-05-03');
+INSERT INTO PAYMENT VALUES(3,'Payment3',25.00,'2020-05-03');
+
+INSERT INTO COURSE VALUES (1,'Curso para perros',false,'2020-07-03','2020-06-03',20,2,1);
+INSERT INTO COURSE VALUES (2,'Curso para gatos',false,'2020-07-03','2020-06-03',20,1,2);
+INSERT INTO COURSE VALUES (3,'Curso para perros peligrosos',true,'2020-07-03','2020-06-03',10,2,3);
+
+INSERT INTO INSCRIPTION VALUES(1,'Inscription1','2020-05-03',true, 1,1,1);
+INSERT INTO INSCRIPTION VALUES(2,'Inscription2','2020-05-03',true, 2,2,2);
+INSERT INTO INSCRIPTION VALUES(3,'Inscription3','2020-05-03',true, 3,3,3);
