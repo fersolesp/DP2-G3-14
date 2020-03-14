@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="courses">
 
-    <h2>Announcement Information</h2>
+    <h2>Course Information</h2>
 
 
     <table class="table table-striped">
@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <th>Trainer</th>
-            <td><c:out value="${course.trainer}"/></td>
+            <td><c:out value="${course.trainer.name}"/></td>
         </tr>
     </table>
 

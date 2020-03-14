@@ -41,4 +41,9 @@
         </c:forEach>
         </tbody>
     </table>
+    
+    <spring:url value="/inscriptions/" var="inscriptionsUrl">
+    </spring:url>
+    <a href="${fn:escapeXml(inscriptionsUrl)}" class="btn btn-default">My Inscriptions</a>
+    
 </petclinic:layout>
