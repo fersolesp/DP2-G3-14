@@ -84,3 +84,12 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO ANNOUNCEMENT VALUES (1,'Anuncio1',true,'Hola','Fox',1,1);
 INSERT INTO ANNOUNCEMENT VALUES (2,'Anuncio2',true,'Hola','Fufu',2,3);
 INSERT INTO ANNOUNCEMENT VALUES (3,'Anuncio3',false,'Hola','Lulu',3,2);
+
+INSERT INTO TRAINER VALUES (1,'Adolfo Fernandez Ruiz');
+INSERT INTO TRAINER VALUES (2,'Laura Rio Caballero');
+INSERT INTO TRAINER VALUES (3,'Pedro Suarez García');
+
+
+INSERT INTO COURSE VALUES (1,'Curso para perros',false,'2020-07-03','2020-06-03',20,2,1);
+INSERT INTO COURSE VALUES (2,'Curso para gatos',false,'2020-07-03','2020-06-03',20,1,2);
+INSERT INTO COURSE VALUES (3,'Curso para perros peligrosos',true,'2020-07-03','2020-06-03',10,2,3);
