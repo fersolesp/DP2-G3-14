@@ -65,3 +65,11 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO ANNOUNCEMENT VALUES (1,'Anuncio1',true,'Hola','Alfonso Garrido','Fox',1);
 INSERT INTO ANNOUNCEMENT VALUES (2,'Anuncio2',true,'Hola','Ana Alonso','Fufu',3);
 INSERT INTO ANNOUNCEMENT VALUES (3,'Anuncio3',false,'Hola','Pedro Lopez','Lulu',2);
+
+INSERT INTO appointments VALUES (1,'Cita1','Cita para Leo','2013-01-02 17:34', 1,1);
+INSERT INTO appointments VALUES (2,'Cita2','Cita para Jewel','2013-01-02 19:34', 2,4);
+INSERT INTO appointments VALUES (3,'Cita3','Cita para Max','2013-01-02 18:34', 3,8);
+
+INSERT INTO hairdressers VALUES (1, 'George', 'Primero', 1, 'Madison', '6085551023', true);
+INSERT INTO hairdressers VALUES (2, 'George', 'Segundo', 2, 'Madison', '6085551023', true);
+INSERT INTO hairdressers VALUES (3, 'George', 'Tercero', 3, 'Madison', '6085551023', false);
