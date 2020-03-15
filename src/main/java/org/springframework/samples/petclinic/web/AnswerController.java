@@ -56,7 +56,7 @@ public class AnswerController {
 		} else {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			answer.setAnnouncement(announcement);
-			answer.setOwner(this.ownerService.findByUsername(auth.getName()));
+			answer.setOwner(this.ownerService.findOwnerByUserName(auth.getName()));
 			this.answerService.saveAnswer(answer);
 			model.addAttribute("message", "Answer successfully saved");
 			return "redirect:/announcements/{announcementId}";
