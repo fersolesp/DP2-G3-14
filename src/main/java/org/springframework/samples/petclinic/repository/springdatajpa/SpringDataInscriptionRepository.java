@@ -16,12 +16,9 @@
 
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
-import java.util.Collection;
-
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Inscription;
+import org.springframework.samples.petclinic.repository.InscriptionRepository;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
 /**
@@ -30,18 +27,10 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
  * @author Michael Isvy
  * @since 15.1.2013
  */
-public interface SpringDataOwnerRepository extends OwnerRepository, Repository<Owner, Integer> {
+public interface SpringDataInscriptionRepository extends InscriptionRepository, Repository<Inscription, Integer> {
 
-	@Override
-	@Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
-	Collection<Owner> findByLastName(@Param("lastName") String lastName);
-
-	@Override
-	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
-	Owner findById(@Param("id") int id);
-
-
-	@Query("select owner from Owner owner, User user where owner.user=user and user.username=?1")
-	Owner findByUserName(String userName);
+	//	@Override
+	//	@Query("select i from Inscription i where i.pet.owner.user.userName = principal.username")
+	//	Iterable<Inscription> findInscriptionsByOwnerId();
 
 }

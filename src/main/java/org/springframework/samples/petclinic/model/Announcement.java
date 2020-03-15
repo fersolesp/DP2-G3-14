@@ -18,6 +18,6 @@ public class Announcement extends NamedEntity {
 	@ManyToOne
 	private PetType	type;
 
-	private String	owner;
-
+	@ManyToOne
+	private Owner	owner;
 }

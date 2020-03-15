@@ -36,11 +36,6 @@ public class AnnouncementService {
 		return this.announcementRepo.findById(announcementId);
 	}
 
-	//	@Transactional
-	//	public void update(final Announcement announcement, final int announcementId) {
-	//		announcement.getId().
-	//	}
-
 	@Transactional
 	public void saveAnnouncement(final Announcement announcement) throws DataAccessException {
 		this.announcementRepo.save(announcement);

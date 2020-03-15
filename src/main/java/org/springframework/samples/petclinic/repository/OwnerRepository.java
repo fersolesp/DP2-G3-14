@@ -66,6 +66,5 @@ public interface OwnerRepository {
 	 */
 	void save(Owner owner) throws DataAccessException;
 
-	Owner findByUsername(String name) throws DataAccessException;
-
+	Owner findByUserName(String userName) throws DataAccessException;
 }
