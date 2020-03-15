@@ -41,5 +41,11 @@
        	</tr>
 		</c:if>
     </table>
+    
+        
+    <spring:url value="/inscriptions/delete/{inscriptionId}" var="inscriptionDeleteUrl">
+    	<spring:param name="inscriptionId" value="${inscription.id}"/>
+    </spring:url> 
+    <a href="${fn:escapeXml(inscriptionDeleteUrl)}">Delete Inscription</a> 
 
 </petclinic:layout>
