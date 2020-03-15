@@ -19,7 +19,7 @@ public class CourseController {
 
 
 	@GetMapping()
-	public String mostrarAnnouncements(final ModelMap modelMap) {
+	public String mostrarCourses(final ModelMap modelMap) {
 		String vista = "courses/coursesList";
 		Iterable<Course> courses = this.courseService.findAll();
 		modelMap.addAttribute("courses", courses);
@@ -27,7 +27,7 @@ public class CourseController {
 	}
 
 	@GetMapping("/{courseId}")
-	public String mostrarAnnouncement(final ModelMap modelMap, @PathVariable("courseId") final int courseId) {
+	public String mostrarCourse(final ModelMap modelMap, @PathVariable("courseId") final int courseId) {
 		String vista = "courses/courseDetails";
 		Course course = this.courseService.findCourseById(courseId).get();
 		modelMap.addAttribute("course", course);

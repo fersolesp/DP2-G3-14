@@ -26,6 +26,9 @@ public class Inscription extends NamedEntity {
 	@ManyToOne
 	private Pet			pet;
 
+	@ManyToOne
+	private Owner		owner;
+
 	@OneToOne
 	private Course		course;
 }

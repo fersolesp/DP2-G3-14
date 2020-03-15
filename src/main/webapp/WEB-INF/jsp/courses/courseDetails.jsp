@@ -39,5 +39,9 @@
             <td><c:out value="${course.trainer.name}"/></td>
         </tr>
     </table>
+    <spring:url value="/courses/{courseId}/inscription/new" var="inscriptionCreateUrl">
+    	<spring:param name="courseId" value="${course.id}"/>
+    </spring:url> 
+    <a href="${fn:escapeXml(inscriptionCreateUrl)}">Create Inscription</a> 
 
 </petclinic:layout>

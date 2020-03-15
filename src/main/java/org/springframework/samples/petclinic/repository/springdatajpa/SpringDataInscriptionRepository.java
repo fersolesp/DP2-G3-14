@@ -16,8 +16,11 @@
 
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Inscription;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.InscriptionRepository;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
@@ -29,8 +32,7 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
  */
 public interface SpringDataInscriptionRepository extends InscriptionRepository, Repository<Inscription, Integer> {
 
-	//	@Override
-	//	@Query("select i from Inscription i where i.pet.owner.user.userName = principal.username")
-	//	Iterable<Inscription> findInscriptionsByOwnerId();
-
+	@Override
+	@Query("SELECT inscription FROM Inscription inscription WHERE inscription.owner=: owner")
+	Iterable<Inscription> findInscriptionsByOwner(@Param("owner") Owner owner);
 }
