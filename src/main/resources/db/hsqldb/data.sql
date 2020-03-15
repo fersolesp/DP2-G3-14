@@ -85,6 +85,10 @@ INSERT INTO ANNOUNCEMENT VALUES (1,'Anuncio1',true,'Hola','Fox',1,1);
 INSERT INTO ANNOUNCEMENT VALUES (2,'Anuncio2',true,'Hola','Fufu',2,3);
 INSERT INTO ANNOUNCEMENT VALUES (3,'Anuncio3',false,'Hola','Lulu',3,2);
 
+INSERT INTO ANSWER VALUES (1,'Respuesta1','2010-03-09','Hola',1,1);
+INSERT INTO ANSWER VALUES (2,'Respuesta2','2010-03-09','Hola',1,1);
+INSERT INTO ANSWER VALUES (3,'Respuesta3','2010-03-09','Hola',2,1);
+
 INSERT INTO TRAINER VALUES (1,'Adolfo Fernandez Ruiz');
 INSERT INTO TRAINER VALUES (2,'Laura Rio Caballero');
 INSERT INTO TRAINER VALUES (3,'Pedro Suarez García');
@@ -100,3 +104,4 @@ INSERT INTO COURSE VALUES (3,'Curso para perros peligrosos',true,'2020-07-03','2
 INSERT INTO INSCRIPTION VALUES(1,'Inscription1','2020-05-03',true, 1,1,1);
 INSERT INTO INSCRIPTION VALUES(2,'Inscription2','2020-05-03',true, 2,2,2);
 INSERT INTO INSCRIPTION VALUES(3,'Inscription3','2020-05-03',true, 3,3,3);
+
