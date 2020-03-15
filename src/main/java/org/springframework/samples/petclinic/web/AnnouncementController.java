@@ -8,9 +8,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
-import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
+import org.springframework.samples.petclinic.service.AnswerService;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,9 @@ public class AnnouncementController {
 
 	@Autowired
 	private AnnouncementService	announcementService;
+
+	@Autowired
+	private AnswerService		answerService;
 
 	@Autowired
 	private PetService			petService;
@@ -95,6 +100,15 @@ public class AnnouncementController {
 			modelMap.addAttribute("message", "Announcement not found");
 		}
 		return view;
+	}
+
+	@GetMapping("/{announcementId}/answers")
+	public String mostrarAnwers(final ModelMap modelMap, @PathVariable("announcementId") final Integer announcementId) {
+		String vista = "answers/answersList";
+		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+		Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+		modelMap.addAttribute("answers", answers);
+    return vista;
 	}
 
 	@GetMapping(path = "/update/{announcementId}")

@@ -36,15 +36,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll()//
-			.antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll()//
-			.antMatchers("/announcements").permitAll().antMatchers("/announcements/new")//
-			.hasAnyAuthority("owner", "admin").antMatchers("/announcements/{announcementId}")//
-			.hasAnyAuthority("owner", "admin").antMatchers("/announcements/update/{announcementId}")//
-			.hasAnyAuthority("owner", "admin").antMatchers("/announcements/delete/{announcementId}")//
-			.hasAnyAuthority("owner", "admin").antMatchers("/admin/**").hasAnyAuthority("admin")//
-			.antMatchers("/courses/**").permitAll().antMatchers("/inscriptions/**").authenticated()//
-			.antMatchers("/owners/**").hasAnyAuthority("owner", "admin").antMatchers("/vets/**").authenticated()//
-			.anyRequest().denyAll().and().formLogin()
+      .antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll()//
+      .antMatchers("/announcements").permitAll()//
+      .antMatchers("/announcements/new").authenticated()//
+			.antMatchers("/announcements/{\\\\d+}").permitAll()//
+      .antMatchers("/announcements/delete/{\\\\d+}").authenticated()//
+      .antMatchers("/announcements/update/{\\\\d+}").authenticated()//
+
+      .antMatchers("/announcements/{\\\\d+}/answers").authenticated()//
+			.antMatchers("/announcements/{\\\\d+}/answer/new").authenticated()//
+      .antMatchers("/admin/**").hasAnyAuthority("admin")//
+  	  .antMatchers("/courses/**").permitAll()//
+
+      .antMatchers("/owners/**").hasAnyAuthority("owner", "admin")//
+      .antMatchers("/vets/**").authenticated()//
+      .antMatchers("/inscriptions/**").authenticated()//
+
+      .anyRequest().denyAll().and().formLogin()
+
 			/* .loginPage("/login") */
 			.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");
 		// Configuración para que funcione la consola de administración
