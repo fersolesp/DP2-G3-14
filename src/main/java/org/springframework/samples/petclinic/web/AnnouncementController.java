@@ -9,10 +9,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Answer;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
 import org.springframework.samples.petclinic.service.AnswerService;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.core.Authentication;
@@ -48,14 +48,21 @@ public class AnnouncementController {
 		String vista = "announcements/announcementsList";
 		Iterable<Announcement> announcements = this.announcementService.findAll();
 		modelMap.addAttribute("announcements", announcements);
+		modelMap.addAttribute("isanonymoususer", SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser"));
+
 		return vista;
 	}
 
 	@GetMapping("/{announcementId}")
 	public String mostrarAnnouncement(final ModelMap modelMap, @PathVariable("announcementId") final int announcementId) {
 		String vista = "announcements/announcementDetails";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 		modelMap.addAttribute("announcement", announcement);
+		modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
+
+		modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
+
 		return vista;
 	}
 
@@ -104,11 +111,19 @@ public class AnnouncementController {
 
 	@GetMapping("/{announcementId}/answers")
 	public String mostrarAnwers(final ModelMap modelMap, @PathVariable("announcementId") final Integer announcementId) {
-		String vista = "answers/answersList";
-		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
-		Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
-		modelMap.addAttribute("answers", answers);
-    return vista;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (!authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
+			modelMap.addAttribute("message", "You cannot access another user's announcement answers");
+			return "exception";
+		} else {
+			String vista = "answers/answersList";
+			Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+			Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+			modelMap.addAttribute("answers", answers);
+			return vista;
+		}
+
 	}
 
 	@GetMapping(path = "/update/{announcementId}")
