@@ -1,6 +1,8 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,22 @@ public class AnswerController {
 			model.addAttribute("message", "Answer successfully saved");
 			return "redirect:/announcements/{announcementId}";
 		}
+	}
+
+	@GetMapping("/answers")
+	public String mostrarAnwers(final ModelMap modelMap, @PathVariable("announcementId") final Integer announcementId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (!authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
+			modelMap.addAttribute("message", "You cannot access another user's announcement answers");
+			return "exception";
+		} else {
+			String vista = "answers/answersList";
+			Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+			Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+			modelMap.addAttribute("answers", answers);
+			return vista;
+		}
+
 	}
 }
