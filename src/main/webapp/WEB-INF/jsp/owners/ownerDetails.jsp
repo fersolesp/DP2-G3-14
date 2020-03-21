@@ -26,6 +26,45 @@
             <th>Telephone</th>
             <td><c:out value="${owner.telephone}"/></td>
         </tr>
+         <tr>
+            <th>Dangerous Animal License?:</th>
+             <c:if test="${owner.dangerousAnimal}">
+              <td><c:out value="Yes"/></td>
+            </c:if>
+			<c:if test="${!owner.dangerousAnimal}">
+              <td><c:out value="No"/></td>
+            </c:if>
+        </tr>
+        
+         <tr>
+            <th>Numerous Animals License?:</th>
+             <c:if test="${owner.numerousAnimal}">
+              <td><c:out value="Yes"/></td>
+            </c:if>
+			<c:if test="${!owner.numerousAnimal}">
+              <td><c:out value="No"/></td>
+            </c:if>
+        </tr>
+        
+         <tr>
+            <th>Lives in City?:</th>
+            <c:if test="${owner.livesInCity}">
+              <td><c:out value="Yes"/></td>
+            </c:if>
+			<c:if test="${!owner.livesInCity}">
+              <td><c:out value="No"/></td>
+            </c:if>
+        </tr>
+        
+         <tr>
+            <th>Positive History?:</th>
+             <c:if test="${owner.positiveHistory}">
+              <td><c:out value="Yes"/></td>
+            </c:if>
+			<c:if test="${!owner.positiveHistory}">
+              <td><c:out value="No"/></td>
+            </c:if>
+        </tr>
     </table>
 
     <spring:url value="{ownerId}/edit" var="editUrl">
@@ -55,6 +94,24 @@
                         <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
                         <dt>Type</dt>
                         <dd><c:out value="${pet.type.name}"/></dd>
+                        <dt>Is vaccinated?:</dt>
+                        <dd>
+                        <c:if test="${pet.isVaccinated}">
+                         <c:out value="Yes"></c:out>
+                         </c:if>
+                          <c:if test="${!pet.isVaccinated}">
+                         <c:out value="No"></c:out>
+                         </c:if>
+                        </dd>
+                        <dt>Dangerous Animal</dt>
+                        <dd>
+                        <c:if test="${pet.dangerous}">
+                         <c:out value="Yes"></c:out>
+                         </c:if>
+                          <c:if test="${!pet.dangerous}">
+                         <c:out value="No"></c:out>
+                         </c:if>
+                        </dd>
                     </dl>
                 </td>
                 <td valign="top">
