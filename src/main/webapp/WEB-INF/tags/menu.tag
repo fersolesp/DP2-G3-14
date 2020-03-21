@@ -51,6 +51,12 @@
 					<span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>
 					<span>Appointments</span>
 				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'hairdressers'}" url="/hairdressers"
+					title="Hairdressers">
+					<span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>
+					<span>Hairdressers</span>
+				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">

@@ -29,7 +29,7 @@
                     <a href="${fn:escapeXml(appointmentUrl)}"><c:out value="${appointment.description}"/></a>
                 </td>
                 <td>
-                    <c:out value="${appointment.date}"/>
+                    <c:out value="${appointment.date.toString().split('T')[0]} || ${appointment.date.toString().split('T')[1]}"/>
                 </td>
                 <td>
                     <c:out value="${appointment.pet.name}"/>
@@ -41,8 +41,4 @@
         </c:forEach>
         </tbody>
     </table>
-    <spring:url value="/appointments/new" var="addUrl">
-
-    </spring:url>
-    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Appointment</a>
 </petclinic:layout>

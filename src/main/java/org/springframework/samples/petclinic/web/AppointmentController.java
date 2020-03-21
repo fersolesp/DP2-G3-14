@@ -1,12 +1,17 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Appointment;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AppointmentService;
+import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,11 +26,16 @@ public class AppointmentController {
 	
 	@Autowired
 	private AppointmentService appointmentService;
+	@Autowired
+	private OwnerService ownerService;
 	
 	@GetMapping()
 	public String mostrarAppointments(final ModelMap modelMap) {
 		String vista = "appointments/appointmentsList";
-		Iterable<Appointment> appointments = this.appointmentService.findAll();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+		Owner owner = this.ownerService.findOwnerByUserName(userName);
+		Collection<Appointment> appointments = this.appointmentService.findAppointmentsByOwner(owner);
 		modelMap.addAttribute("appointments",appointments);
 		return vista;
 	}
@@ -39,7 +49,7 @@ public class AppointmentController {
 	}
 	
 	@GetMapping(path = "new")
-	public String createAppointment (final ModelMap modelMap) {
+	public String createAppointment (@PathVariable("hairdresserId") final Integer hairdresserId, final ModelMap modelMap) {
 		String vista = "appointments/editAppointment";
 		Appointment appointment = new Appointment();
 		modelMap.addAttribute("appointment", appointment);
@@ -58,19 +68,14 @@ public class AppointmentController {
 		}
 		return vista;
 	}
-	
 
 	
 	@GetMapping(path ="delete/{appointmentId}")
 	public String deleteAppointment(@PathVariable("appointmentId") final Integer appointmentId, final ModelMap modelMap) {
 		String vista = "redirect:/appointments";
 		Optional<Appointment> appointment = this.appointmentService.findAppointmentById(appointmentId);
-		if(appointment.isPresent()) {
-			this.appointmentService.deleteAppointment(appointment.get());
-			modelMap.addAttribute("message","Appointment successfully deleted!");
-		} else {
-			modelMap.addAttribute("message","Appointment not found!");
-		}
+		this.appointmentService.deleteAppointment(appointment.get());
+		modelMap.addAttribute("message","Appointment successfully deleted!");
 		return vista;
 	}
 

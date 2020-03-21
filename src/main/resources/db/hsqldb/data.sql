@@ -4,6 +4,24 @@ INSERT INTO authorities VALUES ('admin1','admin');
 -- One owner user, named owner1 with passwor 0wn3r
 INSERT INTO users(username,password,enabled) VALUES ('owner1','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner1','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner2','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner2','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner3','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner3','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner4','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner4','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner5','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner5','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner6','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner6','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner7','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner7','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner8','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner8','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner9','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner9','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner10','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner10','owner');
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities VALUES ('vet1','veterinarian');
@@ -33,15 +51,15 @@ INSERT INTO types VALUES (5, 'bird');
 INSERT INTO types VALUES (6, 'hamster');
 
 INSERT INTO owners VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
-INSERT INTO owners VALUES (2, 'Betty', 'Davis', '638 Cardinal Ave.', 'Sun Prairie', '6085551749', 'owner1');
-INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez', '2693 Commerce St.', 'McFarland', '6085558763', 'owner1');
-INSERT INTO owners VALUES (4, 'Harold', 'Davis', '563 Friendly St.', 'Windsor', '6085553198', 'owner1');
-INSERT INTO owners VALUES (5, 'Peter', 'McTavish', '2387 S. Fair Way', 'Madison', '6085552765', 'owner1');
-INSERT INTO owners VALUES (6, 'Jean', 'Coleman', '105 N. Lake St.', 'Monona', '6085552654', 'owner1');
-INSERT INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona', '6085555387', 'owner1');
-INSERT INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '6085557683', 'owner1');
-INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435', 'owner1');
-INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487', 'owner1');
+INSERT INTO owners VALUES (2, 'Betty', 'Davis', '638 Cardinal Ave.', 'Sun Prairie', '6085551749', 'owner2');
+INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez', '2693 Commerce St.', 'McFarland', '6085558763', 'owner3');
+INSERT INTO owners VALUES (4, 'Harold', 'Davis', '563 Friendly St.', 'Windsor', '6085553198', 'owner4');
+INSERT INTO owners VALUES (5, 'Peter', 'McTavish', '2387 S. Fair Way', 'Madison', '6085552765', 'owner5');
+INSERT INTO owners VALUES (6, 'Jean', 'Coleman', '105 N. Lake St.', 'Monona', '6085552654', 'owner6');
+INSERT INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona', '6085555387', 'owner7');
+INSERT INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '6085557683', 'owner8');
+INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435', 'owner9');
+INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487', 'owner10');
 
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', 1, 1);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 6, 2);
@@ -66,10 +84,23 @@ INSERT INTO ANNOUNCEMENT VALUES (1,'Anuncio1',true,'Hola','Alfonso Garrido','Fox
 INSERT INTO ANNOUNCEMENT VALUES (2,'Anuncio2',true,'Hola','Ana Alonso','Fufu',3);
 INSERT INTO ANNOUNCEMENT VALUES (3,'Anuncio3',false,'Hola','Pedro Lopez','Lulu',2);
 
-INSERT INTO appointments VALUES (1,'Cita1','Cita para Leo','2013-01-02 17:34', 1,1);
-INSERT INTO appointments VALUES (2,'Cita2','Cita para Jewel','2013-01-02 19:34', 2,4);
-INSERT INTO appointments VALUES (3,'Cita3','Cita para Max','2013-01-02 18:34', 3,8);
+INSERT INTO hairdressers(id,first_name,last_name,specialties,active) VALUES (1, 'George', 'Primero', 1, true);
+INSERT INTO hairdressers(id,first_name,last_name,specialties,active) VALUES (2, 'George', 'Segundo', 2, true);
+INSERT INTO hairdressers(id,first_name,last_name,specialties,active) VALUES (3, 'George', 'Tercero', 3, true);
+INSERT INTO hairdressers(id,first_name,last_name,specialties,active) VALUES (4, 'George', 'Cuarto', 4, false);
+INSERT INTO hairdressers(id,first_name,last_name,specialties,active) VALUES (5, 'George', 'Quinto', 5, true);
+INSERT INTO hairdressers(id,first_name,last_name,specialties,active) VALUES (6, 'George', 'Sexto', 6, false);
 
-INSERT INTO hairdressers VALUES (1, 'George', 'Primero', 1, 'Madison', '6085551023', true);
-INSERT INTO hairdressers VALUES (2, 'George', 'Segundo', 2, 'Madison', '6085551023', true);
-INSERT INTO hairdressers VALUES (3, 'George', 'Tercero', 3, 'Madison', '6085551023', false);
+INSERT INTO payments(id,name,amount,pay_date) VALUES (1, 'Pago1', 1100, '2020-07-24' );
+INSERT INTO payments(id,name,amount,pay_date) VALUES (2, 'Pago2', 1200.2 , '2020-07-25' );
+INSERT INTO payments(id,name,amount,pay_date) VALUES (3, 'Pago3', 1300 , '2020-07-26' );
+INSERT INTO payments(id,name,amount,pay_date) VALUES (4, 'Pago4', 1050.4 , '2020-07-27' );
+INSERT INTO payments(id,name,amount,pay_date) VALUES (5, 'Pago5', 1150 , '2020-07-28' );
+INSERT INTO payments(id,name,amount,pay_date) VALUES (6, 'Pago6', 1250.6 , '2020-07-29' );
+
+INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,payment_id,owner_id) VALUES (1,'Cita1','Cita para Leo','2020-07-20 20:50', true, 1, 1, 1, 1);
+INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,payment_id,owner_id) VALUES (2,'Cita2','Cita para Basil','2020-07-03 18:35', true, 2, 2, 2, 2);
+INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,payment_id,owner_id) VALUES (3,'Cita3','Cita para Rosy','2020-07-04 19:36', true, 3, 3, 3, 3);
+INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,owner_id) VALUES (4,'Cita4','Cita para Jewel','2020-07-05 20:37', false, 4, 4, 3);
+INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,owner_id) VALUES (5,'Cita5','Cita para Iggy','2020-07-06 21:38', false, 5, 5, 4);
+INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,payment_id,owner_id) VALUES (6,'Cita6','Cita para George','2020-07-20 10:39', true, 6, 6, 6, 5);

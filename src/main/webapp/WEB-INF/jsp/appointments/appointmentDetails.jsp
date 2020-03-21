@@ -4,41 +4,66 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="owners">
+<petclinic:layout pageName="appointments">
 
-    <h2>Announcement Information</h2>
+    <h2>Appoinment Information</h2>
 
 
     <table class="table table-striped">
     	<tr>
-            <th>Title</th>
-            <td><c:out value="${announcement.name}"/></td>
-        </tr>
-        <tr>
-            <th>Owner</th>
-            <td><c:out value="${announcement.owner}"/></td>
-        </tr>
-        <tr>
-            <th>Pet name</th>
-            <td><c:out value="${announcement.petName}"/></td>
+            <th>Name</th>
+            <td><c:out value="${appointment.name}"/></td>
         </tr>
         <tr>
             <th>Description</th>
-            <td><c:out value="${announcement.description}"/></td>
+            <td><c:out value="${appointment.description}"/></td>
         </tr>
         <tr>
-            <th>Can be adopted</th>
-            <td><c:out value="${announcement.canBeAdopted}"/></td>
+            <th>Date</th>
+            <td><c:out value="${appointment.date.toString().split('T')[0]} || ${appointment.date.toString().split('T')[1]}"/></td>
         </tr>
         <tr>
-            <th>Type</th>
-            <td><c:out value="${announcement.type}"/></td>
+            <th>Is paid</th>
+            <td>
+            	<c:if test="${appointment.isPaid == true}">
+            		<c:out value="Yes"/>
+            	</c:if>
+            	<c:if test="${appointment.isPaid == false}">
+            		<c:out value="No"/>            
+            	</c:if>
+            </td>
         </tr>
+        <tr>
+            <th>Hairdresser</th>
+            <td><c:out value="${appointment.hairdresser.firstName} ${appointment.hairdresser.lastName}"/></td>
+        </tr>
+        <tr>
+            <th>Owner</th>
+            <td><c:out value="${appointment.owner.firstName}  ${appointment.owner.lastName}"/></td>
+        </tr>
+        <tr>
+            <th>Pet</th>
+            <td><c:out value="${appointment.pet.name}  (${appointment.pet.type}) "/></td>
+        </tr>
+        <c:if test="${appointment.isPaid==true}">
+        	<tr>
+        	    <th>Payment</th>
+        	    <td></td>
+        	</tr>
+        	<tr>
+        	    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Amount</th>
+        	    <td><c:out value="${appointment.payment.amount}"/></td>
+        	</tr>
+        	<tr>
+        	    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date</th>
+        	    <td><c:out value="${appointment.payment.date}"/></td>
+        	</tr>
+        </c:if>
     </table>
     
-    <spring:url value="/announcements/delete/{announcementId}" var="announcementDeleteUrl">
-    	<spring:param name="announcementId" value="${announcement.id}"/>
+    <spring:url value="/appointments/delete/{appointmentId}" var="appointmentDeleteUrl">
+    	<spring:param name="appointmentId" value="${appointment.id}"/>
     </spring:url> 
-    <a href="${fn:escapeXml(announcementDeleteUrl)}">Delete Announcement</a> 
+    <a href="${fn:escapeXml(appointmentDeleteUrl)}" class="btn btn-default">Delete Appointment</a> 
 
 </petclinic:layout>
