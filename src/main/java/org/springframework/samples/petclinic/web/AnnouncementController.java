@@ -59,6 +59,10 @@ public class AnnouncementController {
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 		modelMap.addAttribute("announcement", announcement);
 		modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
+		if (authentication.getName() != "anonymousUser") {
+			Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
+			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
+		}
 
 		modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
 

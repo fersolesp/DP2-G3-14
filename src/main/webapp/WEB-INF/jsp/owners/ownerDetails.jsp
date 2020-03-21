@@ -66,17 +66,17 @@
             </c:if>
         </tr>
     </table>
-
-    <spring:url value="{ownerId}/edit" var="editUrl">
-        <spring:param name="ownerId" value="${owner.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Owner</a>
-
-    <spring:url value="{ownerId}/pets/new" var="addUrl">
-        <spring:param name="ownerId" value="${owner.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Pet</a>
-
+	<c:if test="${isMe}">
+	    <spring:url value="{ownerId}/edit" var="editUrl">
+	        <spring:param name="ownerId" value="${owner.id}"/>
+	    </spring:url>
+	    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Owner</a>
+	
+	    <spring:url value="{ownerId}/pets/new" var="addUrl">
+	        <spring:param name="ownerId" value="${owner.id}"/>
+	    </spring:url>
+	    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Pet</a>
+	</c:if>
     <br/>
     <br/>
     <br/>
@@ -130,18 +130,22 @@
                         </c:forEach>
                         <tr>
                             <td>
+                            	<c:if test="${isMe}">
                                 <spring:url value="/owners/{ownerId}/pets/{petId}/edit" var="petUrl">
                                     <spring:param name="ownerId" value="${owner.id}"/>
                                     <spring:param name="petId" value="${pet.id}"/>
                                 </spring:url>
                                 <a href="${fn:escapeXml(petUrl)}">Edit Pet</a>
+                                </c:if>
                             </td>
                             <td>
+                            	<c:if test="${isMe}">
                                 <spring:url value="/owners/{ownerId}/pets/{petId}/visits/new" var="visitUrl">
                                     <spring:param name="ownerId" value="${owner.id}"/>
                                     <spring:param name="petId" value="${pet.id}"/>
                                 </spring:url>
                                 <a href="${fn:escapeXml(visitUrl)}">Add Visit</a>
+                                </c:if>
                             </td>
                         </tr>
                     </table>

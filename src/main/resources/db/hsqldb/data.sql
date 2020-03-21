@@ -54,7 +54,7 @@ INSERT INTO types VALUES (6, 'hamster');
 INSERT INTO owners VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison',false,true,false,true, '6085551023', 'owner1');
 INSERT INTO owners VALUES (2, 'Betty', 'Davis', '638 Cardinal Ave.', 'Sun Prairie',true,false,false,true, '6085551749', 'owner2');
 INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez', '2693 Commerce St.', 'McFarland',false,true,true,true, '6085558763', 'owner3');
-INSERT INTO owners VALUES (4, 'Harold', 'Davis', '563 Friendly St.', 'Windsor',false,true,true,true,'6085558763','owner4');
+INSERT INTO owners VALUES (4, 'Harold', 'Davis', '563 Friendly St.', 'Windsor',false,true,true,false,'6085558763','owner4');
 INSERT INTO owners VALUES (5, 'Peter', 'McTavish', '2387 S. Fair Way', 'Madison',true,true,true,true, '6085552765', 'owner5');
 INSERT INTO owners VALUES (6, 'Jean', 'Coleman', '105 N. Lake St.', 'Monona',false,true,true,true, '6085552654', 'owner6');
 INSERT INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona',true,true,true,true, '6085555387', 'owner7');
