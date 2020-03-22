@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Answer;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AnnouncementService;
 import org.springframework.samples.petclinic.service.AnswerService;
 import org.springframework.samples.petclinic.service.OwnerService;
@@ -47,6 +48,17 @@ public class AnswerController {
 		Answer answer = new Answer();
 		answer.setAnnouncement(announcement);
 		modelMap.addAttribute("answer", answer);
+		if (!announcement.isCanBeAdopted()) {
+			view = "/exception";
+			modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
+		}
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Owner owner = this.ownerService.findOwnerByUserName(auth.getName());
+		if (!owner.getPositiveHistory()) {
+			view = "/exception";
+			modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
+		}
 		return view;
 	}
 

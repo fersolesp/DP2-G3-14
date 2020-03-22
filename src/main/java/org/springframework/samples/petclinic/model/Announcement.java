@@ -28,4 +28,5 @@ public class Announcement extends NamedEntity {
 
 	@ManyToOne
 	private Owner	owner;
+
 }
