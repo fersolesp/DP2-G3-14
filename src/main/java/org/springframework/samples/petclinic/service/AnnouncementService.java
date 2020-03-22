@@ -7,10 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Announcement;
-import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.repository.AnnouncementRepository;
-import org.springframework.samples.petclinic.repository.AnswerRepository;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,6 @@ public class AnnouncementService {
 
 	private AnnouncementRepository	announcementRepo;
 	private PetRepository			petRepo;
-	private AnswerRepository		answerRepo;
 
 
 	@Autowired
@@ -51,8 +48,6 @@ public class AnnouncementService {
 
 	@Transactional
 	public void deleteAnnouncement(final Announcement announcement) {
-		Collection<Answer> answers = this.answerRepo.findAnswersByAnnouncement(announcement);
-		this.answerRepo.deleteAll(answers);
 		this.announcementRepo.delete(announcement);
 	}
 

@@ -8,9 +8,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
+import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
+import org.springframework.samples.petclinic.service.AnswerService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.core.Authentication;
@@ -36,6 +38,9 @@ public class AnnouncementController {
 
 	@Autowired
 	private OwnerService		ownerService;
+
+	@Autowired
+	private AnswerService		answerService;
 
 
 	@GetMapping()
@@ -106,11 +111,15 @@ public class AnnouncementController {
 		String userName = authentication.getName();
 
 		if (userNameAnnouncement == userName) {
-			this.announcementService.deleteAnnouncement(announcement.get());
-			modelMap.addAttribute("message", "Announcement successfully deleted");
-		} else {
-			modelMap.addAttribute("message", "You can't delete another owner's announcement");
-			view = "/exception";
+			if (announcement.isPresent()) {
+				Collection<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+				answers.forEach(a -> this.answerService.delete(a));
+				this.announcementService.deleteAnnouncement(announcement.get());
+				modelMap.addAttribute("message", "Announcement successfully deleted");
+			} else {
+				modelMap.addAttribute("message", "You can't delete another owner's announcement");
+				view = "/exception";
+			}
 		}
 		return view;
 	}
