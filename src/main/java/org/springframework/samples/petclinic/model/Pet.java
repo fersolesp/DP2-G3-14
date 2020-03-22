@@ -62,6 +62,30 @@ public class Pet extends NamedEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit>	visits;
 
+	private Boolean isDangerous;
+
+	private Boolean isVaccinated;
+
+
+
+	public Boolean getIsDangerous() {
+		return this.isDangerous;
+	}
+
+
+	public void setIsDangerous(final Boolean isDangerous) {
+		this.isDangerous = isDangerous;
+	}
+
+
+	public Boolean getIsVaccinated() {
+		return this.isVaccinated;
+	}
+
+
+	public void setIsVaccinated(final Boolean isVaccinated) {
+		this.isVaccinated = isVaccinated;
+	}
 
 	public void setBirthDate(final LocalDate birthDate) {
 		this.birthDate = birthDate;

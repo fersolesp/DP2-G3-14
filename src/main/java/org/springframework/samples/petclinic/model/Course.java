@@ -25,9 +25,12 @@ public class Course extends NamedEntity {
 
 	private Boolean		dangerousAllowed;
 
-	private Integer		vacancies;
+	private Integer		capacity;
 
 	@ManyToOne
 	private Trainer		trainer;
+
+	private Integer		cost;
+
 
 }

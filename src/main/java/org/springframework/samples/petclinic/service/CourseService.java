@@ -1,7 +1,9 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Course;
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CourseService {
 
-	@Autowired
+
 	private CourseRepository courseRepository;
 
 
@@ -22,12 +24,18 @@ public class CourseService {
 	}
 
 	@Transactional
-	public Iterable<Course> findAll() {
-		return this.courseRepository.findAll();
+	public Iterable<Course> findAll(){
+		Iterable<Course> res = this.courseRepository.findAll();
+		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return res;
 	}
 
-	public Optional<Course> findCourseById(final int courseId) {
-		return this.courseRepository.findById(courseId);
+	public Optional<Course> findCourseById(final int courseId) throws NoSuchElementException{
+		Optional<Course> res = this.courseRepository.findById(courseId);
+		res.get();
+		return res;
 	}
 
 }

@@ -31,12 +31,16 @@
             <td><c:out value="${course.finishDate}"/></td>
         </tr>
         <tr>
-            <th>Vacancies</th>
-            <td><c:out value="${course.vacancies}"/></td>
+            <th>Capacity</th>
+            <td><c:out value="${course.capacity}"/></td>
         </tr>
         <tr>
             <th>Trainer</th>
             <td><c:out value="${course.trainer.name}"/></td>
+        </tr>
+        <tr>
+            <th>Cost</th>
+            <td><c:out value="${course.cost}"/></td>
         </tr>
     </table>
     <spring:url value="/courses/{courseId}/inscription/new" var="inscriptionCreateUrl">
