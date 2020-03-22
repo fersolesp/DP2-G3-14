@@ -115,9 +115,16 @@ public class OwnerController {
 
 	@GetMapping(value = "/owners/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("ownerId") final int ownerId, final Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Owner owner = this.ownerService.findOwnerById(ownerId);
-		model.addAttribute(owner);
-		return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+		String res = OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+		if (authentication.getName() != owner.getUser().getUsername()) {
+			model.addAttribute("message", "You can't update data from other users");
+			res = "/exception";
+		} else {
+			model.addAttribute(owner);
+		}
+		return res;
 	}
 
 	@PostMapping(value = "/owners/{ownerId}/edit")

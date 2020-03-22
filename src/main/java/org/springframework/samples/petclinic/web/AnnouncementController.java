@@ -11,7 +11,6 @@ import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
-import org.springframework.samples.petclinic.service.AnswerService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.core.Authentication;
@@ -31,9 +30,6 @@ public class AnnouncementController {
 
 	@Autowired
 	private AnnouncementService	announcementService;
-
-	@Autowired
-	private AnswerService		answerService;
 
 	@Autowired
 	private PetService			petService;
@@ -103,11 +99,18 @@ public class AnnouncementController {
 	public String deleteAnnouncement(@PathVariable("announcementId") final Integer announcementId, final ModelMap modelMap) {
 		String view = "redirect:/announcements";
 		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
-		if (announcement.isPresent()) {
+		Owner owner = announcement.get().getOwner();
+		String userNameAnnouncement = owner.getUser().getUsername();
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+
+		if (userNameAnnouncement == userName) {
 			this.announcementService.deleteAnnouncement(announcement.get());
 			modelMap.addAttribute("message", "Announcement successfully deleted");
 		} else {
-			modelMap.addAttribute("message", "Announcement not found");
+			modelMap.addAttribute("message", "You can't delete another owner's announcement");
+			view = "/exception";
 		}
 		return view;
 	}
@@ -115,12 +118,21 @@ public class AnnouncementController {
 	@GetMapping(path = "/update/{announcementId}")
 	public String iniactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
 		String vista = "announcements/editAnnouncement";
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
-		Owner owner = announcement.getOwner();
-		org.springframework.samples.petclinic.model.User user = owner.getUser();
-		String userName = user.getUsername();
+		Owner ownerAnnouncement = announcement.getOwner();
+		org.springframework.samples.petclinic.model.User user = ownerAnnouncement.getUser();
+		String userNameAnnouncement = user.getUsername();
+
+		if (userName != userNameAnnouncement) {
+			modelMap.addAttribute("message", "You can't another owner's announcement");
+			vista = "/exception";
+		}
 		modelMap.addAttribute("announcement", announcement);
-		modelMap.addAttribute("user", userName);
+		modelMap.addAttribute("user", userNameAnnouncement);
 		return vista;
 	}
 
