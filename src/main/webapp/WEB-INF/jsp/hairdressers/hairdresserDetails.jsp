@@ -23,10 +23,10 @@
             <td>
             <c:if test="${hairdresser.active == true}">
             		<c:out value="Yes"/>
-            	</c:if>
-            	<c:if test="${hairdresser.active == false}">
+            </c:if>
+            <c:if test="${hairdresser.active == false}">
             		<c:out value="No"/>            
-            	</c:if>
+            </c:if>
             </td>
         </tr>
     </table>

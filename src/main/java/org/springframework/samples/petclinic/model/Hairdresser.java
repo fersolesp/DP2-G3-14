@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Column;
@@ -10,13 +11,13 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "hairdressers")
-public class Hairdresser extends Person{
-	
-	@Column(name="specialties")
+public class Hairdresser extends Person {
+
+	@Column(name = "specialties")
 	@NotNull
-	private HairdresserSpecialty specialties;
-	
-	@Column(name="active")
-	private boolean active;
+	private HairdresserSpecialty	specialties;
+
+	@Column(name = "active")
+	private Boolean					active;
 
 }
