@@ -294,24 +294,48 @@ class InscriptionControllerTests {
 
 	// Post createInscription
 
-	@WithMockUser(value = "spring")
+	//	@WithMockUser(value = "george")
+	//	@Test
+	//	void shouldSaveInscription() throws Exception {
+	//		Inscription dummyInscription = this.createDummyInscription("inscription");
+	//		dummyInscription.setPet(this.lillie);
+	//		dummyInscription.setDate(LocalDate.of(2015, 2, 12));
+	//		dummyInscription.setIsPaid(false);
+	//
+	//		Course dummyCourse = this.createDummyCourse("dummycourse");
+	//		dummyCourse.setCapacity(10);
+	//
+	//		Mockito.when(this.courseService.findCourseById(1)).thenReturn(Optional.of(dummyCourse));
+	//		Mockito.doNothing().when(this.inscriptionService).saveInscription(ArgumentMatchers.any(Inscription.class));
+	//
+	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1)
+	//			.with(SecurityMockMvcRequestPostProcessors.csrf())
+	//			.param("date", "2015/02/12")
+	//			.param("isPaid", "false")
+	//			.flashAttr("inscription", dummyInscription))
+	//		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+	//		.andExpect(MockMvcResultMatchers.model().attributeHasNoErrors("inscription"))
+	//		.andExpect(MockMvcResultMatchers.view().name("inscriptions"));
+	//	}
+
+	@WithMockUser(value = "george")
 	@Test
-	void shouldSaveInscription() throws Exception {
-		//		Inscription dummyInscription = this.createDummyInscription("inscription");
-		//
+	void shouldNotSaveInscriptionWithFormErrors() throws Exception {
+
 		Course dummyCourse = this.createDummyCourse("dummycourse");
 		dummyCourse.setCapacity(10);
 
 		Mockito.when(this.courseService.findCourseById(1)).thenReturn(Optional.of(dummyCourse));
-		//		Mockito.doNothing().when(this.inscriptionService).saveInscription(dummyInscription);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.post("courses/{courseId}/inscription/new", 1)
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1)
 			.with(SecurityMockMvcRequestPostProcessors.csrf()))
-		.andExpect(MockMvcResultMatchers.model().attributeHasErrors("owner"))
 		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.model().attributeHasErrors("inscription"))
+		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("inscription", "date"))
+		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("inscription", "isPaid"))
+		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("inscription", "pet"))
 		.andExpect(MockMvcResultMatchers.view().name("inscriptions/editInscription"));
 	}
-
 
 
 
