@@ -63,6 +63,7 @@ public class InscriptionController {
 	public String mostrarInscription(final ModelMap modelMap, @PathVariable("inscriptionId") final int inscriptionId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Optional<Inscription> inscription = null;
+
 		try {
 			inscription = this.inscriptionService.findInscriptionById(inscriptionId);
 			if (!authentication.getName().equals(inscription.get().getOwner().getUser().getUsername())) {
@@ -82,16 +83,19 @@ public class InscriptionController {
 	@GetMapping(path = "courses/{courseId}/inscription/new")
 	public String createInscription(final ModelMap modelMap, @PathVariable("courseId") final int courseId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Course course = this.courseService.findCourseById(courseId).get();
+		Course course = null;
 		Iterable<Inscription> inscriptionsByOwner = null;
 		Iterable<Inscription> inscriptionsByCourse = null;
 		Iterable<Pet> pets = null;
 
 		try {
+			course = this.courseService.findCourseById(courseId).get();
 			inscriptionsByOwner = this.inscriptionService.findInscriptionsByOwner(this.ownerService.findOwnerByUserName(authentication.getName()));
 			inscriptionsByCourse = this.inscriptionService.findInscriptionsByCourse(course);
 			pets = this.petService.findPets(authentication.getName());
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
+			return "exception";
 		}
 
 		// --------- Validación de reglas de negocio ---------
