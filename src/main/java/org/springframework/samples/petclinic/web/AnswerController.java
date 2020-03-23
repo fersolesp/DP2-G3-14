@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -44,9 +45,15 @@ public class AnswerController {
 	@GetMapping(path = "/answer/new")
 	public String createAnswer(final Announcement announcement, final ModelMap modelMap) {
 		String view = "answers/editAnswer";
-		Answer answer = new Answer();
-		answer.setAnnouncement(announcement);
-		modelMap.addAttribute("answer", answer);
+		try {
+			Answer answer = new Answer();
+			answer.setAnnouncement(announcement);
+			modelMap.addAttribute("answer", answer);
+		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
+			return "/exception";
+		}
+
 		return view;
 	}
 
@@ -59,8 +66,13 @@ public class AnswerController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			answer.setAnnouncement(announcement);
 			answer.setOwner(this.ownerService.findOwnerByUserName(auth.getName()));
-			this.answerService.saveAnswer(answer);
-			model.addAttribute("message", "Answer successfully saved");
+			try {
+				this.answerService.saveAnswer(answer);
+				model.addAttribute("message", "Answer successfully saved");
+			} catch (Exception e) {
+				model.addAttribute("message", e.getMessage());
+				return "exception";
+			}
 			return "redirect:/announcements/{announcementId}";
 		}
 	}
@@ -68,17 +80,22 @@ public class AnswerController {
 	@GetMapping("/answers")
 	public String mostrarAnwers(final ModelMap modelMap, @PathVariable("announcementId") final Integer announcementId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		if (!authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
-			modelMap.addAttribute("message", "You cannot access another user's announcement answers");
-			return "exception";
-		} else {
-			String vista = "answers/answersList";
-			Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
-			Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
-			modelMap.addAttribute("answers", answers);
-			return vista;
+		String vista = "answers/answersList";
+		boolean isempty = false;
+		try {
+			if (!authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
+				modelMap.addAttribute("message", "You cannot access another user's announcement answers");
+				return "exception";
+			} else {
+				Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+				Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+				modelMap.addAttribute("answers", answers);
+			}
+		} catch (NoSuchElementException e) {
+			isempty = true;
+			modelMap.addAttribute("isempty", isempty);
 		}
+		return vista;
 
 	}
 }

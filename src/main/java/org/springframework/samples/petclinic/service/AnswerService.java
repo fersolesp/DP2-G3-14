@@ -2,7 +2,8 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
-import java.util.Optional;
+import java.util.NoSuchElementException;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,17 +26,24 @@ public class AnswerService {
 
 	@Transactional
 	public Iterable<Answer> findAll() {
-		return this.answerRepo.findAll();
+		Iterable<Answer> answers = this.answerRepo.findAll();
+		if (StreamSupport.stream(answers.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return answers;
 	}
 
-	@Transactional(readOnly = true)
-	public Optional<Answer> findAnswerById(final int answerId) {
-		return this.answerRepo.findById(answerId);
+	public Answer findAnswerById(final int answerId) throws NoSuchElementException {
+		return this.answerRepo.findById(answerId).get();
 	}
 
 	@Transactional
-	public Collection<Answer> findAnswerByAnnouncement(final Announcement announcement) {
-		return this.answerRepo.findAnswersByAnnouncement(announcement);
+	public Iterable<Answer> findAnswerByAnnouncement(final Announcement announcement) {
+		Iterable<Answer> answers = this.answerRepo.findAnswersByAnnouncement(announcement);
+		if (StreamSupport.stream(answers.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return answers;
 	}
 
 	public void saveAnswer(final Answer answer) throws DataAccessException {
