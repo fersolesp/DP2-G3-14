@@ -18,6 +18,7 @@ public class Hairdresser extends Person {
 	private HairdresserSpecialty	specialties;
 
 	@Column(name = "active")
+	@NotNull
 	private Boolean					active;
 
 }
