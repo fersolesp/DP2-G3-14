@@ -1,8 +1,8 @@
 
 package org.springframework.samples.petclinic.service;
 
-import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,9 @@ public class AnswerService {
 	}
 
 	public Answer findAnswerById(final int answerId) throws NoSuchElementException {
-		return this.answerRepo.findById(answerId).get();
+		Optional<Answer> opt = this.answerRepo.findById(answerId);
+		Answer answer = opt.get();
+		return answer;
 	}
 
 	@Transactional

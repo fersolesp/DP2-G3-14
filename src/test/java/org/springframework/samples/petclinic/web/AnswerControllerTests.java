@@ -159,6 +159,7 @@ class AnswerControllerTests {
 	void shouldNotCreateAnswerWhenAnnouncementNotFound() throws Exception {
 
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenThrow(NoSuchElementException.class);
+		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
 			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
@@ -175,9 +176,10 @@ class AnswerControllerTests {
 
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
 		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
-		Mockito.when(this.answerService.findAnswerByAnnouncement(dummyAnnouncement)).thenThrow(NoSuchElementException.class);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "There are errors validating data"))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
+				.attribute("message", "There are errors validating data"))
 			.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
@@ -191,7 +193,7 @@ class AnswerControllerTests {
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("redirect:/announcements/{announcementId}"));
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("answers/editAnswer"));
 	}
 
 }

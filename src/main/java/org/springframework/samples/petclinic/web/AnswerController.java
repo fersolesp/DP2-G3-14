@@ -43,9 +43,11 @@ public class AnswerController {
 	}
 
 	@GetMapping(path = "/answer/new")
-	public String createAnswer(final Announcement announcement, final ModelMap modelMap) {
+	public String createAnswer(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
 		String view = "answers/editAnswer";
 		try {
+			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
+			Announcement announcement = opt.get();
 			Answer answer = new Answer();
 			answer.setAnnouncement(announcement);
 			modelMap.addAttribute("answer", answer);
