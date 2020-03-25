@@ -112,7 +112,7 @@ public class AnnouncementController {
 
 		if (userNameAnnouncement == userName) {
 			if (announcement.isPresent()) {
-				Collection<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+				Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
 				answers.forEach(a -> this.answerService.delete(a));
 				this.announcementService.deleteAnnouncement(announcement.get());
 				modelMap.addAttribute("message", "Announcement successfully deleted");
