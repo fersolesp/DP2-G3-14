@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
+
 <petclinic:layout pageName="owners">
     <jsp:attribute name="customScript">
         <script>
@@ -31,6 +32,22 @@
                 <div class="control-group">
                     <petclinic:selectField name="type" label="Type " names="${types}" size="5"/>
                 </div>
+                  <div class="col-sm-10">
+                 <label class="col-sm-2 control-label">Dangerous Animal?</label>
+                  <form:select class="form-control" path="dangerous">
+                  	<form:option value="true">Yes</form:option>
+                  	<form:option value="false" selected>No</form:option>
+                  </form:select>
+                 </div>
+                 
+                   <div class="col-sm-10">
+                 <label class="col-sm-2 control-label">Is Vaccinated?</label>
+                  <form:select class="form-control" path="isVaccinated">
+                  	<form:option value="True">Yes</form:option>
+                  	<form:option value="False" selected>No</form:option>
+                  </form:select>
+                 </div>
+                 
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
