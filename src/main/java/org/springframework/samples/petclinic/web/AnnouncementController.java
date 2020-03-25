@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
+import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
@@ -33,13 +34,13 @@ public class AnnouncementController {
 	private AnnouncementService	announcementService;
 
 	@Autowired
-	private AnswerService		answerService;
-
-	@Autowired
 	private PetService			petService;
 
 	@Autowired
 	private OwnerService		ownerService;
+
+	@Autowired
+	private AnswerService		answerService;
 
 
 	@GetMapping()
@@ -59,6 +60,10 @@ public class AnnouncementController {
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 		modelMap.addAttribute("announcement", announcement);
 		modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
+		if (authentication.getName() != "anonymousUser") {
+			Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
+			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
+		}
 
 		modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
 
@@ -99,11 +104,22 @@ public class AnnouncementController {
 	public String deleteAnnouncement(@PathVariable("announcementId") final Integer announcementId, final ModelMap modelMap) {
 		String view = "redirect:/announcements";
 		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
-		if (announcement.isPresent()) {
-			this.announcementService.deleteAnnouncement(announcement.get());
-			modelMap.addAttribute("message", "Announcement successfully deleted");
-		} else {
-			modelMap.addAttribute("message", "Announcement not found");
+		Owner owner = announcement.get().getOwner();
+		String userNameAnnouncement = owner.getUser().getUsername();
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+
+		if (userNameAnnouncement == userName) {
+			if (announcement.isPresent()) {
+				Collection<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+				answers.forEach(a -> this.answerService.delete(a));
+				this.announcementService.deleteAnnouncement(announcement.get());
+				modelMap.addAttribute("message", "Announcement successfully deleted");
+			} else {
+				modelMap.addAttribute("message", "You can't delete another owner's announcement");
+				view = "/exception";
+			}
 		}
 		return view;
 	}
@@ -111,12 +127,21 @@ public class AnnouncementController {
 	@GetMapping(path = "/update/{announcementId}")
 	public String iniactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
 		String vista = "announcements/editAnnouncement";
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
-		Owner owner = announcement.getOwner();
-		org.springframework.samples.petclinic.model.User user = owner.getUser();
-		String userName = user.getUsername();
+		Owner ownerAnnouncement = announcement.getOwner();
+		org.springframework.samples.petclinic.model.User user = ownerAnnouncement.getUser();
+		String userNameAnnouncement = user.getUsername();
+
+		if (userName != userNameAnnouncement) {
+			modelMap.addAttribute("message", "You can't another owner's announcement");
+			vista = "/exception";
+		}
 		modelMap.addAttribute("announcement", announcement);
-		modelMap.addAttribute("user", userName);
+		modelMap.addAttribute("user", userNameAnnouncement);
 		return vista;
 	}
 

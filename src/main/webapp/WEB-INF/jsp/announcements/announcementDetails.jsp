@@ -56,14 +56,17 @@
 	
 			    </c:if>
 		
-		<c:if test="${!ismine}">
+		<c:if test="${!ismine && positiveHistory && announcement.canBeAdopted}">
 		
 				<spring:url value="/announcements/{announcementId}/answer/new" var="newAnswerUrl">
 			    	<spring:param name="announcementId" value="${announcement.id}"/>
 			    </spring:url> 
 			    <a href="${fn:escapeXml(newAnswerUrl)}" class="btn btn-default">Answer to the announcement</a>
-	    
 	   	</c:if>
+	   	<c:if test="${!positiveHistory}">
+	   		<h>You can't answer an announcement if you don't have a possitive history</h>
+	   	</c:if>
+	   	
 	      
     </c:if>
     

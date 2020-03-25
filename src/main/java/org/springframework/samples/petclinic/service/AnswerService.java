@@ -52,4 +52,8 @@ public class AnswerService {
 		this.answerRepo.save(answer);
 	}
 
+	public void delete(final Answer a) {
+		this.answerRepo.delete(a);
+	}
+
 }
