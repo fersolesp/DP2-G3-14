@@ -64,22 +64,19 @@ public class AnnouncementController {
 
 	@GetMapping("/{announcementId}")
 	public String mostrarAnnouncement(final ModelMap modelMap, @PathVariable("announcementId") final int announcementId) {
-
-		Announcement announcement = null;
+		String vista = "announcements/announcementDetails";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication.getName() != "anonymousUser") {
-			Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
+		Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
+		if (owner.getUser().getUsername() != "anonymousUser") {
 			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
 		}
 		try {
-			announcement = this.announcementService.findAnnouncementById(announcementId).get();
-			String vista = "announcements/announcementDetails";
-			modelMap.addAttribute("announcement", announcement);
+			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
+			Announcement announcement = opt.get();
 			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
-
 			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
+			modelMap.addAttribute("announcement", announcement);
 			return vista;
-
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "Announcement not found");
 			return "exception";
@@ -88,15 +85,10 @@ public class AnnouncementController {
 
 	@GetMapping(path = "new")
 	public String createAnnouncement(final ModelMap modelMap) {
-		try {
-			String view = "announcements/editAnnouncement";
-			Announcement announcement = new Announcement();
-			modelMap.addAttribute("announcement", announcement);
-			return view;
-		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "There are errors validating data");
-			return "exception";
-		}
+		String view = "announcements/editAnnouncement";
+		Announcement announcement = new Announcement();
+		modelMap.addAttribute("announcement", announcement);
+		return view;
 	}
 
 	@PostMapping(path = "new")
@@ -132,6 +124,8 @@ public class AnnouncementController {
 		try {
 			announcement = this.announcementService.findAnnouncementById(announcementId);
 			if (announcement.isPresent() && authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
+				Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+				answers.forEach(a -> this.answerService.delete(a));
 				this.announcementService.deleteAnnouncement(announcement.get());
 				modelMap.addAttribute("message", "Announcement successfully deleted");
 			} else {
@@ -142,23 +136,9 @@ public class AnnouncementController {
 			modelMap.addAttribute("message", "Announcement not found");
 			return "exception";
 		}
-		Owner owner = announcement.get().getOwner();
-		String userNameAnnouncement = owner.getUser().getUsername();
-		String userName = authentication.getName();
 
-		if (userNameAnnouncement == userName) {
-			if (announcement.isPresent()) {
-				Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
-				answers.forEach(a -> this.answerService.delete(a));
-				this.announcementService.deleteAnnouncement(announcement.get());
-				modelMap.addAttribute("message", "Announcement successfully deleted");
-			} else {
-				modelMap.addAttribute("message", "You can't delete another owner's announcement");
-				view = "/exception";
-			}
-
-		}
 		return view;
+
 	}
 
 	@GetMapping(path = "/update/{announcementId}")
@@ -175,14 +155,14 @@ public class AnnouncementController {
 			return "exception";
 		}
 
-		String userName = authentication.getName();
+		Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 		Owner ownerAnnouncement = announcement.getOwner();
 		org.springframework.samples.petclinic.model.User user = ownerAnnouncement.getUser();
 		String userNameAnnouncement = user.getUsername();
 
-		if (userName != userNameAnnouncement) {
-			modelMap.addAttribute("message", "You can't another owner's announcement");
+		if (owner.getUser().getUsername() != userNameAnnouncement) {
+			modelMap.addAttribute("message", "You can't update another owner's announcement");
 			vista = "/exception";
 		}
 		modelMap.addAttribute("user", userNameAnnouncement);
@@ -191,14 +171,12 @@ public class AnnouncementController {
 	}
 
 	@PostMapping(path = "/update/{announcementId}")
-	public String postactualizarAnnouncements(@Valid final Announcement announcement, @PathVariable("announcementId") final int announcementId, final BindingResult results, final ModelMap modelMap) {
-
+	public String postactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final BindingResult results, final ModelMap modelMap) {
 		String vista = "announcements/announcementDetails";
 		try {
-			if (results.hasErrors()) {
-				modelMap.addAttribute("announcement", announcement);
-				vista = "announcements/editAnnouncement";
-			} else {
+			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
+			Announcement announcement = opt.get();
+			if (!results.hasErrors()) {
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 				String userName = authentication.getName();
 				Owner owner = this.ownerService.findOwnerByUserName(userName);
@@ -206,6 +184,9 @@ public class AnnouncementController {
 				announcement.setId(announcementId);
 				this.announcementService.saveAnnouncement(announcement);
 				modelMap.addAttribute("message", "Announcement successfully updated");
+			} else {
+				modelMap.addAttribute("announcement", announcement);
+				vista = "announcements/editAnnouncement";
 			}
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "Announcement not found");
