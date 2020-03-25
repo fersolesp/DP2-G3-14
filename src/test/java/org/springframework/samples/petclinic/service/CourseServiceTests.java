@@ -25,7 +25,7 @@ public class CourseServiceTests {
 	@Test
 	void shouldFindCourses() {
 		Iterable<Course> courses = this.courseService.findAll();
-		org.assertj.core.api.Assertions.assertThat(courses).hasSize(3);
+		org.assertj.core.api.Assertions.assertThat(courses).hasSize(4);
 	}
 
 	@Test

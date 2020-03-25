@@ -152,7 +152,7 @@ public class InscriptionController {
 			try {
 				this.inscriptionService.saveInscription(inscription);
 			} catch (Exception e) {
-				modelMap.addAttribute("message", e.getMessage());
+				modelMap.addAttribute("message", "Error: " + e.getMessage());
 				return "exception";
 			}
 			modelMap.addAttribute("message", "Inscription successfully saved!");

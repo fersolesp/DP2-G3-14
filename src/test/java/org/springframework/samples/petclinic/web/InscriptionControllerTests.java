@@ -322,6 +322,30 @@ class InscriptionControllerTests {
 
 	@WithMockUser(value = "george")
 	@Test
+	void shouldNotSaveInscriptionWhenServiceErrors() throws Exception {
+		Inscription dummyInscription = this.createDummyInscription("inscription");
+		dummyInscription.setPet(this.lillie);
+		dummyInscription.setDate(LocalDate.of(2015, 2, 12));
+		dummyInscription.setIsPaid(false);
+
+		Course dummyCourse = this.createDummyCourse("dummycourse");
+		dummyCourse.setCapacity(10);
+
+		Mockito.when(this.courseService.findCourseById(1)).thenReturn(Optional.of(dummyCourse));
+		Mockito.doThrow(Exception.class).when(this.inscriptionService).saveInscription(ArgumentMatchers.any(Inscription.class));
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1)
+			.with(SecurityMockMvcRequestPostProcessors.csrf())
+			.param("date", "2015/02/12")
+			.param("isPaid", "false")
+			.param("pet.id", this.lillie.getId().toString()))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.model().attributeExists("message"))
+		.andExpect(MockMvcResultMatchers.view().name("exception"));
+	}
+
+	@WithMockUser(value = "george")
+	@Test
 	void shouldNotSaveInscriptionWithFormErrors() throws Exception {
 
 		Course dummyCourse = this.createDummyCourse("dummycourse");

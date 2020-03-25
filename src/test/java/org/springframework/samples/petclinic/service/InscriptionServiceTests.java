@@ -226,4 +226,21 @@ public class InscriptionServiceTests {
 		Assertions.assertThrows(InvalidDataAccessApiUsageException.class, ()->{this.inscriptionsService.deleteInscription(null);});
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+		"1", "2", "3"
+	})
+	void shouldFindInscriptionsGivingCourse(final Integer id) {
+		Course course = this.courseService.findCourseById(id).get();
+		Iterable<Inscription> inscriptions = this.inscriptionsService.findInscriptionsByCourse(course);
+		org.assertj.core.api.Assertions.assertThat(inscriptions).hasSize(1);
+	}
+
+	@Test
+	void shouldNotFindInscriptionsGivingCourseWithoutThem() {
+		Course course = this.courseService.findCourseById(4).get();
+		Assertions.assertThrows(NoSuchElementException.class, ()->{this.inscriptionsService.findInscriptionsByCourse(course);});
+
+	}
+
 }
