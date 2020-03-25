@@ -57,7 +57,7 @@ public class AnswerController {
 			return "/exception";
 		}
 
-		if (!announcement.isCanBeAdopted()) {
+		if (!announcement.getCanBeAdopted()) {
 			view = "/exception";
 			modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
 		}
