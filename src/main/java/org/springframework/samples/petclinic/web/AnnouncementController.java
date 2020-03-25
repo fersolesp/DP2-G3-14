@@ -72,17 +72,22 @@ public class AnnouncementController {
 			return vista;
 
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("isempty", "Announcement not found");
+			modelMap.addAttribute("message", "Announcement not found");
 			return "exception";
 		}
 	}
 
 	@GetMapping(path = "new")
 	public String createAnnouncement(final ModelMap modelMap) {
-		String view = "announcements/editAnnouncement";
-		Announcement announcement = new Announcement();
-		modelMap.addAttribute("announcement", announcement);
-		return view;
+		try {
+			String view = "announcements/editAnnouncement";
+			Announcement announcement = new Announcement();
+			modelMap.addAttribute("announcement", announcement);
+			return view;
+		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
+			return "exception";
+		}
 	}
 
 	@PostMapping(path = "new")
@@ -131,14 +136,19 @@ public class AnnouncementController {
 
 	@GetMapping(path = "/update/{announcementId}")
 	public String iniactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
-		String vista = "announcements/editAnnouncement";
-		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
-		Owner owner = announcement.getOwner();
-		org.springframework.samples.petclinic.model.User user = owner.getUser();
-		String userName = user.getUsername();
-		modelMap.addAttribute("announcement", announcement);
-		modelMap.addAttribute("user", userName);
-		return vista;
+		try {
+			String vista = "announcements/editAnnouncement";
+			Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
+			Owner owner = announcement.getOwner();
+			org.springframework.samples.petclinic.model.User user = owner.getUser();
+			String userName = user.getUsername();
+			modelMap.addAttribute("announcement", announcement);
+			modelMap.addAttribute("user", userName);
+			return vista;
+		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
+			return "exception";
+		}
 	}
 
 	@PostMapping(path = "/update/{announcementId}")
