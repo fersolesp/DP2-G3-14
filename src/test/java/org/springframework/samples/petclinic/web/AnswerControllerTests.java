@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -26,6 +27,7 @@ import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -78,6 +80,9 @@ class AnswerControllerTests {
 		User georgeuser = new User();
 		georgeuser.setUsername("george");
 		this.george.setUser(georgeuser);
+		this.george.setDangerousAnimal(true);
+		this.george.setLivesInCity(true);
+		this.george.setPositiveHistory(true);
 	}
 
 	// mostrarAnswers
@@ -142,6 +147,7 @@ class AnswerControllerTests {
 	void shouldCreateAnswer() throws Exception {
 
 		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");
+		dummyAnnouncement.setCanBeAdopted(true);
 
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
 		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
@@ -162,9 +168,7 @@ class AnswerControllerTests {
 		//Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
-				.attribute("message", "There are errors validating data"))
-			.andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(value = "george")
@@ -178,22 +182,65 @@ class AnswerControllerTests {
 		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
-				.attribute("message", "There are errors validating data"))
-			.andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("/exception"));
+	}
+
+	@WithMockUser(value = "george")
+	@Test
+	void shouldNotCreateAnswerWhenAnnouncementPetCanNotBeAdopted() throws Exception {
+
+		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");
+		dummyAnnouncement.setOwner(this.george);
+		dummyAnnouncement.setCanBeAdopted(false);
+
+		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
+		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "You can't adopt this pet because it can't be adopted"))//
+			.andExpect(MockMvcResultMatchers.view().name("/exception"));
+	}
+
+	@WithMockUser(value = "owner")
+	@Test
+	void shouldNotCreateAnswerWhenOwnerHasBadHistory() throws Exception {
+
+		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");
+		Owner owner = this.george;
+		owner.setPositiveHistory(false);
+		dummyAnnouncement.setOwner(this.george);
+		dummyAnnouncement.setCanBeAdopted(false);
+
+		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
+		Mockito.when(this.ownerService.findOwnerByUserName("owner")).thenReturn(owner);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "You can't adopt a pet if you have a bad history"))//
+			.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
 	// Post createInscription
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(value = "george")
 	@Test
 	void shouldSaveAnswer() throws Exception {
 		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");
+		dummyAnnouncement.setCanBeAdopted(true);
+		Answer answer = this.createDummyAnswer("Answer1");
+		answer.setDate(LocalDate.of(2018, 10, 01));
+		answer.setDescription("This is a description");
 
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
+		Mockito.when(this.ownerService.findOwnerByUserName("geoge")).thenReturn(this.george);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("answers/editAnswer"));
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/{announcementId}/answer/new", 1)//
+			.with(SecurityMockMvcRequestPostProcessors.csrf())//
+			.param("description", "This is a description")//
+			.param("date", "2018/10/01"))//
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection())//
+			.andExpect(MockMvcResultMatchers.view()//
+				.name("redirect:/announcements/{announcementId}"));
+
 	}
 
 }
