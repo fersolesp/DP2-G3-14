@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -83,10 +84,12 @@ class InscriptionControllerTests {
 		User georgeuser = new User();
 		georgeuser.setUsername("george");
 		this.george.setUser(georgeuser);
+		this.george.setId(1);
 
 		this.lillie = new Pet();
 		this.lillie.setName("Lillie");
 		this.lillie.setOwner(this.george);
+		this.lillie.setId(1);
 
 	}
 
@@ -294,29 +297,28 @@ class InscriptionControllerTests {
 
 	// Post createInscription
 
-	//	@WithMockUser(value = "george")
-	//	@Test
-	//	void shouldSaveInscription() throws Exception {
-	//		Inscription dummyInscription = this.createDummyInscription("inscription");
-	//		dummyInscription.setPet(this.lillie);
-	//		dummyInscription.setDate(LocalDate.of(2015, 2, 12));
-	//		dummyInscription.setIsPaid(false);
-	//
-	//		Course dummyCourse = this.createDummyCourse("dummycourse");
-	//		dummyCourse.setCapacity(10);
-	//
-	//		Mockito.when(this.courseService.findCourseById(1)).thenReturn(Optional.of(dummyCourse));
-	//		Mockito.doNothing().when(this.inscriptionService).saveInscription(ArgumentMatchers.any(Inscription.class));
-	//
-	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1)
-	//			.with(SecurityMockMvcRequestPostProcessors.csrf())
-	//			.param("date", "2015/02/12")
-	//			.param("isPaid", "false")
-	//			.flashAttr("inscription", dummyInscription))
-	//		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-	//		.andExpect(MockMvcResultMatchers.model().attributeHasNoErrors("inscription"))
-	//		.andExpect(MockMvcResultMatchers.view().name("inscriptions"));
-	//	}
+	@WithMockUser(value = "george")
+	@Test
+	void shouldSaveInscription() throws Exception {
+		Inscription dummyInscription = this.createDummyInscription("inscription");
+		dummyInscription.setPet(this.lillie);
+		dummyInscription.setDate(LocalDate.of(2015, 2, 12));
+		dummyInscription.setIsPaid(false);
+
+		Course dummyCourse = this.createDummyCourse("dummycourse");
+		dummyCourse.setCapacity(10);
+
+		Mockito.when(this.courseService.findCourseById(1)).thenReturn(Optional.of(dummyCourse));
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1)
+			.with(SecurityMockMvcRequestPostProcessors.csrf())
+			.param("date", "2015/02/12")
+			.param("isPaid", "false")
+			.param("pet.id", this.lillie.getId().toString()))
+
+		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+		.andExpect(MockMvcResultMatchers.view().name("redirect:/inscriptions"));
+	}
 
 	@WithMockUser(value = "george")
 	@Test
