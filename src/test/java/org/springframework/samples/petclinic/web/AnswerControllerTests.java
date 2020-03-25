@@ -159,7 +159,7 @@ class AnswerControllerTests {
 	void shouldNotCreateAnswerWhenAnnouncementNotFound() throws Exception {
 
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenThrow(NoSuchElementException.class);
-		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
+		//Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
 			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
