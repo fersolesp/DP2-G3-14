@@ -28,15 +28,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/announcements/{announcementId}")
 public class AnswerController {
 
-	@Autowired
 	private AnswerService		answerService;
 
-	@Autowired
 	private AnnouncementService	announcementService;
 
-	@Autowired
 	private OwnerService		ownerService;
 
+
+	@Autowired
+	private AnswerController(final AnswerService answerService, final AnnouncementService announcementService, final OwnerService ownerService) {
+		this.announcementService = announcementService;
+		this.answerService = answerService;
+		this.ownerService = ownerService;
+	}
 
 	@ModelAttribute("announcement")
 	public Announcement findAnnouncement(@PathVariable("announcementId") final int announcementId) {
@@ -46,30 +50,33 @@ public class AnswerController {
 	@GetMapping(path = "/answer/new")
 	public String createAnswer(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
 		String view = "answers/editAnswer";
-		Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
-		Announcement announcement = opt.get();
 		try {
+			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
+			Announcement announcement = opt.get();
+
 			Answer answer = new Answer();
 			answer.setAnnouncement(announcement);
 			modelMap.addAttribute("answer", answer);
+
+			if (!announcement.isCanBeAdopted()) {
+				modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
+				view = "/exception";
+			}
+
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			Owner owner = this.ownerService.findOwnerByUserName(auth.getName());
+			if (!owner.getPositiveHistory()) {
+				modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
+				view = "/exception";
+			}
+
+			return view;
+
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "There are errors validating data");
 			return "/exception";
 		}
 
-		if (!announcement.isCanBeAdopted()) {
-			view = "/exception";
-			modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
-		}
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Owner owner = this.ownerService.findOwnerByUserName(auth.getName());
-		if (!owner.getPositiveHistory()) {
-			view = "/exception";
-			modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
-		}
-
-		return view;
 	}
 
 	@PostMapping(value = "/answer/new")
