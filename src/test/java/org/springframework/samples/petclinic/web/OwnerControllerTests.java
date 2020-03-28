@@ -171,9 +171,15 @@ class OwnerControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateOwnerFormHasErrors() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/edit", OwnerControllerTests.TEST_OWNER_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("firstName", "Joe").param("lastName", "Bloggs").param("city", "London"))
-		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeHasErrors("owner")).andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("owner", "address"))
-		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("owner", "telephone")).andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"));
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/edit", OwnerControllerTests.TEST_OWNER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
+			.param("firstName", "Joe")
+			.param("lastName", "Bloggs")
+			.param("city", "London"))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.model().attributeHasErrors("owner"))
+		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("owner", "address"))
+		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("owner", "telephone"))
+		.andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"));
 	}
 
 	@WithMockUser(value = "george")

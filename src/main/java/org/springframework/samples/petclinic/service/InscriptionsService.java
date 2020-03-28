@@ -54,7 +54,7 @@ public class InscriptionsService {
 		}
 
 		//No puede apuntarse a una mascota peligrosa a un curso que no admita este tipo de mascotas
-		if (inscription.getPet().getIsDangerous() == true && inscription.getCourse().getDangerousAllowed() == false) {
+		if (inscription.getPet().getDangerous() == true && inscription.getCourse().getDangerousAllowed() == false) {
 			throw new Exception("You can not sign up a dangerous pet in a not-dangerous pet course");
 		}
 
