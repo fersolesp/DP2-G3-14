@@ -30,7 +30,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -146,13 +145,13 @@ public class OwnerController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@GetMapping("/owners/{ownerId}")
-	public ModelAndView showOwner(@PathVariable("ownerId") final int ownerId, final ModelMap modelMap) {
+	public ModelAndView showOwner(@PathVariable("ownerId") final int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		Owner owner = this.ownerService.findOwnerById(ownerId);
 		mav.addObject(owner);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.getName() == owner.getUser().getUsername()) {
-			modelMap.addAttribute("isMe", true);
+			mav.addObject("isMe", true);
 		}
 		return mav;
 	}
