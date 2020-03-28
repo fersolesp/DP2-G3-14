@@ -186,6 +186,10 @@ public class AnnouncementController {
 			this.announcementService.saveAnnouncement(announcement);
 			modelMap.addAttribute("message", "Announcement successfully updated");
 
+			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
+			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
+			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
+
 		} else {
 			announcement.setOwner(owner);
 			announcement.setId(announcementId);
