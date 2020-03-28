@@ -13,6 +13,4 @@
     
     <p>${message}</p>
 
-
-
 </petclinic:layout>

@@ -6,17 +6,16 @@
 
 <petclinic:layout pageName="owners">
 
-    <h2>Announcement Information</h2>
-
+    <h2>Announcement Information </h2>
 
     <table class="table table-striped">
     	<tr>
             <th>Title</th>
             <td><c:out value="${announcement.name}"/></td>
         </tr>
-        <tr>
+       <tr>
             <th>Owner</th>
-            <td><c:out value="${announcement.owner}"/></td>
+            <td><c:out value="${announcement.owner.firstName} ${announcement.owner.lastName}"/></td>
         </tr>
         <tr>
             <th>Pet name</th>
@@ -36,9 +35,39 @@
         </tr>
     </table>
     
-    <spring:url value="/announcements/delete/{announcementId}" var="announcementDeleteUrl">
-    	<spring:param name="announcementId" value="${announcement.id}"/>
-    </spring:url> 
-    <a href="${fn:escapeXml(announcementDeleteUrl)}">Delete Announcement</a> 
-
+    <c:if test="${!isanonymoususer}">
+    
+   	   <c:if test="${ismine}">
+    	
+			     <spring:url value="/announcements/update/{announcementId}" var="announcementUpdateUrl">
+			    	<spring:param name="announcementId" value="${announcement.id}"/>
+			    </spring:url> 
+			    <a href="${fn:escapeXml(announcementUpdateUrl)}" class="btn btn-default">Update Announcement</a> 
+			    
+			     <spring:url value="/announcements/delete/{announcementId}" var="announcementDeleteUrl">
+			    	<spring:param name="announcementId" value="${announcement.id}"/>
+			    </spring:url> 
+			    <a href="${fn:escapeXml(announcementDeleteUrl)}" class="btn btn-default">Delete Announcement</a> 
+	    
+			    <spring:url value="/announcements/{announcementId}/answers" var="announcementsAnswersUrl">
+			    	<spring:param name="announcementId" value="${announcement.id}"/>
+			    </spring:url> 
+			    <a href="${fn:escapeXml(announcementsAnswersUrl)}" class="btn btn-default">Answers</a>
+	
+			    </c:if>
+		
+		<c:if test="${!ismine && positiveHistory && announcement.canBeAdopted}">
+		
+				<spring:url value="/announcements/{announcementId}/answer/new" var="newAnswerUrl">
+			    	<spring:param name="announcementId" value="${announcement.id}"/>
+			    </spring:url> 
+			    <a href="${fn:escapeXml(newAnswerUrl)}" class="btn btn-default">Answer to the announcement</a>
+	   	</c:if>
+	   	<c:if test="${!positiveHistory}">
+	   		<h>You can't answer an announcement if you don't have a possitive history</h>
+	   	</c:if>
+	   	
+	      
+    </c:if>
+    
 </petclinic:layout>

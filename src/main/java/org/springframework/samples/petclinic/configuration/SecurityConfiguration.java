@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -33,10 +35,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll().antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll().antMatchers("/announcements").permitAll()
-			.antMatchers("/announcements/**").permitAll().antMatchers("/appointments/**").hasAnyAuthority("owner").antMatchers("/hairdressers/**").permitAll().antMatchers("/admin/**").hasAnyAuthority("admin").antMatchers("/owners/**").hasAnyAuthority("owner", "admin").antMatchers("/vets/**").authenticated().anyRequest().denyAll().and().formLogin()
-			/* .loginPage("/login") */
-			.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");
+
+		http.authorizeRequests().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll()//
+		.antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll()//
+		.antMatchers("/announcements").permitAll()//
+		.antMatchers("/announcements/new").authenticated()//
+		.antMatchers("/announcements/{\\\\d+}").permitAll()//
+		.antMatchers("/announcements/delete/{\\\\d+}").authenticated()//
+		.antMatchers("/announcements/update/{\\\\d+}").authenticated()//
+  
+    .antMatchers("/appointments/**").hasAnyAuthority("owner")//
+    .antMatchers("/hairdressers/**").permitAll()//
+
+		.antMatchers("/announcements/{\\\\d+}/answers").authenticated()//
+		.antMatchers("/announcements/{\\\\d+}/answer/new").authenticated()//
+		.antMatchers("/admin/**").hasAnyAuthority("admin")//
+		.antMatchers("/courses/**").authenticated()//
+
+		.antMatchers("/owners/**").hasAnyAuthority("owner", "admin")//
+		.antMatchers("/vets/**").authenticated()//
+		.antMatchers("/inscriptions/**").authenticated()//
+
+		.anyRequest().denyAll().and().formLogin()
+
+		/* .loginPage("/login") */
+		.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");
 		// Configuración para que funcione la consola de administración
 		// de la BD H2 (deshabilitar las cabeceras de protección contra
 		// ataques de tipo csrf y habilitar los framesets si su contenido
@@ -48,7 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(this.dataSource).usersByUsernameQuery("select username,password,enabled " + "from users " + "where username = ?")
-			.authoritiesByUsernameQuery("select username, authority " + "from authorities " + "where username = ?").passwordEncoder(this.passwordEncoder());
+		.authoritiesByUsernameQuery("select username, authority " + "from authorities " + "where username = ?").passwordEncoder(this.passwordEncoder());
 	}
 
 	@Bean

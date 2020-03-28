@@ -2,7 +2,9 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AnnouncementService {
 
+	@Autowired
 	private AnnouncementRepository	announcementRepo;
 	private PetRepository			petRepo;
 
@@ -28,20 +31,19 @@ public class AnnouncementService {
 
 	@Transactional
 	public Iterable<Announcement> findAll() {
-		return this.announcementRepo.findAll();
+		Iterable<Announcement> res = this.announcementRepo.findAll();
+		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return res;
 	}
 
-	@Transactional(readOnly = true)
-	public Optional<Announcement> findAnnouncementById(final int announcementId) {
-		return this.announcementRepo.findById(announcementId);
+	public Optional<Announcement> findAnnouncementById(final int announcementId) throws NoSuchElementException {
+		Optional<Announcement> res = this.announcementRepo.findById(announcementId);
+		res.get();
+		return res;
 	}
 
-	//	@Transactional
-	//	public void update(final Announcement announcement, final int announcementId) {
-	//		announcement.getId().
-	//	}
-
-	@Transactional
 	public void saveAnnouncement(final Announcement announcement) throws DataAccessException {
 		this.announcementRepo.save(announcement);
 	}

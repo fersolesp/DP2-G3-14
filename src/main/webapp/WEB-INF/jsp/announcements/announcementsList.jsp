@@ -41,8 +41,11 @@
         </c:forEach>
         </tbody>
     </table>
-    <spring:url value="/announcements/new" var="addUrl">
-
-    </spring:url>
-    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Announcement</a>
+    <c:if test="${!isanonymoususer}">
+    
+	    <spring:url value="/announcements/new" var="addUrl">
+	    </spring:url>
+	    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Announcement</a>
+    
+    </c:if>
 </petclinic:layout>
