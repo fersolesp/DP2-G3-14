@@ -105,7 +105,7 @@ class PetServiceTests {
 		pet.setType(EntityUtils.getById(types, PetType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		pet.setDangerous(false);
-		pet.setisVaccinated(true);
+		pet.setIsVaccinated(true);
 		owner6.addPet(pet);
 		org.assertj.core.api.Assertions.assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 
@@ -132,7 +132,7 @@ class PetServiceTests {
 		pet.setType(EntityUtils.getById(types, PetType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		pet.setDangerous(false);
-		pet.setisVaccinated(true);
+		pet.setIsVaccinated(true);
 		owner6.addPet(pet);
 		try {
 			this.petService.savePet(pet);
@@ -175,7 +175,7 @@ class PetServiceTests {
 		pet.setType(EntityUtils.getById(types, PetType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		pet.setDangerous(false);
-		pet.setisVaccinated(true);
+		pet.setIsVaccinated(true);
 		owner6.addPet(pet);
 
 		Pet anotherPet = new Pet();
@@ -183,7 +183,7 @@ class PetServiceTests {
 		anotherPet.setType(EntityUtils.getById(types, PetType.class, 1));
 		anotherPet.setBirthDate(LocalDate.now().minusWeeks(2));
 		anotherPet.setDangerous(false);
-		anotherPet.setisVaccinated(true);
+		anotherPet.setIsVaccinated(true);
 		owner6.addPet(anotherPet);
 
 		try {
