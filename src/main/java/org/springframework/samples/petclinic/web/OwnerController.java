@@ -30,7 +30,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -118,11 +117,11 @@ public class OwnerController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Owner owner = this.ownerService.findOwnerById(ownerId);
 		String res = OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-		if (authentication.getName() != owner.getUser().getUsername()) {
+		if (authentication.getName().equals(owner.getUser().getUsername())) {
+			model.addAttribute("owner", owner);
+		} else {
 			model.addAttribute("message", "You can't update data from other users");
 			res = "/exception";
-		} else {
-			model.addAttribute(owner);
 		}
 		return res;
 	}
@@ -146,13 +145,13 @@ public class OwnerController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@GetMapping("/owners/{ownerId}")
-	public ModelAndView showOwner(@PathVariable("ownerId") final int ownerId, final ModelMap modelMap) {
+	public ModelAndView showOwner(@PathVariable("ownerId") final int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		Owner owner = this.ownerService.findOwnerById(ownerId);
 		mav.addObject(owner);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.getName() == owner.getUser().getUsername()) {
-			modelMap.addAttribute("isMe", true);
+			mav.addObject("isMe", true);
 		}
 		return mav;
 	}

@@ -64,25 +64,26 @@ public class AnnouncementController {
 
 	@GetMapping("/{announcementId}")
 	public String mostrarAnnouncement(final ModelMap modelMap, @PathVariable("announcementId") final int announcementId) {
+
+		Announcement announcement = null;
 		String vista = "announcements/announcementDetails";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
-
 		try {
-			Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
-			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
-			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
+			announcement = this.announcementService.findAnnouncementById(announcementId).get();
 			modelMap.addAttribute("announcement", announcement);
+			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
 
-			if (owner.getUser().getUsername() != "anonymousUser") {
-				modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
-			}
-			return vista;
+			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
 
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "Announcement not found");
 			return "exception";
 		}
+		if (authentication.getName() != "anonymousUser") {
+			Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
+			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
+		}
+		return vista;
 	}
 
 	@GetMapping(path = "new")

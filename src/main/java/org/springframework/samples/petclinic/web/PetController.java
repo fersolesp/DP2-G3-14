@@ -108,8 +108,6 @@ public class PetController {
 		} else {
 			String res = "redirect:/owners/{ownerId}";
 			try {
-				owner.addPet(pet);
-				this.petService.savePet(pet);
 				if (!owner.getDangerousAnimal() && pet.getDangerous()) {
 					model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
 					res = "/exception";
@@ -121,7 +119,10 @@ public class PetController {
 				if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() > 5) {
 					model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
 					res = "/exception";
+
 				}
+				owner.addPet(pet);
+				this.petService.savePet(pet);
 			} catch (DuplicatedPetNameException ex) {
 				result.rejectValue("name", "duplicate", "already exists");
 				return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
