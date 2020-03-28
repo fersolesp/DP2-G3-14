@@ -77,6 +77,19 @@ public class AnswerController {
 			return "/exception";
 		}
 
+		if (!announcement.getCanBeAdopted()) {
+			view = "/exception";
+			modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
+		}
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Owner owner = this.ownerService.findOwnerByUserName(auth.getName());
+		if (!owner.getPositiveHistory()) {
+			view = "/exception";
+			modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
+		}
+
+		return view;
 	}
 
 	@PostMapping(value = "/answer/new")

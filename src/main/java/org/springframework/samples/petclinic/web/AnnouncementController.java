@@ -13,6 +13,7 @@ import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AnnouncementService;
+import org.springframework.samples.petclinic.service.AnswerService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.core.Authentication;
@@ -63,39 +64,33 @@ public class AnnouncementController {
 
 	@GetMapping("/{announcementId}")
 	public String mostrarAnnouncement(final ModelMap modelMap, @PathVariable("announcementId") final int announcementId) {
+		String vista = "announcements/announcementDetails";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
 
-		Announcement announcement = null;
 		try {
-			announcement = this.announcementService.findAnnouncementById(announcementId).get();
-			String vista = "announcements/announcementDetails";
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			modelMap.addAttribute("announcement", announcement);
+			Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
-
 			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
+			modelMap.addAttribute("announcement", announcement);
+
+			if (owner.getUser().getUsername() != "anonymousUser") {
+				modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
+			}
 			return vista;
 
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "Announcement not found");
 			return "exception";
 		}
-    if (authentication.getName() != "anonymousUser") {
-			Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
-			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
-		}
 	}
 
 	@GetMapping(path = "new")
 	public String createAnnouncement(final ModelMap modelMap) {
-		try {
-			String view = "announcements/editAnnouncement";
-			Announcement announcement = new Announcement();
-			modelMap.addAttribute("announcement", announcement);
-			return view;
-		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "There are errors validating data");
-			return "exception";
-		}
+		String view = "announcements/editAnnouncement";
+		Announcement announcement = new Announcement();
+		modelMap.addAttribute("announcement", announcement);
+		return view;
 	}
 
 	@PostMapping(path = "new")
@@ -111,8 +106,8 @@ public class AnnouncementController {
 			announcement.setOwner(owner);
 			this.announcementService.saveAnnouncement(announcement);
 			modelMap.addAttribute("message", "Announcement successfully saved!");
+			return view;
 		}
-		return view;
 	}
 
 	@ModelAttribute("types")
@@ -122,14 +117,17 @@ public class AnnouncementController {
 
 	@GetMapping(path = "delete/{announcementId}")
 	public String deleteAnnouncement(@PathVariable("announcementId") final Integer announcementId, final ModelMap modelMap) {
-		
+
 		String view = "redirect:/announcements";
 
 		Optional<Announcement> announcement = null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		try {
 			announcement = this.announcementService.findAnnouncementById(announcementId);
 			if (announcement.isPresent() && authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
+				Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+				answers.forEach(a -> this.answerService.delete(a));
 				this.announcementService.deleteAnnouncement(announcement.get());
 				modelMap.addAttribute("message", "Announcement successfully deleted");
 			} else {
@@ -139,55 +137,36 @@ public class AnnouncementController {
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "Announcement not found");
 			return "exception";
-
-		Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
-		Owner owner = announcement.get().getOwner();
-		String userNameAnnouncement = owner.getUser().getUsername();
-
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String userName = authentication.getName();
-
-		if (userNameAnnouncement == userName) {
-			if (announcement.isPresent()) {
-				Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
-				answers.forEach(a -> this.answerService.delete(a));
-				this.announcementService.deleteAnnouncement(announcement.get());
-				modelMap.addAttribute("message", "Announcement successfully deleted");
-			} else {
-				modelMap.addAttribute("message", "You can't delete another owner's announcement");
-				view = "/exception";
-			}
-
 		}
+
 		return view;
+
 	}
 
 	@GetMapping(path = "/update/{announcementId}")
 	public String iniactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
+		String vista = "announcements/editAnnouncement";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-  	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		try {
-			String vista = "announcements/editAnnouncement";
-			Owner owner = announcement.getOwner();
-			org.springframework.samples.petclinic.model.User user = owner.getUser();
-			String userName = user.getUsername();
+			Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
+			modelMap.addAttribute("announcement", announcement);
+
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "There are errors validating data");
 			return "exception";
 		}
 
-		String userName = authentication.getName();
-
+		Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
 		Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 		Owner ownerAnnouncement = announcement.getOwner();
 		org.springframework.samples.petclinic.model.User user = ownerAnnouncement.getUser();
 		String userNameAnnouncement = user.getUsername();
 
-		if (userName != userNameAnnouncement) {
-			modelMap.addAttribute("message", "You can't another owner's announcement");
+		if (owner.getUser().getUsername() != userNameAnnouncement) {
+			modelMap.addAttribute("message", "You can't update another owner's announcement");
 			vista = "/exception";
 		}
-		modelMap.addAttribute("announcement", announcement);
 		modelMap.addAttribute("user", userNameAnnouncement);
 		return vista;
 
@@ -195,24 +174,21 @@ public class AnnouncementController {
 
 	@PostMapping(path = "/update/{announcementId}")
 	public String postactualizarAnnouncements(@Valid final Announcement announcement, @PathVariable("announcementId") final int announcementId, final BindingResult results, final ModelMap modelMap) {
-
 		String vista = "announcements/announcementDetails";
-		try {
-			if (results.hasErrors()) {
-				modelMap.addAttribute("announcement", announcement);
-				vista = "announcements/editAnnouncement";
-			} else {
-				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-				String userName = authentication.getName();
-				Owner owner = this.ownerService.findOwnerByUserName(userName);
-				announcement.setOwner(owner);
-				announcement.setId(announcementId);
-				this.announcementService.saveAnnouncement(announcement);
-				modelMap.addAttribute("message", "Announcement successfully updated");
-			}
-		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Announcement not found");
-			return "exception";
+
+		if (!results.hasErrors()) {
+
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String userName = authentication.getName();
+			Owner owner = this.ownerService.findOwnerByUserName(userName);
+			announcement.setOwner(owner);
+			announcement.setId(announcementId);
+			this.announcementService.saveAnnouncement(announcement);
+			modelMap.addAttribute("message", "Announcement successfully updated");
+
+		} else {
+			modelMap.addAttribute("announcement", announcement);
+			vista = "announcements/editAnnouncement";
 		}
 		return vista;
 	}
