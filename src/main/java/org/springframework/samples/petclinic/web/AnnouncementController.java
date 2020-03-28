@@ -67,16 +67,18 @@ public class AnnouncementController {
 		String vista = "announcements/announcementDetails";
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
-		if (owner.getUser().getUsername() != "anonymousUser") {
-			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
-		}
+
 		try {
-			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
-			Announcement announcement = opt.get();
+			Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
 			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
 			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
 			modelMap.addAttribute("announcement", announcement);
+
+			if (owner.getUser().getUsername() != "anonymousUser") {
+				modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
+			}
 			return vista;
+
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "Announcement not found");
 			return "exception";
@@ -104,8 +106,8 @@ public class AnnouncementController {
 			announcement.setOwner(owner);
 			this.announcementService.saveAnnouncement(announcement);
 			modelMap.addAttribute("message", "Announcement successfully saved!");
+			return view;
 		}
-		return view;
 	}
 
 	@ModelAttribute("types")
@@ -171,26 +173,22 @@ public class AnnouncementController {
 	}
 
 	@PostMapping(path = "/update/{announcementId}")
-	public String postactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final BindingResult results, final ModelMap modelMap) {
+	public String postactualizarAnnouncements(@Valid final Announcement announcement, @PathVariable("announcementId") final int announcementId, final BindingResult results, final ModelMap modelMap) {
 		String vista = "announcements/announcementDetails";
-		try {
-			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
-			Announcement announcement = opt.get();
-			if (!results.hasErrors()) {
-				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-				String userName = authentication.getName();
-				Owner owner = this.ownerService.findOwnerByUserName(userName);
-				announcement.setOwner(owner);
-				announcement.setId(announcementId);
-				this.announcementService.saveAnnouncement(announcement);
-				modelMap.addAttribute("message", "Announcement successfully updated");
-			} else {
-				modelMap.addAttribute("announcement", announcement);
-				vista = "announcements/editAnnouncement";
-			}
-		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Announcement not found");
-			return "exception";
+
+		if (!results.hasErrors()) {
+
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String userName = authentication.getName();
+			Owner owner = this.ownerService.findOwnerByUserName(userName);
+			announcement.setOwner(owner);
+			announcement.setId(announcementId);
+			this.announcementService.saveAnnouncement(announcement);
+			modelMap.addAttribute("message", "Announcement successfully updated");
+
+		} else {
+			modelMap.addAttribute("announcement", announcement);
+			vista = "announcements/editAnnouncement";
 		}
 		return vista;
 	}
