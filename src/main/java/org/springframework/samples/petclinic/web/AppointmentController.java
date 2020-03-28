@@ -1,6 +1,8 @@
+
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -23,59 +25,92 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
-	
+
 	@Autowired
-	private AppointmentService appointmentService;
+	private AppointmentService	appointmentService;
 	@Autowired
-	private OwnerService ownerService;
-	
+	private OwnerService		ownerService;
+
+
 	@GetMapping()
 	public String mostrarAppointments(final ModelMap modelMap) {
 		String vista = "appointments/appointmentsList";
+		boolean isempty = false;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userName = authentication.getName();
 		Owner owner = this.ownerService.findOwnerByUserName(userName);
-		Collection<Appointment> appointments = this.appointmentService.findAppointmentsByOwner(owner);
-		modelMap.addAttribute("appointments",appointments);
+		try {
+			Collection<Appointment> appointments = this.appointmentService.findAppointmentsByOwner(owner);
+			modelMap.addAttribute("appointments", appointments);
+
+		} catch (NoSuchElementException e) {
+			isempty = true;
+			modelMap.addAttribute("isempty", isempty);
+		}
 		return vista;
 	}
-	
+
 	@GetMapping("/{appointmentId}")
 	public String mostrarAppointment(final ModelMap modelMap, @PathVariable("appointmentId") final int appointmentId) {
-		String vista = "appointments/appointmentDetails";
-		Appointment appointment = this.appointmentService.findAppointmentById(appointmentId).get();
-		modelMap.addAttribute("appointment",appointment);
-		return vista;
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Appointment appointment = null;
+
+		try {
+			appointment = this.appointmentService.findAppointmentById(appointmentId).get();
+			if (!authentication.getName().equals(appointment.getOwner().getUser().getUsername())) {
+				modelMap.addAttribute("message", "You cannot access another user's appointment");
+				return "exception";
+			} else {
+				String vista = "appointments/appointmentDetails";
+				modelMap.addAttribute("appointment", appointment);
+				return vista;
+			}
+		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "Appointment not found");
+			return "exception";
+		}
 	}
-	
+
 	@GetMapping(path = "new")
-	public String createAppointment (@PathVariable("hairdresserId") final Integer hairdresserId, final ModelMap modelMap) {
+	public String createAppointment(@PathVariable("hairdresserId") final Integer hairdresserId, final ModelMap modelMap) {
 		String vista = "appointments/editAppointment";
 		Appointment appointment = new Appointment();
 		modelMap.addAttribute("appointment", appointment);
 		return vista;
 	}
-	
+
 	@PostMapping(path = "save")
-	public String saveAppointment (@Valid final Appointment appointment, final BindingResult result, final ModelMap modelMap) {
+	public String saveAppointment(@Valid final Appointment appointment, final BindingResult result, final ModelMap modelMap) {
 		String vista = "redirect:/appointments";
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			modelMap.addAttribute("appointment", appointment);
 			return "appointments/editAppointment";
-		}else {
+		} else {
 			this.appointmentService.saveAppointment(appointment);
 			modelMap.addAttribute("message", "Appointment successfully saved!");
 		}
 		return vista;
 	}
 
-	
-	@GetMapping(path ="delete/{appointmentId}")
+	@GetMapping(path = "delete/{appointmentId}")
 	public String deleteAppointment(@PathVariable("appointmentId") final Integer appointmentId, final ModelMap modelMap) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String vista = "redirect:/appointments";
-		Optional<Appointment> appointment = this.appointmentService.findAppointmentById(appointmentId);
-		this.appointmentService.deleteAppointment(appointment.get());
-		modelMap.addAttribute("message","Appointment successfully deleted!");
+		Optional<Appointment> appointment = null;
+		try {
+			appointment = this.appointmentService.findAppointmentById(appointmentId);
+			if (!authentication.getName().equals(this.appointmentService.findAppointmentById(appointmentId).get().getOwner().getUser().getUsername())) {
+				modelMap.addAttribute("message", "You cannot delete another user's appointment");
+				return "exception";
+			} else {
+				this.appointmentService.deleteAppointment(appointment.get());
+				modelMap.addAttribute("message", "Appointment successfully deleted");
+			}
+		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "Appointment not found");
+			return "exception";
+		}
 		return vista;
 	}
 

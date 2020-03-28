@@ -1,4 +1,7 @@
+
 package org.springframework.samples.petclinic.web;
+
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Hairdresser;
@@ -12,24 +15,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/hairdressers")
 public class HairdresserController {
-	
+
 	@Autowired
 	private HairdresserService hairdresserService;
-	
+
+
 	@GetMapping()
 	public String mostrarHairdressers(final ModelMap modelMap) {
 		String vista = "hairdressers/hairdressersList";
-		Iterable<Hairdresser> hairdressers = this.hairdresserService.findAll();
-		modelMap.addAttribute("hairdressers",hairdressers);
+		boolean isempty = false;
+
+		try {
+			Iterable<Hairdresser> hairdressers = this.hairdresserService.findAll();
+			modelMap.addAttribute("hairdressers", hairdressers);
+		} catch (NoSuchElementException e) {
+			isempty = true;
+			modelMap.addAttribute("isempty", isempty);
+		}
 		return vista;
 	}
-	
+
 	@GetMapping("/{hairdresserId}")
 	public String mostrarHairdresser(final ModelMap modelMap, @PathVariable("hairdresserId") final int hairdresserId) {
-		String vista = "hairdressers/hairdresserDetails";
-		Hairdresser hairdresser = this.hairdresserService.findHairdresserById(hairdresserId).get();
-		modelMap.addAttribute("hairdresser",hairdresser);
-		return vista;
+		Hairdresser hairdresser = null;
+
+		try {
+			String vista = "hairdressers/hairdresserDetails";
+			hairdresser = this.hairdresserService.findHairdresserById(hairdresserId).get();
+			modelMap.addAttribute("hairdresser", hairdresser);
+			return vista;
+		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "Hairdresser not found");
+			return "exception";
+		}
+
 	}
 
 }

@@ -9,28 +9,36 @@
 
 <petclinic:layout pageName="hairdressers">
     <h2>Hairdressers</h2>
+    
+    <c:choose>
+    	<c:when test="${!isempty}">
 
-    <table id="hairdressersTable" class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Specialty</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${hairdressers}" var="hairdresser">
-            <tr>
-				<td>
-                    <spring:url value="/hairdressers/{hairdresserId}" var="hairdresserUrl">
-                        <spring:param name="hairdresserId" value="${hairdresser.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(hairdresserUrl)}"><c:out value="${hairdresser.firstName} ${hairdresser.lastName}"/></a>
-                </td>
-                <td>
-                    <c:out value="${hairdresser.specialties}"/>
-                </td>            
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    		<table id="hairdressersTable" class="table table-striped">
+        		<thead>
+        		<tr>
+            		<th>Name</th>
+            		<th>Specialty</th>
+        		</tr>
+        		</thead>
+        		<tbody>
+        		<c:forEach items="${hairdressers}" var="hairdresser">
+            		<tr>
+						<td>
+                    		<spring:url value="/hairdressers/{hairdresserId}" var="hairdresserUrl">
+                        		<spring:param name="hairdresserId" value="${hairdresser.id}"/>
+                    		</spring:url>
+                    		<a href="${fn:escapeXml(hairdresserUrl)}"><c:out value="${hairdresser.firstName} ${hairdresser.lastName}"/></a>
+                		</td>
+                		<td>
+                    		<c:out value="${hairdresser.specialties}"/>
+                		</td>            
+            		</tr>
+        		</c:forEach>
+        		</tbody>
+    		</table>
+    	</c:when>
+    	<c:otherwise>
+    		There are not hairdressers yet
+    	</c:otherwise>
+    </c:choose>
 </petclinic:layout>
