@@ -12,7 +12,10 @@
         <div class="col-md-12">
             <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
             <img class="img-responsive" src="${petsImage}"/>
-            <h1><c:out value="${catFact}"></c:out></h1>
+            <div style="border-style: solid; border-width: 3px; border-color: #838789">
+            	<h1 style=" margin-left:10px">Random Cat Fact</h1>
+            	<h2 style=" margin-left:10px"><c:out value="${catFact}"></c:out></h2>
+            </div>
         </div>
     </div>
 </petclinic:layout>
