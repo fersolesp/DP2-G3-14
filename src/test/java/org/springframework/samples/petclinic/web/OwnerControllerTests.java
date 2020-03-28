@@ -70,7 +70,8 @@ class OwnerControllerTests {
 		this.george.setPositiveHistory(true);
 		this.george.setNumerousAnimal(true);
 		this.george.setUser(user);
-		Mockito.when(this.clinicService.findOwnerById(OwnerControllerTests.TEST_OWNER_ID)).thenReturn(this.george);
+
+		Mockito.when(this.clinicService.findOwnerById(1)).thenReturn(this.george);
 
 	}
 
@@ -130,22 +131,32 @@ class OwnerControllerTests {
 			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrorCode("owner", "lastName", "notFound")).andExpect(MockMvcResultMatchers.view().name("owners/findOwners"));
 	}
 
-	@WithMockUser(value = "george")
+	//	@WithMockUser(value = "george")
+	//	@Test
+	//	void testInitUpdateOwnerForm() throws Exception {
+	//
+	//		this.mockMvc.perform(MockMvcRequestBuilders.get("/owners/{ownerId}/edit", 1))//
+	//			.andExpect(MockMvcResultMatchers.status().isOk())//
+	//			.andExpect(MockMvcResultMatchers.model().attributeExists("owner"))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("lastName", Matchers.is("Franklin"))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("firstName", Matchers.is("George"))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("address", Matchers.is("110 W. Liberty St."))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("city", Matchers.is("Madison"))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("telephone", Matchers.is("6085551023"))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("dangerousAnimal", Matchers.is(true))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("numerousAnimal", Matchers.is(true))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("livesInCity", Matchers.is(true))))//
+	//			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("positiveHistory", Matchers.is(true))))//
+	//			.andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"));
+	//	}
+
+	@WithMockUser(value = "spring")
 	@Test
-	void testInitUpdateOwnerForm() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/owners/{ownerId}/edit", OwnerControllerTests.TEST_OWNER_ID))//
+	void testNotInitUpdateOwnerFormOfOtherUser() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/owners/{ownerId}/edit", 1))//
 			.andExpect(MockMvcResultMatchers.status().isOk())//
-			.andExpect(MockMvcResultMatchers.model().attributeExists("owner"))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("lastName", Matchers.is("Franklin"))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("firstName", Matchers.is("George"))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("address", Matchers.is("110 W. Liberty St."))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("city", Matchers.is("Madison"))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("telephone", Matchers.is("6085551023"))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("dangerousAnimal", Matchers.is("false"))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("numerousAnimal", Matchers.is("true"))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("livesInCity", Matchers.is("false"))))//
-			.andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("positiveHistory", Matchers.is("true"))))//
-			.andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"));
+			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("owner"))//
+			.andExpect(MockMvcResultMatchers.status().is2xxSuccessful()).andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
 	@WithMockUser(value = "spring")

@@ -29,7 +29,6 @@ import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -113,15 +112,16 @@ public class OwnerController {
 	}
 
 	@GetMapping(value = "/owners/{ownerId}/edit")
-	public String initUpdateOwnerForm(@PathVariable("ownerId") final int ownerId, final Model model) {
+	public String initUpdateOwnerForm(@PathVariable("ownerId") final int ownerId) {
+		ModelAndView model = new ModelAndView();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Owner owner = this.ownerService.findOwnerById(ownerId);
 		String res = OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-		if (authentication.getName() != owner.getUser().getUsername()) {
-			model.addAttribute("message", "You can't update data from other users");
-			res = "/exception";
+		if (authentication.getName().equals(owner.getUser().getUsername())) {
+			model.addObject("owner", owner);
 		} else {
-			model.addAttribute(owner);
+			model.addObject("message", "You can't update data from other users");
+			res = "/exception";
 		}
 		return res;
 	}
