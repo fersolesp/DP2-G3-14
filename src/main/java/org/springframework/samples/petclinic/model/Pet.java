@@ -31,6 +31,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -62,30 +63,30 @@ public class Pet extends NamedEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit>	visits;
 
-	private Boolean isDangerous;
+	@Column(name = "dangerous")
+	@NotNull
+	private Boolean		dangerous;
 
-	private Boolean isVaccinated;
+	@Column(name = "isVaccinated")
+	@NotNull
+	private Boolean		isVaccinated;
 
-
-
-	public Boolean getIsDangerous() {
-		return this.isDangerous;
+	public Boolean getDangerous() {
+		return this.dangerous;
 	}
-
-
-	public void setIsDangerous(final Boolean isDangerous) {
-		this.isDangerous = isDangerous;
-	}
-
 
 	public Boolean getIsVaccinated() {
 		return this.isVaccinated;
 	}
 
-
 	public void setIsVaccinated(final Boolean isVaccinated) {
-		this.isVaccinated = isVaccinated;
+    this.isVaccinated = isVaccinated;
 	}
+  
+	public void setDangerous(final Boolean dangerous) {
+		this.dangerous = dangerous;
+	}
+		
 
 	public void setBirthDate(final LocalDate birthDate) {
 		this.birthDate = birthDate;

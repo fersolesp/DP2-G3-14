@@ -20,7 +20,7 @@ public class Announcement extends NamedEntity {
 	private String	description;
 
 	@NotNull
-	private boolean	canBeAdopted;
+	private Boolean	canBeAdopted;
 
 	@NotNull
 	@ManyToOne
@@ -28,4 +28,5 @@ public class Announcement extends NamedEntity {
 
 	@ManyToOne
 	private Owner	owner;
+
 }
