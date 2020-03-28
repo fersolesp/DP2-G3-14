@@ -168,7 +168,9 @@ class AnswerControllerTests {
 		//Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.status().isOk())//
+			//.andExpect(MockMvcResultMatchers.model().attributeExists("message"))//
+			.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(value = "george")
@@ -240,6 +242,51 @@ class AnswerControllerTests {
 			.andExpect(MockMvcResultMatchers.status().is3xxRedirection())//
 			.andExpect(MockMvcResultMatchers.view()//
 				.name("redirect:/announcements/{announcementId}"));
+
+	}
+
+	@WithMockUser(value = "george")
+	@Test
+	void shouldNotSaveAnswerWithErrors() throws Exception {
+		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");
+		dummyAnnouncement.setCanBeAdopted(true);
+		Answer answer = this.createDummyAnswer("Answer1");
+		answer.setDate(LocalDate.of(2021, 10, 01));
+		answer.setDescription("This is a description");
+
+		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
+		Mockito.when(this.ownerService.findOwnerByUserName("geoge")).thenReturn(this.george);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/{announcementId}/answer/new", 1)//
+			.with(SecurityMockMvcRequestPostProcessors.csrf())//
+			.param("description", "This is a description")//
+			.param("date", "2021/10/01"))//
+			.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())//
+			.andExpect(MockMvcResultMatchers.model().attributeExists("answer"))//
+			.andExpect(MockMvcResultMatchers.view()//
+				.name("answers/editAnswer"));
+	}
+
+	@WithMockUser(value = "george")
+	@Test
+	void shouldNotSaveAnswerWithIncorrectAnnouncement() throws Exception {
+		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");
+		dummyAnnouncement.setCanBeAdopted(true);
+		Answer answer = this.createDummyAnswer("Answer1");
+		answer.setDate(LocalDate.of(2021, 10, 01));
+		answer.setDescription("This is a description");
+
+		Mockito.when(this.announcementService.findAnnouncementById(1)).thenThrow(NoSuchElementException.class);
+		Mockito.when(this.ownerService.findOwnerByUserName("geoge")).thenReturn(this.george);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/{announcementId}/answer/new", 1)//
+			.with(SecurityMockMvcRequestPostProcessors.csrf())//
+			.param("description", "This is a description")//
+			.param("date", "2018/10/01"))//
+			.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())//
+			//.andExpect(MockMvcResultMatchers.model().attributeExists("message"))//
+			.andExpect(MockMvcResultMatchers.view()//
+				.name("exception"));
 
 	}
 
