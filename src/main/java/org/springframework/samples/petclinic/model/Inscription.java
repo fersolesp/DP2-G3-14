@@ -25,7 +25,7 @@ public class Inscription extends NamedEntity {
 	@NotNull
 	private Boolean		isPaid;
 
-	@ManyToOne
+	@OneToOne
 	private Payment		payment;
 
 	@NotNull

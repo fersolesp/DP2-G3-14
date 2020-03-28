@@ -71,7 +71,6 @@ public class Pet extends NamedEntity {
 	@NotNull
 	private Boolean		isVaccinated;
 
-
 	public Boolean getDangerous() {
 		return this.dangerous;
 	}
@@ -80,13 +79,14 @@ public class Pet extends NamedEntity {
 		return this.isVaccinated;
 	}
 
+	public void setIsVaccinated(final Boolean isVaccinated) {
+    this.isVaccinated = isVaccinated;
+	}
+  
 	public void setDangerous(final Boolean dangerous) {
 		this.dangerous = dangerous;
 	}
-
-	public void setisVaccinated(final Boolean isVaccinated) {
-		this.isVaccinated = isVaccinated;
-	}
+		
 
 	public void setBirthDate(final LocalDate birthDate) {
 		this.birthDate = birthDate;
@@ -108,7 +108,7 @@ public class Pet extends NamedEntity {
 		return this.owner;
 	}
 
-	protected void setOwner(final Owner owner) {
+	public void setOwner(final Owner owner) {
 		this.owner = owner;
 	}
 

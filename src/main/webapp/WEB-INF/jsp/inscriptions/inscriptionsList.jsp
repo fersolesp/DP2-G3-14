@@ -9,6 +9,10 @@
 
 <petclinic:layout pageName="inscriptions">
     <h2>Inscriptions</h2>
+        
+        <c:choose>
+    		<c:when test="${!isempty}">
+       
 
     <table id="inscriptionsTable" class="table table-striped">
         <thead>
@@ -19,6 +23,8 @@
         </tr>
         </thead>
         <tbody>
+        
+        
         <c:forEach items="${inscriptions}" var="inscription">
             <tr>
 				<td>
@@ -35,8 +41,15 @@
                 </td>
             </tr>
         </c:forEach>
+        
+        
         </tbody>
     </table>
 
+            </c:when>    
+    <c:otherwise>
+        You have not inscriptions yet.
+    </c:otherwise>
+</c:choose>
     
 </petclinic:layout>

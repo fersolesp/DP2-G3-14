@@ -16,9 +16,12 @@
 
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import org.springframework.dao.DataAccessException;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.model.Course;
 import org.springframework.samples.petclinic.model.Inscription;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.InscriptionRepository;
@@ -34,5 +37,10 @@ public interface SpringDataInscriptionRepository extends InscriptionRepository, 
 
 	@Override
 	@Query("SELECT inscription FROM Inscription inscription WHERE inscription.owner=: owner")
-	Iterable<Inscription> findInscriptionsByOwner(@Param("owner") Owner owner);
+	Iterable<Inscription> findInscriptionsByOwner(@Param("owner") Owner owner) throws DataAccessException;
+
+	@Override
+	@Query("SELECT inscription FROM Inscription inscription WHERE inscription.course=: course")
+	Iterable<Inscription> findInscriptionsByCourse(@Param("course") Course course) throws DataAccessException;
+
 }

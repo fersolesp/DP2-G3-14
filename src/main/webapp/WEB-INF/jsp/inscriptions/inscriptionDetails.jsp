@@ -26,20 +26,21 @@
             <th>Is paid</th>
             <td><c:out value="${inscription.isPaid}"/></td>
         </tr>
-		<c:if test="${inscription.isPaid==true}">
-		<tr>
-            <th>Payment</th>
-            <td></td>
-        </tr>
-		<tr>
-            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment amount</th>
-            <td><c:out value="${inscription.payment.amount}"/> EUR</td>
-        </tr>
-       	<tr>
-       	   <th>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment date</th>
-       		<td><c:out value="${inscription.payment.date}"/></td>
-       	</tr>
-		</c:if>
+        <c:if test="${inscription.payment!=null}">
+        
+			<tr>
+	            <th>Payment</th>
+	            <td></td>
+	        </tr>
+			<tr>
+	            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment amount</th>
+	            <td><c:out value="${inscription.payment.amount}"/> EUR</td>
+	        </tr>
+	       	<tr>
+	       	   <th>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment date</th>
+	       		<td><c:out value="${inscription.payment.date}"/></td>
+	       	</tr>
+       	</c:if>
     </table>
     
         

@@ -18,7 +18,7 @@
     <jsp:body>
         <h2>Inscriptions</h2>
 
-        <form:form modelAttribute="inscription" class="form-horizontal">
+        <form:form modelAttribute="inscription" class="form-horizontal" action="/courses/${course.id}/inscription/new">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Date:" name="date"/>
 
@@ -27,7 +27,9 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="inscriptionId" value="${inscription.id}"/>
+                    <input type="hidden" name="isPaid" value="${false}"/>
+                
+<%--                     <input type="hidden" name="inscriptionId" value="${inscription.id}"/> --%>
                 </div>
             </div>
             
