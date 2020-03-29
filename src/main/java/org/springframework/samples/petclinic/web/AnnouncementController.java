@@ -121,14 +121,16 @@ public class AnnouncementController {
 
 		String view = "redirect:/announcements";
 
-		Optional<Announcement> announcement = null;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		try {
-			announcement = this.announcementService.findAnnouncementById(announcementId);
+			Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
+
 			if (announcement.isPresent() && authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
 				Iterable<Answer> answers = this.answerService.findAnswerByAnnouncement(announcement.get());
+
 				answers.forEach(a -> this.answerService.delete(a));
+
 				this.announcementService.deleteAnnouncement(announcement.get());
 				modelMap.addAttribute("message", "Announcement successfully deleted");
 			} else {
