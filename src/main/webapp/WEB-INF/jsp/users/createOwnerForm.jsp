@@ -19,6 +19,32 @@
             <petclinic:inputField label="Telephone" name="telephone"/>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
+             <label class="col-sm-2 control-label">Dangerous Animal License?</label>
+                  <form:select class="form-control" path="dangerousAnimal">
+                  	<form:option value="False">No</form:option>
+                  	<form:option value="True">Yes</form:option>
+                  </form:select>
+                 
+                 
+                 <label class="col-sm-2 control-label">Numerous Animal License?</label>
+                  <form:select class="form-control" path="numerousAnimal">
+                  	<form:option value="False">No</form:option>
+                  	<form:option value="True">Yes</form:option>
+                  </form:select>
+                 
+                 
+                 <label class="col-sm-2 control-label">Lives in City?</label>
+                  <form:select class="form-control" path="livesInCity">
+                  	<form:option value="False">No</form:option>
+                  	<form:option value="True">Yes</form:option>
+                  </form:select>
+                 
+                 
+                 <label class="col-sm-2 control-label">Positive History?</label>
+                  <form:select class="form-control" path="positiveHistory">
+                  	<form:option value="False">No</form:option>
+                  	<form:option value="True">Yes</form:option>
+                  </form:select>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

@@ -20,7 +20,6 @@
         <form:form modelAttribute="pet"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${pet.id}"/>
-            <div class="form-group has-feedback">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Owner</label>
                     <div class="col-sm-10">
@@ -32,22 +31,22 @@
                 <div class="control-group">
                     <petclinic:selectField name="type" label="Type " names="${types}" size="5"/>
                 </div>
+                <div class="control-group">
                   <div class="col-sm-10">
                  <label class="col-sm-2 control-label">Dangerous Animal?</label>
                   <form:select class="form-control" path="dangerous">
-                  	<form:option value="true">Yes</form:option>
-                  	<form:option value="false" selected>No</form:option>
+                  	<form:option value="False">No</form:option>
+                  	<form:option value="True">Yes</form:option>
                   </form:select>
                  </div>
                  
-                   <div class="col-sm-10">
+                 <div class="col-sm-10">
                  <label class="col-sm-2 control-label">Is Vaccinated?</label>
                   <form:select class="form-control" path="isVaccinated">
-                  	<form:option value="True">Yes</form:option>
-                  	<form:option value="False" selected>No</form:option>
+                  	<form:option value="False">No</form:option>
+                  	<form:option value="Yes">Yes</form:option>
                   </form:select>
                  </div>
-                 
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
