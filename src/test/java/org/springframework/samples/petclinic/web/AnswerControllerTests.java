@@ -189,6 +189,22 @@ class AnswerControllerTests {
 
 	@WithMockUser(value = "george")
 	@Test
+	void shouldNotCreateAnswerWhenAnswerHasErrors() throws Exception {
+
+		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");
+		dummyAnnouncement.setCanBeAdopted(false);
+
+		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(dummyAnnouncement));
+		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}/answer/new", 1))//
+			.andExpect(MockMvcResultMatchers.status().isOk())//
+			.andExpect(MockMvcResultMatchers.model().attributeExists("answer"))//
+			.andExpect(MockMvcResultMatchers.view().name("/exception"));
+	}
+
+	@WithMockUser(value = "george")
+	@Test
 	void shouldNotCreateAnswerWhenAnnouncementPetCanNotBeAdopted() throws Exception {
 
 		Announcement dummyAnnouncement = this.createDummyAnnouncement("dummyAnnouncement");

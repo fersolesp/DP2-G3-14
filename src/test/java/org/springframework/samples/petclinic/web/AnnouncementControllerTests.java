@@ -93,7 +93,7 @@ class AnnouncementControllerTests {
 		Mockito.when(this.announcementService.findAll()).thenReturn(Lists.newArrayList(announcement1, announcement2));
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("announcements"))
-		.andExpect(MockMvcResultMatchers.view().name("announcements/announcementsList"));
+			.andExpect(MockMvcResultMatchers.view().name("announcements/announcementsList"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -102,7 +102,7 @@ class AnnouncementControllerTests {
 		Mockito.when(this.announcementService.findAll()).thenThrow(NoSuchElementException.class);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("isempty"))
-		.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("announcements")).andExpect(MockMvcResultMatchers.view().name("announcements/announcementsList"));
+			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("announcements")).andExpect(MockMvcResultMatchers.view().name("announcements/announcementsList"));
 	}
 
 	// mostrarAnnouncement
@@ -119,11 +119,11 @@ class AnnouncementControllerTests {
 		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(owner);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}", 1))//
-		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
-			.attributeExists("positiveHistory"))
-		.andExpect(MockMvcResultMatchers.model()//
-			.attributeExists("announcement"))
-		.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
+				.attributeExists("positiveHistory"))
+			.andExpect(MockMvcResultMatchers.model()//
+				.attributeExists("announcement"))
+			.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -132,7 +132,7 @@ class AnnouncementControllerTests {
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenThrow(NoSuchElementException.class);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}", AnnouncementControllerTests.TEST_ANNOUNCEMENT_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("announcement")).andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("announcement")).andExpect(MockMvcResultMatchers.view().name("exception"));
 
 	}
 
@@ -142,9 +142,9 @@ class AnnouncementControllerTests {
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenThrow(NoSuchElementException.class);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}", 1))//
-		.andExpect(MockMvcResultMatchers.status().isOk())//
-		.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
-		.andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.status().isOk())//
+			.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
+			.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	// Get createAnnouncement
@@ -154,7 +154,7 @@ class AnnouncementControllerTests {
 	void shouldCreateAnnouncement() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/new", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("announcement"))
-		.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+			.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 	}
 
 	// Post createAnnouncement
@@ -175,7 +175,7 @@ class AnnouncementControllerTests {
 			.with(SecurityMockMvcRequestPostProcessors.csrf())//
 			.param("type.id", this.dog.getId().toString()).param("canBeAdopted", "true").param("petName", "Bibi"))
 
-		.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/announcements"));
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/announcements"));
 	}
 
 	@WithMockUser(value = "george")
@@ -183,9 +183,9 @@ class AnnouncementControllerTests {
 	void shouldNotSaveAnnouncementWithFormErrors() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement")).andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "petName"))
-		//.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "type"))//
-		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "canBeAdopted")).andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+			.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement")).andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "petName"))
+			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "type"))//
+			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "canBeAdopted")).andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 	}
 
 	// deleteAnnouncement
@@ -210,7 +210,7 @@ class AnnouncementControllerTests {
 
 		Mockito.when(this.announcementService.findAnnouncementById(1)).thenReturn(Optional.of(announcement1));
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/delete/{announcementId}", 1)).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.model().attribute("message", "You cannot delete another user's announcement details")).andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.model().attribute("message", "You cannot delete another user's announcement details")).andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(value = "george")
@@ -221,7 +221,7 @@ class AnnouncementControllerTests {
 
 		Mockito.when(this.announcementService.findAnnouncementById(200)).thenThrow(NoSuchElementException.class);
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/delete/{announcementId}", 200)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))
-		.andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	//updateAnnouncement
@@ -236,7 +236,7 @@ class AnnouncementControllerTests {
 		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/update/{announcementId}", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("announcement"))
-		.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+			.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 	}
 
 	@WithMockUser(value = "george")
@@ -253,10 +253,10 @@ class AnnouncementControllerTests {
 		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/update/{announcementId}", 1))//
-		.andExpect(MockMvcResultMatchers.status().isOk())//
-		.andExpect(MockMvcResultMatchers.model()//
-			.attribute("message", "You can't update another owner's announcement"))//
-		.andExpect(MockMvcResultMatchers.view().name("/exception"));
+			.andExpect(MockMvcResultMatchers.status().isOk())//
+			.andExpect(MockMvcResultMatchers.model()//
+				.attribute("message", "You can't update another owner's announcement"))//
+			.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
 	@WithMockUser(value = "george")
@@ -266,10 +266,10 @@ class AnnouncementControllerTests {
 		Mockito.when(this.announcementService.findAnnouncementById(200)).thenThrow(NoSuchElementException.class);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/update/{announcementId}", 200))//
-		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
-			.attributeExists("message"))
-		.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
-		.andExpect(MockMvcResultMatchers.view().name("exception"));
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
+				.attributeExists("message"))
+			.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
+			.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(value = "george")
@@ -291,13 +291,9 @@ class AnnouncementControllerTests {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/update/{announcementId}", 1)//
 			.with(SecurityMockMvcRequestPostProcessors.csrf())//
-			.param("type.id", this.dog.getId().toString())
-			.param("canBeAdopted", "true")
-			.param("petName", "Bibi")
-			.param("id", "1")//
-			.param("owner.id", this.george.getId().toString()))
-		.andExpect(MockMvcResultMatchers.status().isOk())//
-		.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
+			.param("type.id", this.dog.getId().toString()).param("canBeAdopted", "true").param("petName", "Bibi").param("id", "1")//
+			.param("owner.id", this.george.getId().toString())).andExpect(MockMvcResultMatchers.status().isOk())//
+			.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
 
 	}
 
@@ -311,10 +307,8 @@ class AnnouncementControllerTests {
 		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(owner);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/update/{announcementId}", 1)//
-			.with(SecurityMockMvcRequestPostProcessors.csrf()))
-		.andExpect(MockMvcResultMatchers.status().isOk())//
-		.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement"))
-		.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+			.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk())//
+			.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement")).andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 
 	}
 
