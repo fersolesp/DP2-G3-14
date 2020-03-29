@@ -138,8 +138,7 @@
         <dependency>
 		  <groupId>org.assertj</groupId>
 		  <artifactId>assertj-core</artifactId>
-		  <version>3.13.2</version>
-		  <scope>import</scope>
+		  <scope>import,test</scope>		  
 		</dependency>
         <!-- Development tools -->
         <dependency>
