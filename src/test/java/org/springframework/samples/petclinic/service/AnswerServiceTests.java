@@ -46,14 +46,6 @@ class AnswerServiceTests {
 	}
 
 	@Test
-	void shouldNotFindAnswerGivingAnnouncementWithoutThem() {
-		Announcement announcement = this.announcementService.findAnnouncementById(3).get();
-		Assertions.assertThrows(NoSuchElementException.class, () -> {
-			this.answerService.findAnswerByAnnouncement(announcement);
-		});
-	}
-
-	@Test
 	void shouldNotFindAnswersWithIncorrectId() {
 		Assertions.assertThrows(NoSuchElementException.class, () -> {
 			this.answerService.findAnswerById(200);

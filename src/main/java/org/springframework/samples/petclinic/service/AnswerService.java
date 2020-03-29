@@ -40,11 +40,8 @@ public class AnswerService {
 	}
 
 	@Transactional
-	public Iterable<Answer> findAnswerByAnnouncement(final Announcement announcement) throws NoSuchElementException {
+	public Iterable<Answer> findAnswerByAnnouncement(final Announcement announcement) {
 		Iterable<Answer> answers = this.answerRepo.findAnswersByAnnouncement(announcement);
-		if (StreamSupport.stream(answers.spliterator(), false).count() == 0) {
-			throw new NoSuchElementException();
-		}
 		return answers;
 	}
 
