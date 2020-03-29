@@ -20,6 +20,7 @@ import org.springframework.samples.petclinic.model.Course;
 import org.springframework.samples.petclinic.model.Inscription;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.util.InscriptionAssert;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +64,9 @@ public class InscriptionServiceTests {
 	void shouldFindInscriptionWithCorrectId(final int id, final String nameInscription) {
 		Optional<Inscription> inscription = this.inscriptionsService.findInscriptionById(id);
 		org.assertj.core.api.Assertions.assertThat(inscription).isPresent();
-		org.assertj.core.api.Assertions.assertThat(inscription.get().getName()).isEqualTo(nameInscription);
+
+		//Assert personalizado
+		InscriptionAssert.assertThat(inscription.get()).hasName(nameInscription);
 	}
 
 	@Test
@@ -91,7 +94,8 @@ public class InscriptionServiceTests {
 
 		org.assertj.core.api.Assertions.assertThat(IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner3))).isEqualTo(found + 1);
 
-		org.assertj.core.api.Assertions.assertThat(inscription.getId()).isNotNull();
+		//Assert personalizado
+		InscriptionAssert.assertThat(inscription).idNotNull();
 	}
 
 	@Test
@@ -163,7 +167,9 @@ public class InscriptionServiceTests {
 
 		org.assertj.core.api.Assertions.assertThat(IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner10))).isEqualTo(found + 1);
 
-		org.assertj.core.api.Assertions.assertThat(inscription.getId()).isNotNull();
+		//Assert personalizado
+		InscriptionAssert.assertThat(inscription).idNotNull();
+
 	}
 
 	@Test

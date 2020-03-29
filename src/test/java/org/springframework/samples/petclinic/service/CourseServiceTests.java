@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Course;
 import org.springframework.samples.petclinic.repository.CourseRepository;
+import org.springframework.samples.petclinic.util.CourseAssert;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -40,7 +41,9 @@ public class CourseServiceTests {
 	void shouldFindCourseById() {
 		Optional<Course> course = this.courseService.findCourseById(1);
 		org.assertj.core.api.Assertions.assertThat(course).isPresent();
-		org.assertj.core.api.Assertions.assertThat(course.get().getName()).isEqualTo("Curso para gatos");
+
+		//Assert personalizado
+		CourseAssert.assertThat(course.get()).hasName("Curso para gatos");
 	}
 
 	@Test
