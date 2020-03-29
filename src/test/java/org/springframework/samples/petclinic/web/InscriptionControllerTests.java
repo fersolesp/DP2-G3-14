@@ -201,41 +201,6 @@ class InscriptionControllerTests {
 
 	@WithMockUser(value = "george")
 	@Test
-	void shouldNotCreateInscriptionWhenOwnerInscriptionsNotFound() throws Exception {
-
-		Course dummyCourse = this.createDummyCourse("dummycourse");
-		dummyCourse.setCapacity(20);
-
-		Mockito.when(this.courseService.findCourseById(1)).thenReturn(Optional.of(dummyCourse));
-		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
-		Mockito.when(this.inscriptionService.findInscriptionsByOwner(this.george)).thenThrow(NoSuchElementException.class);
-
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/courses/{courseId}/inscription/new", 1))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.model().attribute("message","There are errors validating data"))
-		.andExpect(MockMvcResultMatchers.view().name("exception"));
-	}
-
-	@WithMockUser(value = "george")
-	@Test
-	void shouldNotCreateInscriptionWhenCourseInscriptionsNotFound() throws Exception {
-
-		Course dummyCourse = this.createDummyCourse("dummycourse");
-		dummyCourse.setCapacity(20);
-
-		Mockito.when(this.courseService.findCourseById(1)).thenReturn(Optional.of(dummyCourse));
-		Mockito.when(this.ownerService.findOwnerByUserName("george")).thenReturn(this.george);
-		Mockito.when(this.inscriptionService.findInscriptionsByOwner(this.george)).thenReturn(new ArrayList<Inscription>());
-		Mockito.when(this.inscriptionService.findInscriptionsByCourse(dummyCourse)).thenThrow(NoSuchElementException.class);
-
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/courses/{courseId}/inscription/new", 1))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.model().attribute("message","There are errors validating data"))
-		.andExpect(MockMvcResultMatchers.view().name("exception"));
-	}
-
-	@WithMockUser(value = "george")
-	@Test
 	void shouldNotCreateInscriptionWhenOwnerHasNoPets() throws Exception {
 
 		Course dummyCourse = this.createDummyCourse("dummycourse");

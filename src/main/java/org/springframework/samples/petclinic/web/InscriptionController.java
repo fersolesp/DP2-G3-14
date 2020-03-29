@@ -89,10 +89,21 @@ public class InscriptionController {
 		Iterable<Pet> pets = null;
 
 		try {
-			course = this.courseService.findCourseById(courseId).get();
 			inscriptionsByOwner = this.inscriptionService.findInscriptionsByOwner(this.ownerService.findOwnerByUserName(authentication.getName()));
+		} catch (NoSuchElementException e) {
+		}
+		try {
 			inscriptionsByCourse = this.inscriptionService.findInscriptionsByCourse(course);
+		} catch (NoSuchElementException e) {
+		}
+
+		try {
 			pets = this.petService.findPets(authentication.getName());
+		} catch (NoSuchElementException e) {
+		}
+
+		try {
+			course = this.courseService.findCourseById(courseId).get();
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "There are errors validating data");
 			return "exception";
