@@ -2,17 +2,21 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.repository.AnswerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +43,16 @@ class AnswerServiceTests {
 	}
 
 	@Test
+	void shouldNotFindAnswers() {
+		AnswerRepository answerRepository = Mockito.mock(AnswerRepository.class);
+		this.answerService = new AnswerService(answerRepository);
+		Mockito.when(answerRepository.findAll()).thenReturn(new ArrayList<Answer>());
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.answerService.findAll();
+		});
+	}
+
+	@Test
 	void shouldFindAnswersByAnnouncement() {
 		Announcement announcement = this.announcementService.findAnnouncementById(1).get();
 		Collection<Answer> answers = (Collection<Answer>) this.answerService.findAnswerByAnnouncement(announcement);
@@ -46,10 +60,12 @@ class AnswerServiceTests {
 	}
 
 	@Test
-	void shouldNotFindAnswersWithIncorrectId() {
+	void shouldNotFindAnswersGivingAnnouncementWithoutThem() {
+		Announcement announcement = this.announcementService.findAnnouncementById(3).get();
 		Assertions.assertThrows(NoSuchElementException.class, () -> {
-			this.answerService.findAnswerById(200);
+			this.answerService.findAnswerByAnnouncement(announcement);
 		});
+
 	}
 
 	@Test
@@ -60,6 +76,13 @@ class AnswerServiceTests {
 		org.assertj.core.api.Assertions.assertThat(answer.getDescription()).isEqualTo("Hola");
 		org.assertj.core.api.Assertions.assertThat(answer.getOwner()).isNotNull();
 		org.assertj.core.api.Assertions.assertThat(answer.getAnnouncement()).isNotNull();
+	}
+
+	@Test
+	void shoulsNotFindAnswerByIncorrectId() {
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.answerService.findAnswerById(200);
+		});
 	}
 
 	@Test
@@ -83,6 +106,46 @@ class AnswerServiceTests {
 
 		answers = (Collection<Answer>) this.answerService.findAll();
 		org.assertj.core.api.Assertions.assertThat(answers.size()).isEqualTo(found + 1);
+	}
+
+	@Test
+	public void shouldDeleteAnswer() {
+		Answer answer = this.answerService.findAnswerById(2);
+		Collection<Answer> answersIni = (Collection<Answer>) this.answerService.findAll();
+		int tamInicial = answersIni.size();
+		this.answerService.delete(answer);
+		Collection<Answer> answers = (Collection<Answer>) this.answerService.findAll();
+		org.assertj.core.api.Assertions.assertThat(answers.size()).isEqualTo(tamInicial - 1);
+	}
+
+	@Test
+	public void shouldNotDeleteAnswerFromDatabaseWhenNull() {
+		Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> {
+			this.answerService.delete(null);
+		});
+	}
+
+	@Test
+	public void shouldNotDeleteAnswerWithIncorrectId() {
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.answerService.delete(this.answerService.findAnswerById(200));
+		});
+	}
+
+	@Test
+	public void shouldFindAnswersByOwner() {
+		Owner owner = this.ownerService.findOwnerById(2);
+		Collection<Answer> answers = this.answerService.findAnswerByOwner(owner);
+		org.assertj.core.api.Assertions.assertThat(answers.size()).isEqualTo(1);
+	}
+
+	@Test
+	void shouldNotFindAnswersGivingOwnerWithoutThem() {
+		Owner owner = this.ownerService.findOwnerById(1);
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.answerService.findAnswerByOwner(owner);
+		});
+
 	}
 
 }

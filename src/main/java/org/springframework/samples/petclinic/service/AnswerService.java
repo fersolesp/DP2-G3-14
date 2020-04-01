@@ -42,8 +42,11 @@ public class AnswerService {
 	}
 
 	@Transactional
-	public Iterable<Answer> findAnswerByAnnouncement(final Announcement announcement) {
+	public Iterable<Answer> findAnswerByAnnouncement(final Announcement announcement) throws NoSuchElementException {
 		Iterable<Answer> answers = this.answerRepo.findAnswersByAnnouncement(announcement);
+		if (StreamSupport.stream(answers.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
 		return answers;
 	}
 
@@ -55,8 +58,12 @@ public class AnswerService {
 		this.answerRepo.delete(a);
 	}
 
-	public List<Answer> findAnswerByOwner(final Owner owner) {
-		return (List<Answer>) this.answerRepo.findAnswersByOwner(owner);
+	public List<Answer> findAnswerByOwner(final Owner owner) throws NoSuchElementException {
+		List<Answer> answers = (List<Answer>) this.answerRepo.findAnswersByOwner(owner);
+		if (StreamSupport.stream(answers.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return answers;
 	}
 
 }
