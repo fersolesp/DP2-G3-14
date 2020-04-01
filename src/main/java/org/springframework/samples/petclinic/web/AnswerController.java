@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -68,6 +69,14 @@ public class AnswerController {
 			if (!owner.getPositiveHistory()) {
 				modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
 				view = "/exception";
+			}
+
+			List<Answer> answers = this.answerService.findAnswerByOwner(owner);
+			for (int i = 0; i < answers.size(); i++) {
+				if (answers.get(i).getAnnouncement() == announcement) {
+					modelMap.addAttribute("message", "You can't send more than one answer to the same announcement");
+					view = "/exception";
+				}
 			}
 
 			return view;

@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Answer;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.AnswerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +53,10 @@ public class AnswerService {
 
 	public void delete(final Answer a) {
 		this.answerRepo.delete(a);
+	}
+
+	public List<Answer> findAnswerByOwner(final Owner owner) {
+		return (List<Answer>) this.answerRepo.findAnswersByOwner(owner);
 	}
 
 }
