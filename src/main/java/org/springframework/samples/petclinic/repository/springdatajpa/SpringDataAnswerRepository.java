@@ -18,7 +18,7 @@ public interface SpringDataAnswerRepository extends AnswerRepository, Repository
 	Collection<Answer> findAnswersByAnnouncement(@Param("announcement") Announcement announcement);
 
 	@Override
-	@Query("SELECT answer FROM Answer answer WHERE answer.owner=:owner")
+	@Query("SELECT count(answer) FROM Answer answer WHERE answer.owner=:owner")
 	Collection<Answer> findAnswersByOwner(@Param("owner") Owner owner);
 
 }

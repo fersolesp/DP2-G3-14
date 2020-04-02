@@ -134,14 +134,14 @@ class AnswerServiceTests {
 
 	@Test
 	public void shouldFindAnswersByOwner() {
-		Owner owner = this.ownerService.findOwnerById(2);
+		Owner owner = this.ownerService.findOwnerById(1);
 		Collection<Answer> answers = this.answerService.findAnswerByOwner(owner);
-		org.assertj.core.api.Assertions.assertThat(answers.size()).isEqualTo(1);
+		org.assertj.core.api.Assertions.assertThat(answers.size()).isEqualTo(3);
 	}
 
 	@Test
 	void shouldNotFindAnswersGivingOwnerWithoutThem() {
-		Owner owner = this.ownerService.findOwnerById(1);
+		Owner owner = this.ownerService.findOwnerById(3);
 		Assertions.assertThrows(NoSuchElementException.class, () -> {
 			this.answerService.findAnswerByOwner(owner);
 		});
