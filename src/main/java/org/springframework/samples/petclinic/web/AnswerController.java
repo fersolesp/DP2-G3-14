@@ -1,6 +1,8 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -10,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.AnnouncementService;
 import org.springframework.samples.petclinic.service.AnswerService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -34,12 +38,15 @@ public class AnswerController {
 
 	private OwnerService		ownerService;
 
+	private PetService			petService;
+
 
 	@Autowired
-	private AnswerController(final AnswerService answerService, final AnnouncementService announcementService, final OwnerService ownerService) {
+	private AnswerController(final AnswerService answerService, final AnnouncementService announcementService, final OwnerService ownerService, final PetService petService) {
 		this.announcementService = announcementService;
 		this.answerService = answerService;
 		this.ownerService = ownerService;
+		this.petService = petService;
 	}
 
 	@ModelAttribute("announcement")
@@ -49,33 +56,71 @@ public class AnswerController {
 
 	@GetMapping(path = "/answer/new")
 	public String createAnswer(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
-		String view = "answers/editAnswer";
+		Announcement announcement = null;
+		Owner owner = null;
+		List<Answer> answers = new ArrayList<Answer>();
+		List<Pet> pets = new ArrayList<Pet>();
+		String view = "/exception";
+
 		try {
 			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
-			Announcement announcement = opt.get();
-
-			Answer answer = new Answer();
-			answer.setAnnouncement(announcement);
-			modelMap.addAttribute("answer", answer);
-
-			if (!announcement.getCanBeAdopted()) {
-				modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
-				view = "/exception";
-			}
-
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			Owner owner = this.ownerService.findOwnerByUserName(auth.getName());
-			if (!owner.getPositiveHistory()) {
-				modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
-				view = "/exception";
-			}
-
-			return view;
-
+			announcement = opt.get();
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "There are errors validating data");
-			return "/exception";
+			return view;
 		}
+
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			owner = this.ownerService.findOwnerByUserName(auth.getName());
+		} catch (NoSuchElementException e) {
+		}
+
+		try {
+			answers = this.answerService.findAnswerByOwner(owner);
+		} catch (NoSuchElementException e) {
+		}
+
+		try {
+			pets = (List<Pet>) this.petService.findPets(owner.getUser().getUsername());
+		} catch (NoSuchElementException e) {
+		}
+
+		if (announcement.getOwner().equals(owner)) {
+			modelMap.addAttribute("message", "You can't answer your own announcement");
+			return view;
+		}
+
+		if (!announcement.getCanBeAdopted()) {
+			modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
+			return view;
+		}
+
+		if (!owner.getPositiveHistory()) {
+			modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
+			return view;
+		}
+
+		for (Answer answerIni : answers) {
+			if (answerIni.getAnnouncement().equals(announcement)) {
+				modelMap.addAttribute("message", "You can't send more than one answer to the same announcement");
+				return view;
+			}
+		}
+
+		for (int i = 0; i < pets.size(); i++) {
+			if (pets.get(i).getIsVaccinated() != true) {
+				modelMap.addAttribute("message", "You can't send an answer if any of your pets aren't vaccinated");
+				return view;
+			}
+		}
+
+		view = "answers/editAnswer";
+		Answer answer = new Answer();
+		answer.setAnnouncement(announcement);
+		modelMap.addAttribute("answer", answer);
+		return view;
+
 	}
 
 	@PostMapping(value = "/answer/new")
@@ -85,10 +130,10 @@ public class AnswerController {
 			return "answers/editAnswer";
 		} else {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
-			answer.setAnnouncement(announcement);
-			answer.setOwner(this.ownerService.findOwnerByUserName(auth.getName()));
 			try {
+				Announcement announcement = this.announcementService.findAnnouncementById(announcementId).get();
+				answer.setAnnouncement(announcement);
+				answer.setOwner(this.ownerService.findOwnerByUserName(auth.getName()));
 				this.answerService.saveAnswer(answer);
 			} catch (Exception e) {
 				model.addAttribute("message", e.getMessage());
