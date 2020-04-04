@@ -55,13 +55,6 @@ public class PetValidator implements Validator {
 			errors.rejectValue("birthDate", PetValidator.REQUIRED, PetValidator.REQUIRED);
 		}
 
-		//		if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() + 1 > 3) {
-		//			errors.reject("NumerousAnimalError");
-		//		}
-		//
-		//		if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() + 1 > 5) {
-		//			errors.reject("NumerousAnimalError");
-		//		}
 	}
 
 	/**
