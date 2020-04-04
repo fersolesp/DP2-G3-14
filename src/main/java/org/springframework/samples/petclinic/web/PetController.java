@@ -101,32 +101,35 @@ public class PetController {
 	}
 
 	@PostMapping(value = "/pets/new")
-	public String processCreationForm(final Owner owner, @Valid final Pet pet, final BindingResult result, final ModelMap model) {
+	public String processCreationForm(@PathVariable("ownerId") final int ownerId, @Valid final Pet pet, final BindingResult result, final ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("pet", pet);
 			return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
 			String res = "redirect:/owners/{ownerId}";
+			Owner owner = null;
 			try {
-				if (!owner.getDangerousAnimal() && pet.getDangerous()) {
-					model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
-					res = "/exception";
-				}
-				if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() > 3) {
-					model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
-					res = "/exception";
-				}
-				if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() > 5) {
-					model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
-					res = "/exception";
-
-				}
+				owner = this.ownerService.findOwnerById(ownerId);
 				owner.addPet(pet);
 				this.petService.savePet(pet);
 			} catch (DuplicatedPetNameException ex) {
 				result.rejectValue("name", "duplicate", "already exists");
 				return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 			}
+
+			if (!owner.getDangerousAnimal() && pet.getDangerous()) {
+				model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
+				return "/exception";
+			}
+			if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() > 3) {
+				model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
+				return "/exception";
+			}
+			if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() > 5) {
+				model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
+				return "/exception";
+			}
+
 			return res;
 		}
 	}
@@ -154,6 +157,10 @@ public class PetController {
 			model.put("pet", pet);
 			return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
+			if (!owner.getDangerousAnimal() && pet.getDangerous()) {
+				model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
+				return "/exception";
+			}
 			Pet petToUpdate = this.petService.findPetById(petId);
 			BeanUtils.copyProperties(pet, petToUpdate, "id", "owner", "visits");
 			try {
