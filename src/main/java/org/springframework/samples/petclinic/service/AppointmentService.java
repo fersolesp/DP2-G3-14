@@ -36,13 +36,13 @@ public class AppointmentService {
 		}
 		return result;
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Collection<Appointment> findAppointmentsByHairdresser(final Hairdresser hairdresser) throws NoSuchElementException {
 		Collection<Appointment> result = this.appointmentRepo.findAppointmentsByHairdresser(hairdresser);
 		return result;
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Collection<Appointment> findAppointmentsByPet(final Pet pet) throws NoSuchElementException {
 		Collection<Appointment> result = this.appointmentRepo.findAppointmentsByPet(pet);
@@ -63,12 +63,12 @@ public class AppointmentService {
 
 	@Transactional
 	public void deleteAppointment(final Appointment appointment) throws Exception {
-		
+
 		// No puedes borrar una cita el mismo dia que esta tiene lugar
-		if(appointment.getDate().getDayOfMonth()==LocalDateTime.now().getDayOfMonth()) {
+		if (appointment.getDate().getDayOfMonth() == LocalDateTime.now().getDayOfMonth() && appointment.getDate().getMonth() == LocalDateTime.now().getMonth() && appointment.getDate().getYear() == LocalDateTime.now().getYear()) {
 			throw new Exception("You cannot delete an appointment whose date is today");
 		}
-		
+
 		this.appointmentRepo.delete(appointment);
 	}
 

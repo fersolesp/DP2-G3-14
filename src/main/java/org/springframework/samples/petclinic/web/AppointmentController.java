@@ -1,12 +1,8 @@
 
 package org.springframework.samples.petclinic.web;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalField;
-import java.time.temporal.TemporalUnit;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -36,14 +32,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AppointmentController {
 
-	@Autowired
 	private AppointmentService	appointmentService;
-	@Autowired
 	private HairdresserService	hairdresserService;
-	@Autowired
 	private OwnerService		ownerService;
+	private PetService			petService;
+
+
 	@Autowired
-	private PetService		petService;
+	public AppointmentController(final AppointmentService appointmentService, final HairdresserService hairdresserService, final OwnerService ownerService, final PetService petService) {
+		this.appointmentService = appointmentService;
+		this.hairdresserService = hairdresserService;
+		this.ownerService = ownerService;
+		this.petService = petService;
+	}
 
 	//AUXILIARES
 	@ModelAttribute("allPets")
@@ -99,46 +100,46 @@ public class AppointmentController {
 		Hairdresser hairdresser = null;
 		Iterable<Pet> allPets = null;
 		Collection<Appointment> appointmentsByOwner = null;
-		
+
 		try {
 			allPets = this.petService.findPets(authentication.getName());
-		}catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 		}
-		
+
 		try {
 			hairdresser = this.hairdresserService.findHairdresserById(hairdresserId).get();
 		} catch (NoSuchElementException e) {
 			modelMap.addAttribute("message", "There are errors validating data");
 			return "exception";
 		}
-		
+
 		try {
 			appointmentsByOwner = this.appointmentService.findAppointmentsByOwner(this.ownerService.findOwnerByUserName(authentication.getName()));
-		} catch(NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 		}
-		
+
 		// ------------Validación de reglas de negocio--------------//
-		
+
 		// Owner no puede crear un appointment si no tiene mascotas
 		int numeroPets = 0;
-		if(allPets != null) {
+		if (allPets != null) {
 			numeroPets = (int) StreamSupport.stream(allPets.spliterator(), false).count();
 		}
-		if(numeroPets == 0) {
-			modelMap.addAttribute("message","You have no pets to make an appointment");
+		if (numeroPets == 0) {
+			modelMap.addAttribute("message", "You have no pets to make an appointment");
 			return "exception";
 		}
-		
+
 		// Owner no puede crear un appointment si no ha pagado las anteriores
-		if(appointmentsByOwner != null && StreamSupport.stream(appointmentsByOwner.spliterator(), false).count() != 0) {
-			for(Appointment a: appointmentsByOwner) {
-				if(a.getIsPaid() != true) {
-					modelMap.addAttribute("message","You have to pay previous appointments");
+		if (appointmentsByOwner != null && StreamSupport.stream(appointmentsByOwner.spliterator(), false).count() != 0) {
+			for (Appointment a : appointmentsByOwner) {
+				if (a.getIsPaid() != true) {
+					modelMap.addAttribute("message", "You have to pay previous appointments");
 					return "exception";
 				}
 			}
 		}
-		
+
 		String vista = "appointments/editAppointment";
 		Appointment appointment = new Appointment();
 		appointment.setHairdresser(hairdresser);
@@ -158,31 +159,32 @@ public class AppointmentController {
 		} else {
 			appointment.setHairdresser(this.hairdresserService.findHairdresserById(hairdresserId).get());
 			appointment.setOwner(appointment.getPet().getOwner());
-			
+
 			// ------------ Validación reglas de negocio ------------ //
 			// Owner no puede coger una cita a la misma hora en la que el peluquero ya tenga otra cita
 			Hairdresser hairdresser = this.hairdresserService.findHairdresserById(hairdresserId).get();
 			Collection<Appointment> appointmentsByHairdresser = this.appointmentService.findAppointmentsByHairdresser(hairdresser);
-			for(Appointment a: appointmentsByHairdresser) {
-				LocalDateTime fechaExistente =  a.getDate();
-				if(appointment.getDate().isEqual(fechaExistente)) {
+			for (Appointment a : appointmentsByHairdresser) {
+				LocalDateTime fechaExistente = a.getDate();
+				if (appointment.getDate().isEqual(fechaExistente)) {
 					// !appointment.getDate().isAfter(fechaExistente.plusMinutes(30)) ||
 					//   !appointment.getDate().isBefore(fechaExistente.minusMinutes(30))
-					modelMap.addAttribute("message","Hairdresser already has an appointment at that time");
+					modelMap.addAttribute("message", "Hairdresser already has an appointment at that time");
 					return "exception";
 				}
 			}
+			//Owner no puede coger cita mas de una vez por mascota al día
 			Integer petId = Integer.parseInt(result.getFieldValue("pet.id").toString());
 			Pet pet = this.petService.findPetById(petId);
 			Collection<Appointment> appointmentsByPet = this.appointmentService.findAppointmentsByPet(pet);
-			for(Appointment a: appointmentsByPet) {
+			for (Appointment a : appointmentsByPet) {
 				LocalDate fechaExistente = LocalDate.from(a.getDate());
-				if(fechaExistente.isEqual(LocalDate.from(appointment.getDate()))) {
-					modelMap.addAttribute("message","You cannot make more than one appointment per day for the same pet");
+				if (fechaExistente.isEqual(LocalDate.from(appointment.getDate()))) {
+					modelMap.addAttribute("message", "You cannot make more than one appointment per day for the same pet");
 					return "exception";
 				}
 			}
-			
+
 			try {
 				this.appointmentService.saveAppointment(appointment);
 			} catch (Exception e) {
@@ -191,9 +193,7 @@ public class AppointmentController {
 			}
 			modelMap.addAttribute("message", "Appointment successfully saved!");
 		}
-		
-		
-		
+
 		return vista;
 	}
 
@@ -212,7 +212,7 @@ public class AppointmentController {
 				modelMap.addAttribute("message", "Appointment successfully deleted");
 			}
 		} catch (Exception e) {
-			modelMap.addAttribute("message","Error: " + e.getMessage());
+			modelMap.addAttribute("message", "Error: " + e.getMessage());
 			return "exception";
 		}
 		return vista;
