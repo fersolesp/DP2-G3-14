@@ -76,44 +76,6 @@ public class AppointmentTests {
 	}
 
 	@Test
-	void shouldNotValidateWhenOwnerNull() {
-		LocaleContextHolder.setLocale(Locale.ENGLISH);
-		Appointment appointment = new Appointment();
-		appointment.setDate(LocalDateTime.now().plusMonths(1));
-		appointment.setIsPaid(false);
-		appointment.setPet(this.createDummyPet());
-		appointment.setHairdresser(this.createDummyHairdresser());
-		appointment.setOwner(null);
-		appointment.setPayment(this.createDummyPayment());
-
-		Validator validator = this.createValidator();
-		Set<ConstraintViolation<Appointment>> constraintViolations = validator.validate(appointment);
-
-		Assertions.assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Appointment> violation = constraintViolations.iterator().next();
-		Assertions.assertThat(violation.getPropertyPath().toString()).isEqualTo("owner");
-	}
-
-	@Test
-	void shouldNotValidateWhenHairdresserNull() {
-		LocaleContextHolder.setLocale(Locale.ENGLISH);
-		Appointment appointment = new Appointment();
-		appointment.setDate(LocalDateTime.now().plusMonths(1));
-		appointment.setIsPaid(false);
-		appointment.setPet(this.createDummyPet());
-		appointment.setHairdresser(null);
-		appointment.setOwner(this.createDummyOwner());
-		appointment.setPayment(this.createDummyPayment());
-
-		Validator validator = this.createValidator();
-		Set<ConstraintViolation<Appointment>> constraintViolations = validator.validate(appointment);
-
-		Assertions.assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Appointment> violation = constraintViolations.iterator().next();
-		Assertions.assertThat(violation.getPropertyPath().toString()).isEqualTo("hairdresser");
-	}
-
-	@Test
 	void shouldNotValidateWhenPetNull() {
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Appointment appointment = new Appointment();
