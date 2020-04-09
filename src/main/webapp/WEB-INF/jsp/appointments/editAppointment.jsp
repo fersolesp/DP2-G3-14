@@ -5,35 +5,24 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="Announcements">
+<petclinic:layout pageName="Appointments">
     <jsp:body>
-        <h2>Announcements</h2>
+        <h2>Appointments</h2>
 
-        <form:form modelAttribute="announcement" class="form-horizontal" action="/announcements/save">
+        <form:form modelAttribute="appointment" class="form-horizontal" action="/hairdressers/${hairdresser.id}/appointments/new">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Title:" name="name"/>
-                <petclinic:inputField label="Pet Name:" name="petName"/>
                 <petclinic:inputField label="Description:" name="description"/>
-                <petclinic:inputField label="Owner:" name="owner"></petclinic:inputField>
-                 <div class="control-group">
-                   <petclinic:selectField name="type" label="Type of pet:" names="${types}" size="5"/> 
-                </div>
-				<label class="col-sm-2 control-label">Can be adopted:</label>
-				<form:select path="canBeAdopted">
-					<form:option value="True">Yes</form:option>
-					<form:option value="False">No</form:option>
-				</form:select>		
-				</div>
-
+                <petclinic:inputField label="Date:" name="date"/>
+           		<petclinic:selectField label="Pet:" name="pet" size="3" names="${allPets}"/>
+           		<input type="hidden" name="isPaid" value="false"/>
+			</div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="announcementId" value="${announcement.id}"/>
-                    <button class="btn btn-default" type="submit">Save Announcement</button>
+<!--                <input type="hidden" name="appointmentId" value="${appointment.id}"/>  			-->
+                    <button class="btn btn-default" type="submit">Save Appointment</button>
                 </div>
             </div>
         </form:form>
-
-
     </jsp:body>
-
 </petclinic:layout>

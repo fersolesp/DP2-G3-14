@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -9,7 +10,9 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Appointment;
+import org.springframework.samples.petclinic.model.Hairdresser;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,18 @@ public class AppointmentService {
 	}
 
 	@Transactional(readOnly = true)
+	public Collection<Appointment> findAppointmentsByHairdresser(final Hairdresser hairdresser) throws NoSuchElementException {
+		Collection<Appointment> result = this.appointmentRepo.findAppointmentsByHairdresser(hairdresser);
+		return result;
+	}
+
+	@Transactional(readOnly = true)
+	public Collection<Appointment> findAppointmentsByPet(final Pet pet) throws NoSuchElementException {
+		Collection<Appointment> result = this.appointmentRepo.findAppointmentsByPet(pet);
+		return result;
+	}
+
+	@Transactional(readOnly = true)
 	public Optional<Appointment> findAppointmentById(final int appointmentId) throws NoSuchElementException {
 		Optional<Appointment> result = this.appointmentRepo.findById(appointmentId);
 		result.get();
@@ -47,7 +62,13 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public void deleteAppointment(final Appointment appointment) throws DataAccessException {
+	public void deleteAppointment(final Appointment appointment) throws Exception {
+
+		// No puedes borrar una cita el mismo dia que esta tiene lugar
+		if (appointment.getDate().getDayOfMonth() == LocalDateTime.now().getDayOfMonth() && appointment.getDate().getMonth() == LocalDateTime.now().getMonth() && appointment.getDate().getYear() == LocalDateTime.now().getYear()) {
+			throw new Exception("You cannot delete an appointment whose date is today");
+		}
+
 		this.appointmentRepo.delete(appointment);
 	}
 

@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -12,9 +13,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Appointment;
+import org.springframework.samples.petclinic.model.Hairdresser;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,10 @@ public class AppointmentServiceTests {
 	protected AppointmentService	appointmentService;
 	@Autowired
 	protected OwnerService			ownerService;
+	@Autowired
+	protected HairdresserService	hairdresserService;
+	@Autowired
+	protected PetService			petService;
 
 
 	@ParameterizedTest
@@ -38,7 +44,6 @@ public class AppointmentServiceTests {
 	}
 
 	@ParameterizedTest
-
 	@CsvSource({
 		"owner8", "owner9", "owner10"
 	})
@@ -50,7 +55,26 @@ public class AppointmentServiceTests {
 	}
 
 	@ParameterizedTest
+	@CsvSource({
+		"1", "2", "3"
+	})
+	void shouldFindAppointmentsGivingHairdresser(final int hairdresserId) {
+		Hairdresser hairdresser = this.hairdresserService.findHairdresserById(hairdresserId).get();
+		Collection<Appointment> appointments = this.appointmentService.findAppointmentsByHairdresser(hairdresser);
+		org.assertj.core.api.Assertions.assertThat(appointments).hasSize(1);
+	}
 
+	@ParameterizedTest
+	@CsvSource({
+		"1", "2", "3"
+	})
+	void shouldFindAppointmentsGivingPet(final int petId) {
+		Pet pet = this.petService.findPetById(petId);
+		Collection<Appointment> appointments = this.appointmentService.findAppointmentsByPet(pet);
+		org.assertj.core.api.Assertions.assertThat(appointments).hasSize(1);
+	}
+
+	@ParameterizedTest
 	@CsvSource({
 		"1,Cita1,Cita para Leo", "2,Cita2,Cita para Basil", "3,Cita3,Cita para Rosy"
 	})
@@ -80,7 +104,7 @@ public class AppointmentServiceTests {
 		"3,owner3", "4,owner3"
 	})
 	@Transactional
-	void shouldDeleteAppointment(final int id, final String ownername) {
+	void shouldDeleteAppointment(final int id, final String ownername) throws Exception {
 
 		Owner owner = this.ownerService.findOwnerByUserName(ownername);
 
@@ -91,9 +115,6 @@ public class AppointmentServiceTests {
 		org.assertj.core.api.Assertions.assertThat(appointment.isPresent());
 		this.appointmentService.deleteAppointment(appointment.get());
 		org.assertj.core.api.Assertions.assertThat(!appointment.isPresent());
-		Assertions.assertThrows(NoSuchElementException.class, () -> {
-			this.appointmentService.findAppointmentById(id);
-		});
 
 		appointments = this.appointmentService.findAppointmentsByOwner(owner);
 		org.assertj.core.api.Assertions.assertThat(appointments.size()).isEqualTo(count - 1);
@@ -104,10 +125,53 @@ public class AppointmentServiceTests {
 	@Transactional
 	void shouldNotDeleteAppointment() {
 
-		Assertions.assertThrows(DataAccessException.class, () -> {
+		Assertions.assertThrows(NullPointerException.class, () -> {
 			this.appointmentService.deleteAppointment(null);
 		});
 
+	}
+
+	@Test
+	@Transactional
+	void shouldNotDeleteAppointmentHappeningToday() throws Exception {
+		Owner owner1 = this.ownerService.findOwnerById(1);
+		Pet pet1 = owner1.getPet("Leo");
+		Hairdresser hairdresser1 = this.hairdresserService.findHairdresserById(1).get();
+
+		Appointment appointment = new Appointment();
+		appointment.setOwner(owner1);
+		appointment.setPet(pet1);
+		appointment.setHairdresser(hairdresser1);
+		appointment.setName("Cita para mi mascota");
+		appointment.setDescription("Cita para cortarle el pelo y las uñas a mi mascota");
+		appointment.setDate(LocalDateTime.now().plusMinutes(30));
+		appointment.setIsPaid(false);
+
+		Assertions.assertThrows(Exception.class, () -> {
+			this.appointmentService.deleteAppointment(appointment);
+		}, "You cannot delete an appointment whose date is today");
+	}
+
+	@Test
+	@Transactional
+	void shouldInsertAppointmentIntoDatabaseAndGenerateId() {
+		Owner owner1 = this.ownerService.findOwnerById(1);
+		Integer defaultAppointments = this.appointmentService.findAppointmentsByOwner(owner1).size();
+		Pet pet1 = owner1.getPet("Leo");
+		Hairdresser hairdresser1 = this.hairdresserService.findHairdresserById(1).get();
+
+		Appointment appointment = new Appointment();
+		appointment.setOwner(owner1);
+		appointment.setPet(pet1);
+		appointment.setHairdresser(hairdresser1);
+		appointment.setName("Cita para mi mascota");
+		appointment.setDescription("Cita para cortarle el pelo y las uñas a mi mascota");
+		appointment.setDate(LocalDateTime.now().plusMinutes(30));
+		appointment.setIsPaid(false);
+
+		this.appointmentService.saveAppointment(appointment);
+
+		org.assertj.core.api.Assertions.assertThat(this.appointmentService.findAppointmentsByOwner(owner1).size()).isEqualTo(defaultAppointments + 1);
 	}
 
 }

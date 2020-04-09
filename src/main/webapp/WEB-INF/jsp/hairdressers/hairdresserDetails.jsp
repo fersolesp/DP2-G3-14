@@ -32,7 +32,7 @@
     </table>
     
     <c:if test="${hairdresser.active==true}">
-    	<spring:url value="/appointments/new/{hairdresserId}" var="addAppointmentUrl">
+    	<spring:url value="/hairdressers/{hairdresserId}/appointments/new" var="addAppointmentUrl">
     		<spring:param name="hairdresserId" value="${hairdresser.id}"/>
     	</spring:url>
     	<a href="${fn:escapeXml(addAppointmentUrl)}" class="btn btn-default">Add New Appointment</a>

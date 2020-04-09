@@ -37,7 +37,6 @@ public class Appointment extends NamedEntity {
 	private Boolean			isPaid;
 
 	@JoinColumn(name = "hairdresser_id")
-	@NotNull
 	@ManyToOne
 	private Hairdresser		hairdresser;
 
@@ -51,7 +50,6 @@ public class Appointment extends NamedEntity {
 	private Payment			payment;
 
 	@JoinColumn(name = "owner_id")
-	@NotNull
 	@ManyToOne
 	private Owner			owner;
 
