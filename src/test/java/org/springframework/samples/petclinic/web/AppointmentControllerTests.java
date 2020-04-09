@@ -241,21 +241,20 @@ class AppointmentControllerTests {
 	@WithMockUser(value = "carlitos")
 	@Test
 	void shouldSaveAppointment() throws Exception {
+		Hairdresser dummyHairdresser = this.createDummyHairdresser("Jesús", "Maroto");
+		dummyHairdresser.setActive(true);
+
 		Appointment dummyAppointment = this.createDummyAppointment("appointment");
 		dummyAppointment.setPet(this.neko);
 		dummyAppointment.setDate(LocalDateTime.of(2020, 7, 7, 15, 30));
 		dummyAppointment.setIsPaid(false);
-
-		Hairdresser dummyHairdresser = this.createDummyHairdresser("Jesús", "Maroto");
-		dummyHairdresser.setActive(true);
-		;
+		dummyAppointment.setHairdresser(dummyHairdresser);
 
 		Mockito.when(this.hairdresserService.findHairdresserById(1)).thenReturn(Optional.of(dummyHairdresser));
 
 		this.mockMvc
 			.perform(
 				MockMvcRequestBuilders.post("/hairdressers/{hairdresserId}/appointments/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("date", "2020/07/07 15:30").param("isPaid", "false").param("pet.id", this.neko.getId().toString()))
-
 			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/appointments"));
 	}
 
@@ -278,24 +277,52 @@ class AppointmentControllerTests {
 	 * 
 	 * @Test
 	 * void shouldNotSaveAppointmentWhenDateAlreadyTaken() throws Exception {
+	 * Hairdresser dummyHairdresser = this.createDummyHairdresser("Juanjo", "Smith");
+	 * dummyHairdresser.setActive(true);
+	 * 
 	 * Appointment dummyAppointment = this.createDummyAppointment("appointment");
 	 * dummyAppointment.setPet(this.neko);
 	 * dummyAppointment.setDate(LocalDateTime.of(2020, 07, 20, 20, 50));
 	 * dummyAppointment.setIsPaid(true);
-	 * 
-	 * Appointment dummyAppointment2 = this.createDummyAppointment("appointment2");
-	 * dummyAppointment2.setPet(this.neko);
-	 * dummyAppointment2.setDate(LocalDateTime.of(2020, 07, 20, 20, 50));
-	 * dummyAppointment2.setIsPaid(false);
-	 * 
-	 * Hairdresser dummyHairdresser = this.createDummyHairdresser("Juanjo", "Smith");
-	 * dummyHairdresser.setActive(true);
-	 * ;
+	 * dummyAppointment.setHairdresser(dummyHairdresser);
+	 * dummyAppointment.setOwner(this.carlitos);
 	 * 
 	 * Mockito.when(this.hairdresserService.findHairdresserById(1)).thenReturn(Optional.of(dummyHairdresser));
 	 * 
-	 * this.mockMvc.perform(MockMvcRequestBuilders.post("/hairdressers/{hairdresserId}/appointments/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk())
+	 * this.mockMvc.perform(MockMvcRequestBuilders.post("/hairdressers/{hairdresserId}/appointments/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("owner", this.carlitos.getId().toString())
+	 * .param("hairdresser", dummyHairdresser.toString()).param("date", "2020/07/20 20:50").param("isPaid", "true").param("pet.id", this.neko.getId().toString())).andExpect(MockMvcResultMatchers.status().isOk());
+	 * 
+	 * this.mockMvc
+	 * .perform(MockMvcRequestBuilders.post("/hairdressers/{hairdresserId}/appointments/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("owner", this.carlitos.getId().toString()).param("hairdresser", dummyHairdresser.toString())
+	 * .param("date", "2020/07/20 20:50").param("isPaid", "false").param("pet.id", this.neko.getId().toString()))
 	 * .andExpect(MockMvcResultMatchers.model().attribute("message", "Hairdresser already has an appointment at that time")).andExpect(MockMvcResultMatchers.view().name("exception"));
 	 * }
 	 */
+
+	/*
+	 * @WithMockUser(value = "carlitos")
+	 * 
+	 * @Test
+	 * void shouldNotSaveAppointmentWhenPetAlreadyHasAnotherAppointmentThatDay() throws Exception {
+	 * Hairdresser dummyHairdresser = this.createDummyHairdresser("Juanjo", "Smith");
+	 * dummyHairdresser.setActive(true);
+	 * 
+	 * Appointment dummyAppointment = this.createDummyAppointment("appointment");
+	 * dummyAppointment.setPet(this.neko);
+	 * dummyAppointment.setDate(LocalDateTime.of(2020, 07, 20, 20, 50));
+	 * dummyAppointment.setIsPaid(true);
+	 * dummyAppointment.setOwner(this.carlitos);
+	 * 
+	 * Mockito.when(this.hairdresserService.findHairdresserById(1)).thenReturn(Optional.of(dummyHairdresser));
+	 * 
+	 * this.mockMvc.perform(MockMvcRequestBuilders.post("/hairdressers/{hairdresserId}/appointments/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("owner", this.carlitos.getId().toString()).param("date", "2020/07/20 20:50")
+	 * .param("isPaid", "true").param("pet.id", this.neko.getId().toString())).andExpect(MockMvcResultMatchers.status().isOk());
+	 * 
+	 * this.mockMvc
+	 * .perform(MockMvcRequestBuilders.post("/hairdressers/{hairdresserId}/appointments/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("owner", this.carlitos.getId().toString()).param("date", "2020/07/20 20:50")
+	 * .param("isPaid", "false").param("pet.id", this.neko.getId().toString()))
+	 * .andExpect(MockMvcResultMatchers.model().attribute("message", "You cannot make more than one appointment per day for the same pet")).andExpect(MockMvcResultMatchers.view().name("exception"));
+	 * }
+	 */
+
 }
