@@ -2,6 +2,7 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -64,8 +65,12 @@ public class AppointmentService {
 	@Transactional
 	public void deleteAppointment(final Appointment appointment) throws Exception {
 
+		if (appointment.getDate().isBefore(LocalDateTime.now())) {
+			throw new Exception("You cannot delete a passed appointment");
+		}
+
 		// No puedes borrar una cita el mismo dia que esta tiene lugar
-		if (appointment.getDate().getDayOfMonth() == LocalDateTime.now().getDayOfMonth() && appointment.getDate().getMonth() == LocalDateTime.now().getMonth() && appointment.getDate().getYear() == LocalDateTime.now().getYear()) {
+		if (LocalDateTime.now().until(appointment.getDate(), ChronoUnit.HOURS) < 24) {
 			throw new Exception("You cannot delete an appointment whose date is today");
 		}
 
