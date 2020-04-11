@@ -24,6 +24,7 @@ public class AppointmentUITest {
 	private int port;
 
 	private WebDriver driver;
+	private String userName;
 	private String baseUrl;
 	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
@@ -40,7 +41,33 @@ public class AppointmentUITest {
 	@ParameterizedTest
 	@CsvSource({"owner1,0wn3r,Leo,2020/05/04 20:00","owner2,0wn3r,Basil,2020/05/03 20:00"})
 	public void testCreateAppointment(final String owner, final String pass, final String pet,final String date) throws Exception {
-		this.login(owner, pass);
+		this.as(owner, pass)
+		.whenImLoggedInTheSystem()
+		.thenICanCreateAppointment(pet, date);
+
+	}
+
+	private AppointmentUITest as(final String user,final String password) {
+		this.userName = user;
+		this.driver.get("http://localhost:"+this.port);
+		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
+		this.driver.findElement(By.id("username")).click();
+		this.driver.findElement(By.id("username")).clear();
+		this.driver.findElement(By.id("username")).sendKeys(user);
+		this.driver.findElement(By.id("password")).click();
+		this.driver.findElement(By.id("password")).clear();
+		this.driver.findElement(By.id("password")).sendKeys(password);
+		this.driver.findElement(By.xpath("//button[@type='submit']")).click();
+		Assert.assertEquals(user.toUpperCase(), this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
+		return this;
+	}
+
+	private AppointmentUITest whenImLoggedInTheSystem() {
+		Assert.assertEquals(this.userName.toUpperCase(), this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
+		return this;
+	}
+
+	private AppointmentUITest thenICanCreateAppointment(final String pet,final String date) {
 		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[5]/a/span[2]")).click();
 		this.driver.findElement(By.linkText("George Primero")).click();
 		this.driver.findElement(By.linkText("Add New Appointment")).click();
@@ -59,19 +86,7 @@ public class AppointmentUITest {
 		Assert.assertEquals("Description example", this.driver.findElement(By.linkText("Description example")).getText());
 		this.driver.findElement(By.linkText("Description example")).click();
 		Assert.assertEquals("CreateAppointmentUITest", this.driver.findElement(By.xpath("//td")).getText());
-	}
-
-	private void login(final String user,final String password) {
-		this.driver.get("http://localhost:"+this.port);
-		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
-		this.driver.findElement(By.id("username")).click();
-		this.driver.findElement(By.id("username")).clear();
-		this.driver.findElement(By.id("username")).sendKeys(user);
-		this.driver.findElement(By.id("password")).click();
-		this.driver.findElement(By.id("password")).clear();
-		this.driver.findElement(By.id("password")).sendKeys(password);
-		this.driver.findElement(By.xpath("//button[@type='submit']")).click();
-		Assert.assertEquals(user.toUpperCase(), this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
+		return this;
 	}
 
 	@AfterEach
