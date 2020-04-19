@@ -148,7 +148,6 @@ public class AppointmentUITest {
 		this.driver.findElement(By.id("password")).clear();
 		this.driver.findElement(By.id("password")).sendKeys(password);
 		this.driver.findElement(By.xpath("//button[@type='submit']")).click();
-		Assert.assertEquals(user.toUpperCase(), this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
 		return this;
 	}
 
