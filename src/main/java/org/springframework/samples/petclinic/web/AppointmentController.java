@@ -140,6 +140,12 @@ public class AppointmentController {
 			}
 		}
 
+		// Owner no puede crear un appointment a un hairdresser que no está activo
+		if (!hairdresser.getActive()) {
+			modelMap.addAttribute("message", "You cannot create an appointment for a inactive hairdresser");
+			return "exception";
+		}
+
 		String vista = "appointments/editAppointment";
 		Appointment appointment = new Appointment();
 		appointment.setHairdresser(hairdresser);

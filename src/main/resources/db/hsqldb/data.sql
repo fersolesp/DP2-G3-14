@@ -22,6 +22,8 @@ INSERT INTO users(username,password,enabled) VALUES ('owner9','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner9','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner10','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner10','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner11','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner11','owner');
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities VALUES ('vet1','veterinarian');
@@ -60,6 +62,7 @@ INSERT INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona',true,t
 INSERT INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison',false,true,true,true, '6085557683', 'owner8');
 INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison',true,true,true,true, '6085559435', 'owner9');
 INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee',false,true,true,true, '6085555487', 'owner10');
+INSERT INTO owners VALUES (11, 'Antonio', 'Chaves', '467 Brandesbourg St.', 'Wisconsin',false,true,true,true, '6085555444', 'owner11');
 
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07',false,true, 1, 1);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06',false,false, 6, 2);
