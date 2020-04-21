@@ -24,6 +24,9 @@ INSERT INTO users(username,password,enabled) VALUES ('owner10','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner10','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner11','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner11','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner12','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner12','owner');
+
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities VALUES ('vet1','veterinarian');
@@ -62,13 +65,15 @@ INSERT INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona',true,t
 INSERT INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison',false,true,true,true, '6085557683', 'owner8');
 INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison',true,true,true,true, '6085559435', 'owner9');
 INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee',false,true,true,true, '6085555487', 'owner10');
-INSERT INTO owners VALUES (11, 'Antonio', 'Chaves', '467 Brandesbourg St.', 'Wisconsin',false,true,true,true, '6085555444', 'owner11');
+INSERT INTO owners VALUES (11, 'Carla', 'Blanco', '115 Prime St.', 'Puerto Rico',true,true,true,true, '1285555487', 'owner11');
+INSERT INTO owners VALUES (12, 'Julia', 'Martin', '116 Prime St.', 'Puerto Rico',true,true,true,true, '3454565424', 'owner12');
+
 
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07',false,true, 1, 1);
-INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06',false,false, 6, 2);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06',false,false, 1, 2);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (3, 'Rosy', '2011-04-17',false,true, 2, 3);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (4, 'Jewel', '2010-03-07',false,false, 2, 3);
-INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (5, 'Iggy', '2010-11-30',false,true, 3, 4);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (5, 'Iggy', '2010-11-30',false,true, 1, 4);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (6, 'George', '2010-01-20',false,true, 4, 5);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (7, 'Samantha', '2012-09-04',false,false, 1, 6);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (8, 'Max', '2012-09-04',false,true, 1, 6);
@@ -77,6 +82,7 @@ INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VA
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (11, 'Freddy', '2010-03-09',false,true, 5, 9);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (12, 'Lucky', '2010-06-24',true,true, 2, 10);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (13, 'Sly', '2012-06-08',false,true, 1, 10);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (14, 'Poppy', '2013-02-01',true,true, 1, 11);
 
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');
@@ -96,6 +102,8 @@ INSERT INTO payments(id,name,amount,pay_date) VALUES (3, 'Pago3', 25.00 , '2020-
 INSERT INTO payments(id,name,amount,pay_date) VALUES (4, 'Pago4', 1050.4 , '2020-07-27' );
 INSERT INTO payments(id,name,amount,pay_date) VALUES (5, 'Pago5', 1150 , '2020-07-28' );
 INSERT INTO payments(id,name,amount,pay_date) VALUES (6, 'Pago6', 1250.6 , '2020-07-29' );
+INSERT INTO payments(id,name,amount,pay_date) VALUES (7, 'Pago7', 200 , '2020-07-29' );
+INSERT INTO payments(id,name,amount,pay_date) VALUES (8, 'Pago8', 200 , '2020-07-29' );
 
 INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,payment_id,owner_id) VALUES (1,'Cita1','Cita para Leo','2020-07-20 20:50', true, 1, 1, 1, 1);
 INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,payment_id,owner_id) VALUES (2,'Cita2','Cita para Basil','2020-07-03 18:35', true, 2, 2, 2, 2);
@@ -120,8 +128,11 @@ INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PE
 INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (2,'Curso para perros',false,'2020-07-03','2020-06-03',20,2,2,150);
 INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (3,'Curso para perros peligrosos',true,'2020-07-03','2020-06-03',10,2,3,250);
 INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (4,'Curso para gatos peligrosos',true,'2020-07-03','2020-06-03',10,1,3,300);
+INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (5,'Curso super guay para gatos',false,'2020-07-03','2020-06-03',2,1,1,200);
 
 INSERT INTO INSCRIPTION VALUES(1,'Inscription1','2020-05-03',true, 1,1,1,1);
-INSERT INTO INSCRIPTION VALUES(2,'Inscription2','2020-05-03',false, 2,2,2,2);
+INSERT INTO INSCRIPTION VALUES(2,'Inscription2','2020-05-03',true, 2,2,2,2);
 INSERT INTO INSCRIPTION VALUES(3,'Inscription3','2020-05-03',false, 3,3,3,3);
+INSERT INTO INSCRIPTION VALUES(4,'Inscription4','2020-05-03',true, 5,10,7,13);
+INSERT INTO INSCRIPTION VALUES(5,'Inscription5','2020-05-03',true, 5,6,8,8);
 
