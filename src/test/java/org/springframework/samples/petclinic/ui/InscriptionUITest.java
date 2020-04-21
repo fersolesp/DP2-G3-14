@@ -45,7 +45,7 @@ public class InscriptionUITest {
 		this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
-	//Historia de Usuario ?
+	//Historia de Usuario 16
 	@ParameterizedTest
 	@CsvSource({
 		"owner1,Curso para gatos,Leo,2020/04/03"
@@ -63,6 +63,16 @@ public class InscriptionUITest {
 	public void testCreateInscription(final String owner, final String course, final String pet, final String date) {
 		this.as(owner, "0wn3r")//
 			.whenImLoggedInTheSystem().thenICanCreteInscription(course, pet, date);
+	}
+
+	//Hisotia de Usuario 16
+	@ParameterizedTest
+	@CsvSource({
+		"owner12,Curso para gatos"
+	})
+	public void testCanNotCreateInscriptionWithoutPets(final String owner, final String course) {
+		this.as(owner, "0wn3r")//
+			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionWithoutPet(course);
 	}
 
 	//Historia de Usuario 17
@@ -103,6 +113,16 @@ public class InscriptionUITest {
 	public void testCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(final String owner, final String course) {
 		this.as(owner, "0wn3r")//
 			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(course);
+	}
+
+	//Historia de Usuario 21
+	@ParameterizedTest
+	@CsvSource({
+		"owner1,Curso super guay para gatos,Leo,2020/03/03"
+	})
+	public void testCanNotCreateInscriptionIfCourseIsFull(final String owner, final String course, final String date) {
+		this.as(owner, "0wn3r")//
+			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfCourseIsFull(course);
 	}
 
 	//Definición de métodos
@@ -226,6 +246,29 @@ public class InscriptionUITest {
 		this.driver.findElement(By.xpath("//button[@type='submit']")).click();
 
 		Assert.assertEquals("Error: You can not sign up a dangerous pet in a not-dangerous pet course", this.driver.findElement(By.xpath("//body/div/div/p[2]")).getText());
+		return this;
+	}
+
+	public InscriptionUITest thenCanNotCreateInscriptionIfCourseIsFull(final String course) {
+		this.driver.get("http://localhost:" + this.port);
+		this.driver.findElement(By.cssSelector(".navbar-right > li:nth-child(1) > a")).click();
+
+		this.driver.findElement(By.cssSelector("li:nth-child(6) span:nth-child(2)")).click();
+		this.driver.findElement(By.linkText(course)).click();
+		this.driver.findElement(By.linkText("Create Inscription")).click();
+
+		Assert.assertEquals("The course is full", this.driver.findElement(By.xpath("//body/div/div/p[2]")).getText());
+		return this;
+	}
+
+	public InscriptionUITest thenCanNotCreateInscriptionWithoutPet(final String course) {
+		this.driver.get("http://localhost:" + this.port);
+
+		this.driver.findElement(By.cssSelector("li:nth-child(6) span:nth-child(2)")).click();
+		this.driver.findElement(By.linkText(course)).click();
+		this.driver.findElement(By.linkText("Create Inscription")).click();
+
+		Assert.assertEquals("You have no pets to sign up in a course", this.driver.findElement(By.xpath("//body/div/div/p[2]")).getText());
 		return this;
 	}
 
