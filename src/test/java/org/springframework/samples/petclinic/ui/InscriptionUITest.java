@@ -17,6 +17,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -82,6 +83,26 @@ public class InscriptionUITest {
 	public void testCanNotCreateInscriptionIfThereIsUnpaidCourses(final String owner, final String course) {
 		this.as(owner, "0wn3r")//
 			.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfThereIsUnpaidCourse(course);
+	}
+
+	//Historia de Usuario 19
+	@ParameterizedTest
+	@CsvSource({
+		"owner1,Curso para perros,Leo,2020/04/03"
+	})
+	public void testCanNotCreateInscriptionIfThePetTypeIsIncorrect(final String owner, final String course) {
+		this.as(owner, "0wn3r")//
+			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfThePetTypeIsIncorrect(course);
+	}
+
+	//Historia de Usuario 20
+	@ParameterizedTest
+	@CsvSource({
+		"owner11,Curso para gatos,Poppy,2020/03/03"
+	})
+	public void testCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(final String owner, final String course) {
+		this.as(owner, "0wn3r")//
+			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(course);
 	}
 
 	//Definición de métodos
@@ -175,6 +196,36 @@ public class InscriptionUITest {
 		this.driver.findElement(By.linkText("Curso para gatos")).click();
 		this.driver.findElement(By.linkText("Create Inscription")).click();
 		Assert.assertEquals("You have to pay previous courses inscriptions", this.driver.findElement(By.xpath("//body/div/div/p[2]")).getText());
+		return this;
+	}
+
+	public InscriptionUITest thenCanNotCreateInscriptionIfThePetTypeIsIncorrect(final String course) {
+		this.driver.get("http://localhost:" + this.port);
+		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
+		this.driver.findElement(By.linkText("Curso para perros")).click();
+		this.driver.findElement(By.linkText("Create Inscription")).click();
+		this.driver.findElement(By.id("date")).click();
+		this.driver.findElement(By.linkText("16")).click();
+		new Select(this.driver.findElement(By.id("pet"))).selectByVisibleText("Leo");
+		this.driver.findElement(By.xpath("//option[@value='Leo']")).click();
+		this.driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Assert.assertEquals("Error: You can not sign up a pet in other pet type course", this.driver.findElement(By.xpath("//body/div/div/p[2]")).getText());
+		return this;
+	}
+
+	public InscriptionUITest thenCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(final String course) {
+		this.driver.get("http://localhost:" + this.port);
+		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
+		this.driver.findElement(By.linkText("Curso para gatos")).click();
+		this.driver.findElement(By.linkText("Create Inscription")).click();
+		this.driver.findElement(By.id("date")).click();
+		this.driver.findElement(By.linkText("15")).click();
+		new Select(this.driver.findElement(By.id("pet"))).selectByVisibleText("Poppy");
+		this.driver.findElement(By.xpath("//option[@value='Poppy']")).click();
+		this.driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Assert.assertEquals("Error: You can not sign up a dangerous pet in a not-dangerous pet course", this.driver.findElement(By.xpath("//body/div/div/p[2]")).getText());
 		return this;
 	}
 
