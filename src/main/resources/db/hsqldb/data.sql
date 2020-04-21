@@ -68,7 +68,7 @@ INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VA
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06',false,false, 6, 2);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (3, 'Rosy', '2011-04-17',false,true, 2, 3);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (4, 'Jewel', '2010-03-07',false,false, 2, 3);
-INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (5, 'Iggy', '2010-11-30',false,true, 3, 4);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (5, 'Iggy', '2010-11-30',false,true, 1, 4);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (6, 'George', '2010-01-20',false,true, 4, 5);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (7, 'Samantha', '2012-09-04',false,false, 1, 6);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (8, 'Max', '2012-09-04',false,true, 1, 6);
@@ -120,8 +120,10 @@ INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PE
 INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (2,'Curso para perros',false,'2020-07-03','2020-06-03',20,2,2,150);
 INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (3,'Curso para perros peligrosos',true,'2020-07-03','2020-06-03',10,2,3,250);
 INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (4,'Curso para gatos peligrosos',true,'2020-07-03','2020-06-03',10,1,3,300);
+INSERT INTO COURSE (ID,NAME,DANGEROUS_ALLOWED,FINISH_DATE,START_DATE,CAPACITY,PET_TYPE_ID,TRAINER_ID,COST) VALUES (5,'Curso para gatos 2',false,'2020-07-03','2020-06-03',1,1,3,300);
 
 INSERT INTO INSCRIPTION VALUES(1,'Inscription1','2020-05-03',true, 1,1,1,1);
 INSERT INTO INSCRIPTION VALUES(2,'Inscription2','2020-05-03',false, 2,2,2,2);
 INSERT INTO INSCRIPTION VALUES(3,'Inscription3','2020-05-03',false, 3,3,3,3);
+INSERT INTO INSCRIPTION VALUES(4,'Inscription1','2020-05-03',true, 5,1,3,1);
 
