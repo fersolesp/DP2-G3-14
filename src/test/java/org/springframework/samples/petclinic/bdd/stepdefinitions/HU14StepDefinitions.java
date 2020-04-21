@@ -53,12 +53,9 @@ public class HU14StepDefinitions extends AbstractStep{
 	public void iCanDeleteAppointmentWhichIsNotToday() {
 		this.getDriver().get("http://localhost:"+this.port);
 		this.getDriver().findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-		int appointmentsNumber = this.getDriver().findElements(By.xpath("//table[@id='appointmentsTable']/tbody/tr")).size();
-		Assert.assertEquals(appointmentsNumber, 2);
 		this.getDriver().findElement(By.linkText("Description example")).click();
 		this.getDriver().findElement(By.linkText("Delete Appointment")).click();
-		appointmentsNumber = this.getDriver().findElements(By.xpath("//table[@id='appointmentsTable']/tbody/tr")).size();
-		Assert.assertEquals(appointmentsNumber, 1);
+		Assert.assertEquals("There are not appointments yet.", this.getDriver().findElement(By.xpath("//body/div/div/p")).getText());
 		this.stopDriver();
 
 	}

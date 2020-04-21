@@ -9,5 +9,4 @@ Feature: Cannot make appointment for same pet on same day
 	
 	Examples:
       | name     | password |   pet    |        date        |
-      | "owner1" | "0wn3r"  |  "Leo"   | "2020/07/20 10:50" |
-      | "owner2" | "0wn3r"  | "Basil"  | "2020/07/03 18:00" |
+      | "owner5" | "0wn3r"  | "George" | "2020/07/20 18:00" |
