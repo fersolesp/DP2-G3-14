@@ -154,6 +154,27 @@ public class AppointmentServiceTests {
 
 	@Test
 	@Transactional
+	void shouldNotDeletePassedAppointment() throws Exception {
+		Owner owner1 = this.ownerService.findOwnerById(1);
+		Pet pet1 = owner1.getPet("Leo");
+		Hairdresser hairdresser1 = this.hairdresserService.findHairdresserById(1).get();
+
+		Appointment appointment = new Appointment();
+		appointment.setOwner(owner1);
+		appointment.setPet(pet1);
+		appointment.setHairdresser(hairdresser1);
+		appointment.setName("Cita para mi mascota");
+		appointment.setDescription("Cita para cortarle el pelo y las uñas a mi mascota");
+		appointment.setDate(LocalDateTime.now().minusMinutes(30));
+		appointment.setIsPaid(false);
+
+		Assertions.assertThrows(Exception.class, () -> {
+			this.appointmentService.deleteAppointment(appointment);
+		}, "You cannot delete a passed appointment");
+	}
+
+	@Test
+	@Transactional
 	void shouldInsertAppointmentIntoDatabaseAndGenerateId() {
 		Owner owner1 = this.ownerService.findOwnerById(1);
 		Integer defaultAppointments = this.appointmentService.findAppointmentsByOwner(owner1).size();

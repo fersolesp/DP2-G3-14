@@ -46,7 +46,7 @@
     		</table>
     	</c:when>
     	<c:otherwise>
-    		There are not appointments yet.
+    		<p>There are not appointments yet.</p>
     	</c:otherwise>
     </c:choose>
     
