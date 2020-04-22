@@ -44,7 +44,6 @@ public class HU14StepDefinitions extends AbstractStep{
 		this.getDriver().findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
 		this.getDriver().findElement(By.linkText("Description example")).click();
 		this.getDriver().findElement(By.linkText("Delete Appointment")).click();
-
 		Assert.assertEquals("Error: You cannot delete an appointment whose date is today", this.getDriver().findElement(By.xpath("//body/div/div/p[2]")).getText());
 		this.stopDriver();
 	}
