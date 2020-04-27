@@ -88,7 +88,7 @@ public class InscriptionUITest {
 	//Historia de Usuario 18
 	@ParameterizedTest
 	@CsvSource({
-		"owner3,Curso para gatos"
+		"owner10,Curso para gatos"
 	})
 	public void testCanNotCreateInscriptionIfThereIsUnpaidCourses(final String owner, final String course) {
 		this.as(owner, "0wn3r")//

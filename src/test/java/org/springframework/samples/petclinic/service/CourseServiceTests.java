@@ -1,7 +1,6 @@
 
 package org.springframework.samples.petclinic.service;
 
-
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -21,12 +20,13 @@ import org.springframework.stereotype.Service;
 public class CourseServiceTests {
 
 	@Autowired
-	protected CourseService			courseService;
+	protected CourseService courseService;
+
 
 	@Test
 	void shouldFindCourses() {
 		Iterable<Course> courses = this.courseService.findAll();
-		org.assertj.core.api.Assertions.assertThat(courses).hasSize(4);
+		org.assertj.core.api.Assertions.assertThat(courses).hasSize(5);
 	}
 
 	@Test
@@ -34,7 +34,9 @@ public class CourseServiceTests {
 		CourseRepository courseRepository = Mockito.mock(CourseRepository.class);
 		this.courseService = new CourseService(courseRepository);
 		Mockito.when(courseRepository.findAll()).thenReturn(new ArrayList<Course>());
-		Assertions.assertThrows(NoSuchElementException.class, ()->{this.courseService.findAll();});
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.courseService.findAll();
+		});
 	}
 
 	@Test
@@ -48,7 +50,9 @@ public class CourseServiceTests {
 
 	@Test
 	void shouldNotFindCourseWithIncorrectId() {
-		Assertions.assertThrows(NoSuchElementException.class, ()->{this.courseService.findCourseById(200);});
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.courseService.findCourseById(200);
+		});
 	}
 
 }

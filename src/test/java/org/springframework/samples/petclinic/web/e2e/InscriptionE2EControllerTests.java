@@ -22,7 +22,7 @@ public class InscriptionE2EControllerTests {
 	private MockMvc mockMvc;
 
 
-	@WithMockUser(username = "owner1", password = "0wn3r")
+	@WithMockUser(username = "owner9", password = "0wn3r")
 	@Test
 	void shouldShowInscriptions() throws Exception {
 
@@ -30,7 +30,7 @@ public class InscriptionE2EControllerTests {
 			.andExpect(MockMvcResultMatchers.view().name("inscriptions/inscriptionsList"));
 	}
 
-	@WithMockUser(username = "owner9", password = "0wn3r")
+	@WithMockUser(username = "owner7", password = "0wn3r")
 	@Test
 	void shouldNotShowInscriptionsWhenYouHaveNotInscriptions() throws Exception {
 
@@ -40,7 +40,7 @@ public class InscriptionE2EControllerTests {
 
 	// mostrarInscription
 
-	@WithMockUser(username = "owner1", password = "0wn3r")
+	@WithMockUser(username = "owner9", password = "0wn3r")
 	@Test
 	void shouldShowInscriptionDetails() throws Exception {
 
@@ -82,7 +82,7 @@ public class InscriptionE2EControllerTests {
 			.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
-	@WithMockUser(username = "owner11", password = "0wn3r")
+	@WithMockUser(username = "owner12", password = "0wn3r")
 	@Test
 	void shouldNotCreateInscriptionWhenOwnerHasNoPets() throws Exception {
 
@@ -90,7 +90,7 @@ public class InscriptionE2EControllerTests {
 			.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
-	@WithMockUser(username = "owner2", password = "0wn3r")
+	@WithMockUser(username = "owner10", password = "0wn3r")
 	@Test
 	void shouldNotCreateInscriptionWithOtherInscriptionsNotPaid() throws Exception {
 
@@ -98,21 +98,21 @@ public class InscriptionE2EControllerTests {
 			.andExpect(MockMvcResultMatchers.model().attribute("message", "You have to pay previous courses inscriptions")).andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
-	//	@WithMockUser(username = "owner4", password = "0wn3r")
-	//	@Test
-	//	void shouldNotCreateInscriptionForAFullCourse() throws Exception {
-	//
-	//		this.mockMvc.perform(MockMvcRequestBuilders.get("/courses/{courseId}/inscription/new", 5)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "The course is full"))
-	//			.andExpect(MockMvcResultMatchers.view().name("exception"));
-	//	}
+	@WithMockUser(username = "owner1", password = "0wn3r")
+	@Test
+	void shouldNotCreateInscriptionForAFullCourse() throws Exception {
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/courses/{courseId}/inscription/new", 5)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "The course is full"))
+			.andExpect(MockMvcResultMatchers.view().name("exception"));
+	}
 
 	// Post createInscription
 
-	//	@WithMockUser(username = "owner4", password = "0wn3r")
+	//	@WithMockUser(username = "owner5", password = "0wn3r")
 	//	@Test
 	//	void shouldSaveInscription() throws Exception {
 	//
-	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("date", "2020/02/12").param("isPaid", "false").param("pet.id", "5"))
+	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("date", "2020/02/12").param("isPaid", "false").param("pet.id", "6"))
 	//			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/inscriptions"));
 	//	}
 
@@ -136,7 +136,7 @@ public class InscriptionE2EControllerTests {
 
 	// deleteInscription
 
-	@WithMockUser(username = "owner1", password = "0wn3r")
+	@WithMockUser(username = "owner9", password = "0wn3r")
 	@Test
 	void shouldDeleteInscription() throws Exception {
 
