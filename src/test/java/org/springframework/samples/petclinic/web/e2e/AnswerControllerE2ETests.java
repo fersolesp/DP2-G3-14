@@ -8,10 +8,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -99,7 +99,7 @@ class AnswerControllerE2ETests {
 			.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
-	@WithMockUser(username = "owner2", password = "0wn3r")
+	@WithMockUser(username = "owner6", password = "0wn3r")
 	@Test
 	void shouldNotCreateAnswerWhenYouHavePetsNotVaccinated() throws Exception {
 
