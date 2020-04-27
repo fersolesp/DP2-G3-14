@@ -53,8 +53,8 @@ public class InscriptionController {
 			Iterable<Inscription> inscriptions = this.inscriptionService.findInscriptionsByOwner(owner);
 			modelMap.addAttribute("inscriptions", inscriptions);
 		} catch (NoSuchElementException e) {
-			isempty=true;
-			modelMap.addAttribute("isempty",isempty);
+			isempty = true;
+			modelMap.addAttribute("isempty", isempty);
 		}
 		return vista;
 	}
@@ -92,10 +92,6 @@ public class InscriptionController {
 			inscriptionsByOwner = this.inscriptionService.findInscriptionsByOwner(this.ownerService.findOwnerByUserName(authentication.getName()));
 		} catch (NoSuchElementException e) {
 		}
-		try {
-			inscriptionsByCourse = this.inscriptionService.findInscriptionsByCourse(course);
-		} catch (NoSuchElementException e) {
-		}
 
 		try {
 			pets = this.petService.findPets(authentication.getName());
@@ -109,6 +105,11 @@ public class InscriptionController {
 			return "exception";
 		}
 
+		try {
+			inscriptionsByCourse = this.inscriptionService.findInscriptionsByCourse(course);
+		} catch (NoSuchElementException e) {
+		}
+
 		// --------- Validación de reglas de negocio ---------
 
 		//Owner no puede crear una inscripción si no tiene mascotas
@@ -116,14 +117,14 @@ public class InscriptionController {
 		if (pets != null) {
 			numeroPets = (int) StreamSupport.stream(pets.spliterator(), false).count();
 		}
-		if (numeroPets == 0 ) {
+		if (numeroPets == 0) {
 			modelMap.addAttribute("message", "You have no pets to sign up in a course");
 			return "exception";
 		}
 
 		//Owner no puede crear una inscripción si no ha pagado las anteriores
 		if (inscriptionsByOwner != null && StreamSupport.stream(inscriptionsByOwner.spliterator(), false).count() != 0) {
-			for(Inscription inscriptionit: inscriptionsByOwner) {
+			for (Inscription inscriptionit : inscriptionsByOwner) {
 				if (inscriptionit.getIsPaid() != true) {
 					modelMap.addAttribute("message", "You have to pay previous courses inscriptions");
 					return "exception";
@@ -145,7 +146,7 @@ public class InscriptionController {
 		Inscription inscription = new Inscription();
 		inscription.setCourse(course);
 		modelMap.addAttribute("inscription", inscription);
-		modelMap.addAttribute("course",course);
+		modelMap.addAttribute("course", course);
 		return view;
 	}
 
@@ -154,7 +155,7 @@ public class InscriptionController {
 
 		String view = "redirect:/inscriptions";
 		if (result.hasErrors()) {
-			modelMap.addAttribute("course",this.courseService.findCourseById(courseId).get());
+			modelMap.addAttribute("course", this.courseService.findCourseById(courseId).get());
 			modelMap.put("inscription", inscription);
 			return "inscriptions/editInscription";
 		} else {
@@ -170,7 +171,6 @@ public class InscriptionController {
 		}
 		return view;
 	}
-
 
 	@ModelAttribute("pets")
 	public Iterable<Pet> populatePet() {
