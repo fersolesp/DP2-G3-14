@@ -13,7 +13,7 @@ public class HU15StepDefinitions extends AbstractStep{
 	@LocalServerPort
 	private int port;
 
-	@Then("I cannot create appointment because there's another one")
+	@Then("I cannot create appointment because theres another one")
 	public void iCannotCreatAppointmentBecauseTheresAnotherOne() {
 		Assert.assertEquals("Hairdresser already has an appointment at that time", this.getDriver().findElement(By.xpath("//body/div/div/p[2]")).getText());
 		this.stopDriver();
