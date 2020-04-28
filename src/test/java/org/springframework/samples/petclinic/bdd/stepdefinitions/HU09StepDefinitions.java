@@ -46,7 +46,7 @@ public class HU09StepDefinitions extends AbstractStep{
 		this.getDriver().get("http://localhost:"+this.port);
 		this.getDriver().findElement(By.xpath("//div[@id='main-navbar']/ul/li/a/span[2]")).click();
 		this.getDriver().findElement(By.xpath("//button[@type='submit']")).click();
-		this.getDriver().findElement(By.linkText("Antonio Chaves")).click();
+		this.getDriver().findElement(By.linkText("Julia Martin")).click();
 		int petsNumber = this.getDriver().findElements(By.xpath("//table[@id='pets']/tbody/tr")).size();
 		Assert.assertEquals(petsNumber, 0);
 	}
