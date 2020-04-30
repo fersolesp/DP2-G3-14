@@ -22,14 +22,14 @@ public class PetControllerE2ETest {
 	private MockMvc mockMvc;
 
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
 	void testInitCreationForm() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/owners/{ownerId}/pets/new", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("pets/createOrUpdatePetForm"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("pet"));
 	}
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
 
@@ -40,7 +40,7 @@ public class PetControllerE2ETest {
 			.andExpect(MockMvcResultMatchers.view().name("redirect:/owners/{ownerId}"));
 	}
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/{petId}/edit", 1, 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("birthDate", "2015/02/12"))
@@ -48,12 +48,12 @@ public class PetControllerE2ETest {
 			.andExpect(MockMvcResultMatchers.model().attributeExists("pet")).andExpect(MockMvcResultMatchers.view().name("pets/createOrUpdatePetForm"));
 	}
 
-	@WithMockUser(value = "george")
+	@WithMockUser(username = "owner6", password = "0wn3r")
 	@Test
 	void testProcessCreationFormDangerousAnimalOwnerWithoutLicense() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/new", //
-			1, 1)//
+			6)//
 			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("type", "hamster")//
 			.param("birthDate", "2015/02/12").param("dangerous", "true").param("isVaccinated", "true"))//
 			.andExpect(MockMvcResultMatchers.model()//
@@ -62,12 +62,12 @@ public class PetControllerE2ETest {
 			.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
-	@WithMockUser(value = "george")
+	@WithMockUser(username = "owner10", password = "0wn3r")
 	@Test
 	void testProcessCreationFormOwnerWithoutNumerousAnimalsLivesInCity() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/new", //
-			1, 1)//
+			10)//
 			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("type", "hamster")//
 			.param("birthDate", "2015/02/12").param("dangerous", "true").param("isVaccinated", "true"))//
 			.andExpect(MockMvcResultMatchers.model()//
@@ -76,47 +76,47 @@ public class PetControllerE2ETest {
 			.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
-	@WithMockUser(value = "george")
+	@WithMockUser(username = "owner11", password = "0wn3r")
 	@Test
 	void testProcessCreationFormOwnerWithoutNumerousAnimalsAndNotLivesInCity() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/new", //
-			1, 1)//
+			11)//
 			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("type", "hamster")//
-			.param("birthDate", "2015/02/12").param("dangerous", "true").param("isVaccinated", "true"))//
+			.param("birthDate", "2015/02/12").param("dangerous", "false").param("isVaccinated", "true"))//
 			.andExpect(MockMvcResultMatchers.model()//
-				.attribute("message", "You can't add a new pet if you have three pets without the numerous pets license"))
+				.attribute("message", "You can't add a new pet if you have five pets without the numerous pets license"))
 			.andExpect(MockMvcResultMatchers.status().isOk())//
 			.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
-	@WithMockUser(value = "george")
-	@Test
-	void testProcessCreationFormPetDuplication() throws Exception {
+	//	@WithMockUser(username = "owner1", password = "0wn3r")
+	//	@Test
+	//	void testProcessCreationFormPetDuplication() throws Exception {
+	//
+	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/new", //
+	//			1)//
+	//			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Leo").param("type", "cat")//
+	//			.param("birthDate", "2010/09/07").param("dangerous", "false").param("isVaccinated", "true"))//
+	//			.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())//
+	//			.andExpect(MockMvcResultMatchers.view().name("redirect:/owners/{ownerId}"));
+	//	}
 
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/new", //
-			1, 1)//
-			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Puppy").param("type", "hamster")//
-			.param("birthDate", "2015/02/12").param("dangerous", "true").param("isVaccinated", "true"))//
-			.andExpect(MockMvcResultMatchers.status().is3xxRedirection())//
-			.andExpect(MockMvcResultMatchers.view().name("redirect:/owners/{ownerId}"));
-	}
-
-	@WithMockUser(value = "spring")
+	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
 	void testInitUpdateForm() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/owners/{ownerId}/pets/{petId}/edit", 1, 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("pet"))
 			.andExpect(MockMvcResultMatchers.view().name("pets/createOrUpdatePetForm"));
 	}
 
-	@WithMockUser(value = "spring")
-	@Test
-	void testProcessUpdateFormSuccess() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/{petId}/edit", 1, 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("type", "hamster").param("birthDate", "2015/02/12"))
-			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/owners/{ownerId}"));
-	}
+	//	@WithMockUser(username = "owner1", password = "0wn3r")
+	//	@Test
+	//	void testProcessUpdateFormSuccess() throws Exception {
+	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/{petId}/edit", 1, 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("type", "cat").param("birthDate", "2015/02/12"))
+	//			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/owners/{ownerId}"));
+	//	}
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
 	void testProcessUpdateFormHasErrors() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/{petId}/edit", 1, 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("birthDate", "2015/02/12"))
@@ -124,19 +124,19 @@ public class PetControllerE2ETest {
 			.andExpect(MockMvcResultMatchers.view().name("pets/createOrUpdatePetForm"));
 	}
 
-	@WithMockUser(value = "george")
-	@Test
-	void testProcessUpdateFormPetDuplication() throws Exception {
+	//	@WithMockUser(username = "owner1", password = "0wn3r")
+	//	@Test
+	//	void testProcessUpdateFormPetDuplication() throws Exception {
+	//
+	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/{petId}/edit", //
+	//			1, 1)//
+	//			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Leo").param("type", "hamster")//
+	//			.param("birthDate", "2015/02/12").param("dangerous", "true").param("isVaccinated", "true"))//
+	//			.andExpect(MockMvcResultMatchers.status().is3xxRedirection())//
+	//			.andExpect(MockMvcResultMatchers.view().name("redirect:/owners/{ownerId}"));
+	//	}
 
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/owners/{ownerId}/pets/{petId}/edit", //
-			1, 1)//
-			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Puppy").param("type", "hamster")//
-			.param("birthDate", "2015/02/12").param("dangerous", "true").param("isVaccinated", "true"))//
-			.andExpect(MockMvcResultMatchers.status().is3xxRedirection())//
-			.andExpect(MockMvcResultMatchers.view().name("redirect:/owners/{ownerId}"));
-	}
-
-	@WithMockUser(value = "george")
+	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
 	void testProcessUpdateFormDangerousAnimalOwnerWithoutLicense() throws Exception {
 
