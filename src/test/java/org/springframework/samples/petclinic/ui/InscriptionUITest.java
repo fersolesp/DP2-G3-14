@@ -52,7 +52,7 @@ public class InscriptionUITest {
 	})
 	public void testCanNotCreateInscriptionIfThereIsAPetOnTheSameCourse(final String owner, final String course, final String pet, final String date) throws Exception {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfThereIsAPetOnTheSameCourse(course, pet, date);
+		.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfThereIsAPetOnTheSameCourse(course, pet, date);
 	}
 
 	//Hisotia de Usuario 16
@@ -62,7 +62,7 @@ public class InscriptionUITest {
 	})
 	public void testCreateInscription(final String owner, final String course, final String pet, final String date) {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenICanCreteInscription(course, pet, date);
+		.whenImLoggedInTheSystem().thenICanCreteInscription(course, pet, date);
 	}
 
 	//Hisotia de Usuario 16
@@ -72,7 +72,7 @@ public class InscriptionUITest {
 	})
 	public void testCanNotCreateInscriptionWithoutPets(final String owner, final String course) {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionWithoutPet(course);
+		.whenImLoggedInTheSystem().thenCanNotCreateInscriptionWithoutPet(course);
 	}
 
 	//Historia de Usuario 17
@@ -82,7 +82,7 @@ public class InscriptionUITest {
 	})
 	public void testCanNotCreateInscriptionIfPetNotVaccinated(final String owner, final String course, final String pet, final String date) {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfPetIsNotVaccinated(course, pet, date);
+		.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfPetIsNotVaccinated(course, pet, date);
 	}
 
 	//Historia de Usuario 18
@@ -92,7 +92,7 @@ public class InscriptionUITest {
 	})
 	public void testCanNotCreateInscriptionIfThereIsUnpaidCourses(final String owner, final String course) {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfThereIsUnpaidCourse(course);
+		.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfThereIsUnpaidCourse(course);
 	}
 
 	//Historia de Usuario 19
@@ -102,7 +102,7 @@ public class InscriptionUITest {
 	})
 	public void testCanNotCreateInscriptionIfThePetTypeIsIncorrect(final String owner, final String course) {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfThePetTypeIsIncorrect(course);
+		.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfThePetTypeIsIncorrect(course);
 	}
 
 	//Historia de Usuario 20
@@ -112,7 +112,7 @@ public class InscriptionUITest {
 	})
 	public void testCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(final String owner, final String course) {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(course);
+		.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(course);
 	}
 
 	//Historia de Usuario 21
@@ -122,7 +122,7 @@ public class InscriptionUITest {
 	})
 	public void testCanNotCreateInscriptionIfCourseIsFull(final String owner, final String course, final String date) {
 		this.as(owner, "0wn3r")//
-			.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfCourseIsFull(course);
+		.whenImLoggedInTheSystem().thenCanNotCreateInscriptionIfCourseIsFull(course);
 	}
 
 	//Definición de métodos
@@ -225,6 +225,7 @@ public class InscriptionUITest {
 		this.driver.findElement(By.linkText("Curso para perros")).click();
 		this.driver.findElement(By.linkText("Create Inscription")).click();
 		this.driver.findElement(By.id("date")).click();
+		this.driver.findElement(By.xpath("//div[@id='ui-datepicker-div']/div/a/span")).click();
 		this.driver.findElement(By.linkText("16")).click();
 		new Select(this.driver.findElement(By.id("pet"))).selectByVisibleText("Leo");
 		this.driver.findElement(By.xpath("//option[@value='Leo']")).click();
@@ -240,6 +241,7 @@ public class InscriptionUITest {
 		this.driver.findElement(By.linkText("Curso para gatos")).click();
 		this.driver.findElement(By.linkText("Create Inscription")).click();
 		this.driver.findElement(By.id("date")).click();
+		this.driver.findElement(By.xpath("//div[@id='ui-datepicker-div']/div/a/span")).click();
 		this.driver.findElement(By.linkText("15")).click();
 		new Select(this.driver.findElement(By.id("pet"))).selectByVisibleText("Poppy");
 		this.driver.findElement(By.xpath("//option[@value='Poppy']")).click();
