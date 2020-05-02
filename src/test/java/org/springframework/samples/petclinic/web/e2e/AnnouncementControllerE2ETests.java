@@ -12,10 +12,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@Transactional
 class AnnouncementControllerE2ETests {
 
 	@Autowired
@@ -27,7 +29,7 @@ class AnnouncementControllerE2ETests {
 	void shouldShowAnnouncements() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("announcements"))
-			.andExpect(MockMvcResultMatchers.view().name("announcements/announcementsList"));
+		.andExpect(MockMvcResultMatchers.view().name("announcements/announcementsList"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -35,11 +37,11 @@ class AnnouncementControllerE2ETests {
 	void shouldShowAnnouncementDetails() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}", 3))//
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
-				.attributeExists("positiveHistory"))
-			.andExpect(MockMvcResultMatchers.model()//
-				.attributeExists("announcement"))
-			.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
+		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
+			.attributeExists("positiveHistory"))
+		.andExpect(MockMvcResultMatchers.model()//
+			.attributeExists("announcement"))
+		.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -47,7 +49,7 @@ class AnnouncementControllerE2ETests {
 	void shouldNotShowAnnouncementDetails() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}", 200)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("announcement"))
-			.andExpect(MockMvcResultMatchers.view().name("exception"));
+		.andExpect(MockMvcResultMatchers.view().name("exception"));
 
 	}
 
@@ -55,11 +57,11 @@ class AnnouncementControllerE2ETests {
 	@Test
 	void shouldNotShowAnnouncementWhenNotFound() throws Exception {
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}", 1))//
-			.andExpect(MockMvcResultMatchers.status().isOk())//
-			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("announcement"))//
-			.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
-			.andExpect(MockMvcResultMatchers.view().name("exception"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/{announcementId}", 200))//
+		.andExpect(MockMvcResultMatchers.status().isOk())//
+		.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("announcement"))//
+		.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
+		.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -67,7 +69,7 @@ class AnnouncementControllerE2ETests {
 	void shouldCreateAnnouncement() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/new", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("announcement"))
-			.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+		.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -84,9 +86,9 @@ class AnnouncementControllerE2ETests {
 	void shouldNotSaveAnnouncementWithFormErrors() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement")).andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "petName"))
-			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "type"))//
-			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "canBeAdopted")).andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+		.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement")).andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "petName"))
+		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "type"))//
+		.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("announcement", "canBeAdopted")).andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -101,7 +103,7 @@ class AnnouncementControllerE2ETests {
 	void shouldNotDeleteAnnouncementOfOtherUser() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/delete/{announcementId}", 3)).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.model().attribute("message", "You cannot delete another user's announcement details")).andExpect(MockMvcResultMatchers.view().name("exception"));
+		.andExpect(MockMvcResultMatchers.model().attribute("message", "You cannot delete another user's announcement details")).andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(username = "owner2", password = "0wn3r")
@@ -109,7 +111,7 @@ class AnnouncementControllerE2ETests {
 	void shouldNotDeleteAnnouncementWhenNotFound() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/delete/{announcementId}", 200)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))
-			.andExpect(MockMvcResultMatchers.view().name("exception"));
+		.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(username = "owner3", password = "0wn3r")
@@ -117,7 +119,7 @@ class AnnouncementControllerE2ETests {
 	void shouldUpdateAnnouncement() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/update/{announcementId}", 3)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("announcement"))
-			.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+		.andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -125,10 +127,10 @@ class AnnouncementControllerE2ETests {
 	void shouldNotUpdateAnotherOwnerAnnouncement() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/update/{announcementId}", 3))//
-			.andExpect(MockMvcResultMatchers.status().isOk())//
-			.andExpect(MockMvcResultMatchers.model()//
-				.attribute("message", "You can't update another owner's announcement"))//
-			.andExpect(MockMvcResultMatchers.view().name("/exception"));
+		.andExpect(MockMvcResultMatchers.status().isOk())//
+		.andExpect(MockMvcResultMatchers.model()//
+			.attribute("message", "You can't update another owner's announcement"))//
+		.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -136,10 +138,10 @@ class AnnouncementControllerE2ETests {
 	void shouldNotUpdateAnnouncementWithIncorrectId() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/announcements/update/{announcementId}", 200))//
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
-				.attributeExists("message"))
-			.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
-			.andExpect(MockMvcResultMatchers.view().name("exception"));
+		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model()//
+			.attributeExists("message"))
+		.andExpect(MockMvcResultMatchers.model().attribute("message", "Announcement not found"))//
+		.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -150,7 +152,7 @@ class AnnouncementControllerE2ETests {
 			.with(SecurityMockMvcRequestPostProcessors.csrf())//
 			.param("type.id", "1").param("canBeAdopted", "true").param("petName", "Bibi").param("id", "1")//
 			.param("owner.id", "1")).andExpect(MockMvcResultMatchers.status().isOk())//
-			.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
+		.andExpect(MockMvcResultMatchers.view().name("announcements/announcementDetails"));
 
 	}
 
@@ -160,7 +162,7 @@ class AnnouncementControllerE2ETests {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/announcements/update/{announcementId}", 1)//
 			.with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk())//
-			.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement")).andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
+		.andExpect(MockMvcResultMatchers.model().attributeHasErrors("announcement")).andExpect(MockMvcResultMatchers.view().name("announcements/editAnnouncement"));
 
 	}
 

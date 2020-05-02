@@ -11,10 +11,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@Transactional
 public class CourseE2EControllerTests {
 
 	@Autowired
@@ -37,7 +39,7 @@ public class CourseE2EControllerTests {
 	void shouldShowCourseDetails() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/courses/{courseId}", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("course"))
-			.andExpect(MockMvcResultMatchers.view().name("courses/courseDetails"));
+		.andExpect(MockMvcResultMatchers.view().name("courses/courseDetails"));
 	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
@@ -45,6 +47,6 @@ public class CourseE2EControllerTests {
 	void shouldNotShowCourseWhenNotFound() throws Exception {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/courses/{courseId}", 20)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "Course not found"))
-			.andExpect(MockMvcResultMatchers.view().name("exception"));
+		.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 }
