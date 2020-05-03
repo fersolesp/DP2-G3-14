@@ -26,6 +26,8 @@ INSERT INTO users(username,password,enabled) VALUES ('owner11','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner11','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner12','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner12','owner');
+INSERT INTO users(username,password,enabled) VALUES ('owner13','0wn3r',TRUE);
+INSERT INTO authorities VALUES ('owner13','owner');
 
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
@@ -67,7 +69,7 @@ INSERT INTO owners (ID,FIRST_NAME,LAST_NAME,ADDRESS,CITY,DANGEROUS_ANIMAL,LIVES_
 INSERT INTO owners (ID,FIRST_NAME,LAST_NAME,ADDRESS,CITY,DANGEROUS_ANIMAL,LIVES_IN_CITY,NUMEROUS_ANIMAL,POSITIVE_HISTORY,TELEPHONE,USERNAME) VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee',true,true,false,true, '6085555487', 'owner10');
 INSERT INTO owners (ID,FIRST_NAME,LAST_NAME,ADDRESS,CITY,DANGEROUS_ANIMAL,LIVES_IN_CITY,NUMEROUS_ANIMAL,POSITIVE_HISTORY,TELEPHONE,USERNAME) VALUES (11, 'Carla', 'Blanco', '115 Prime St.', 'Puerto Rico',true,false,false,true, '1285555487', 'owner11');
 INSERT INTO owners (ID,FIRST_NAME,LAST_NAME,ADDRESS,CITY,DANGEROUS_ANIMAL,LIVES_IN_CITY,NUMEROUS_ANIMAL,POSITIVE_HISTORY,TELEPHONE,USERNAME) VALUES (12, 'Julia', 'Martin', '116 Prime St.', 'Puerto Rico',true,true,true,true, '3454565424', 'owner12');
-
+INSERT INTO owners (ID,FIRST_NAME,LAST_NAME,ADDRESS,CITY,DANGEROUS_ANIMAL,LIVES_IN_CITY,NUMEROUS_ANIMAL,POSITIVE_HISTORY,TELEPHONE,USERNAME) VALUES (13, 'Ruben', 'Doblas', '42 St. Florencia', 'Rubencio',false,false,false,true, '6087555434', 'owner13');
 
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07',false,true, 1, 1);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06',false,false, 1, 2);
@@ -88,6 +90,9 @@ INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VA
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (17, 'Lulu', '2013-02-01',false,true, 3, 11);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (18, 'Caty', '2013-02-01',false,true, 4, 11);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (19, 'Lili', '2013-02-01',false,true, 5, 11);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (14, 'Subaru', '2020-01-08',false,true, 1, 13);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (15, 'Masato', '2020-01-08',false,true, 1, 13);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (16, 'Satoshi', '2020-01-08',false,true, 1, 13);
 
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');

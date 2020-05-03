@@ -22,6 +22,12 @@ public class LoginStepsDefinitions extends AbstractStep {
 		LoginStepsDefinitions.loginAs(user, password, this.port, this.getDriver());
 
 	}
+	
+	@Given("I am not logged in the system")
+	public void iAmNotLoggedInTheSystem() {
+		this.getDriver().get("http://localhost:" + this.port);
+		this.getDriver().findElement(By.xpath("//a[contains(text(),'Login')]")).getText();
+	}
 
 	public static void loginAs(final String user, final String password, final int port, final WebDriver driver) {
 		driver.get("http://localhost:" + port);
