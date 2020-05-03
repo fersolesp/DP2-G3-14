@@ -1,11 +1,13 @@
 
 package org.springframework.samples.petclinic.bdd.stepdefinitions;
 
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.extern.java.Log;
@@ -44,5 +46,18 @@ public class HU01StepDefinitions extends AbstractStep {
 		Assert.assertEquals(announcementsNumber, 4);
 		this.stopDriver();
 	}
+	
+	@When("I list announcements")
+	public void iListAnnouncements() {
+		this.getDriver().get("http://localhost:" + this.port);
+	    this.getDriver().findElement(By.xpath("//a[contains(@href, '/announcements')]")).click();
+	}
 
+	@Then("the create announcements button does not appear")
+	public void theButtonNotAppears() {
+		 Assert.assertFalse(this.getDriver().findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*link=Add New Announcement[\\s\\S]*$"));
+		this.stopDriver();
+	}
+
+	
 }

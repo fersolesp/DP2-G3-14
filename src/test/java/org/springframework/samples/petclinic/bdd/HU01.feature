@@ -9,3 +9,8 @@ Feature: Announcement creation
 	Examples: 
       | user     | password |   pet    | name                |  description     | petType |
       | "owner1" | "0wn3r"  |  "Leo"   | "anuncio ejemplo 1" | "this is a text" | "dog"   |
+
+  Scenario: I cannot create an announcement
+    Given I am not logged in the system
+    When I list announcements
+    Then the create announcements button does not appear
