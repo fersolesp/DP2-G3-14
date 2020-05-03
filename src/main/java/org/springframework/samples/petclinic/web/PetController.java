@@ -120,11 +120,11 @@ public class PetController {
 				model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
 				return "/exception";
 			}
-			if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() > 3) {
+			if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() >= 3) {
 				model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
 				return "/exception";
 			}
-			if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() > 5) {
+			if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() >= 5) {
 				model.put("message", "You can't add a new pet if you have five pets without the numerous pets license");
 				return "/exception";
 			}
