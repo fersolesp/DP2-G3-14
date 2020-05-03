@@ -90,9 +90,9 @@ INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VA
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (17, 'Lulu', '2013-02-01',false,true, 3, 11);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (18, 'Caty', '2013-02-01',false,true, 4, 11);
 INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (19, 'Lili', '2013-02-01',false,true, 5, 11);
-INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (14, 'Subaru', '2020-01-08',false,true, 1, 13);
-INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (15, 'Masato', '2020-01-08',false,true, 1, 13);
-INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (16, 'Satoshi', '2020-01-08',false,true, 1, 13);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (20, 'Subaru', '2020-01-08',false,true, 1, 13);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (21, 'Masato', '2020-01-08',false,true, 1, 13);
+INSERT INTO pets(id,name,birth_date,dangerous,is_vaccinated,type_id,owner_id) VALUES (22, 'Satoshi', '2020-01-08',false,true, 1, 13);
 
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');

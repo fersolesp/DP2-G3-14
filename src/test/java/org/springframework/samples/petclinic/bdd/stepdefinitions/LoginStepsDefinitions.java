@@ -22,7 +22,7 @@ public class LoginStepsDefinitions extends AbstractStep {
 		LoginStepsDefinitions.loginAs(user, password, this.port, this.getDriver());
 
 	}
-	
+
 	@Given("I am not logged in the system")
 	public void iAmNotLoggedInTheSystem() {
 		this.getDriver().get("http://localhost:" + this.port);
@@ -41,15 +41,4 @@ public class LoginStepsDefinitions extends AbstractStep {
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		Assert.assertEquals(user.toUpperCase(), driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
 	}
-
-	@Given("I am not logged in the system")
-	public void iAmNotLoggedInTheSystem() {
-		LoginStepsDefinitions.notLoginInSystem(this.port, this.getDriver());
-	}
-
-	public static void notLoginInSystem(final int port, final WebDriver driver) {
-		driver.get("http://localhost:" + port);
-		Assert.assertEquals("LOGIN", driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).getText());
-	}
-
 }
