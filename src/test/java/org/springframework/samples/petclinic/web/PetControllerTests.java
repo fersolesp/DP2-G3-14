@@ -185,7 +185,7 @@ class PetControllerTests {
 			.with(SecurityMockMvcRequestPostProcessors.csrf()).param("name", "Betty").param("type", "hamster")//
 			.param("birthDate", "2015/02/12").param("dangerous", "true").param("isVaccinated", "true"))//
 			.andExpect(MockMvcResultMatchers.model()//
-				.attribute("message", "You can't add a new pet if you have three pets without the numerous pets license"))
+				.attribute("message", "You can't add a new pet if you have five pets without the numerous pets license"))
 			.andExpect(MockMvcResultMatchers.status().isOk())//
 			.andExpect(MockMvcResultMatchers.view().name("/exception"));
 	}

@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.bdd.stepdefinitions;
 
 import org.junit.Assert;
@@ -10,10 +11,11 @@ import lombok.extern.java.Log;
 
 @Log
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LoginStepsDefinitions extends AbstractStep{
+public class LoginStepsDefinitions extends AbstractStep {
 
 	@LocalServerPort
 	private int port;
+
 
 	@Given("I am logged in the system as {string} with password {string}")
 	public void iAmLoggedInTheSystem(final String user, final String password) {
@@ -28,7 +30,7 @@ public class LoginStepsDefinitions extends AbstractStep{
 	}
 
 	public static void loginAs(final String user, final String password, final int port, final WebDriver driver) {
-		driver.get("http://localhost:"+port);
+		driver.get("http://localhost:" + port);
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
 		driver.findElement(By.id("username")).click();
 		driver.findElement(By.id("username")).clear();
@@ -38,6 +40,16 @@ public class LoginStepsDefinitions extends AbstractStep{
 		driver.findElement(By.id("password")).sendKeys(password);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		Assert.assertEquals(user.toUpperCase(), driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
+	}
+
+	@Given("I am not logged in the system")
+	public void iAmNotLoggedInTheSystem() {
+		LoginStepsDefinitions.notLoginInSystem(this.port, this.getDriver());
+	}
+
+	public static void notLoginInSystem(final int port, final WebDriver driver) {
+		driver.get("http://localhost:" + port);
+		Assert.assertEquals("LOGIN", driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).getText());
 	}
 
 }

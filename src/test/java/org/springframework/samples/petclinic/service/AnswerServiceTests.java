@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 class AnswerServiceTests {
 
 	@Autowired
@@ -136,12 +139,12 @@ class AnswerServiceTests {
 	public void shouldFindAnswersByOwner() {
 		Owner owner = this.ownerService.findOwnerById(1);
 		Collection<Answer> answers = this.answerService.findAnswerByOwner(owner);
-		org.assertj.core.api.Assertions.assertThat(answers.size()).isEqualTo(3);
+		org.assertj.core.api.Assertions.assertThat(answers.size()).isEqualTo(1);
 	}
 
 	@Test
 	void shouldNotFindAnswersGivingOwnerWithoutThem() {
-		Owner owner = this.ownerService.findOwnerById(3);
+		Owner owner = this.ownerService.findOwnerById(12);
 		Assertions.assertThrows(NoSuchElementException.class, () -> {
 			this.answerService.findAnswerByOwner(owner);
 		});

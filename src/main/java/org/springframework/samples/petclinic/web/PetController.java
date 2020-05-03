@@ -17,6 +17,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
@@ -108,26 +109,32 @@ public class PetController {
 		} else {
 			String res = "redirect:/owners/{ownerId}";
 			Owner owner = null;
+
 			try {
 				owner = this.ownerService.findOwnerById(ownerId);
-				owner.addPet(pet);
-				this.petService.savePet(pet);
-			} catch (DuplicatedPetNameException ex) {
-				result.rejectValue("name", "duplicate", "already exists");
-				return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+			} catch (NoSuchElementException e) {
+				return "/exception";
 			}
 
 			if (!owner.getDangerousAnimal() && pet.getDangerous()) {
 				model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
 				return "/exception";
 			}
-			if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() > 3) {
+			if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() >= 3) {
 				model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
 				return "/exception";
 			}
-			if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() > 5) {
-				model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
+			if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() >= 5) {
+				model.put("message", "You can't add a new pet if you have five pets without the numerous pets license");
 				return "/exception";
+			}
+
+			try {
+				owner.addPet(pet);
+				this.petService.savePet(pet);
+			} catch (DuplicatedPetNameException ex) {
+				result.rejectValue("name", "duplicate", "already exists");
+				return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 			}
 
 			return res;

@@ -12,6 +12,6 @@ Feature: Appointment for hairdresser
       | "owner2" | "0wn3r"  | "Basil"  | "2020/08/03 20:00" |
 	
 	Scenario: I cannot make an appointment
-    Given I am logged in the system as "owner11" with password "0wn3r"
+    Given I am logged in the system as "owner12" with password "0wn3r"
     When I have no pets
     Then I can not create an appointment

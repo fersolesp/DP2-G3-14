@@ -1,18 +1,18 @@
 
 package org.springframework.samples.petclinic.service;
 
-
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
-
 import org.assertj.core.util.IterableUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public class InscriptionServiceTests {
 
 	@Autowired
@@ -39,7 +40,7 @@ public class InscriptionServiceTests {
 
 	@ParameterizedTest
 	@CsvSource({
-		"owner1", "owner2", "owner3"
+		"owner9", "owner3", "owner6"
 	})
 	void shouldFindInscriptionsGivingOwner(final String ownername) {
 		Owner owner = this.ownerService.findOwnerByUserName(ownername);
@@ -49,11 +50,13 @@ public class InscriptionServiceTests {
 
 	@ParameterizedTest
 	@CsvSource({
-		"owner8", "owner9"
+		"owner4", "owner4"
 	})
 	void shouldNotFindInscriptionsGivingOwnerWithoutThem(final String ownername) {
 		Owner owner = this.ownerService.findOwnerByUserName(ownername);
-		Assertions.assertThrows(NoSuchElementException.class, ()->{this.inscriptionsService.findInscriptionsByOwner(owner);});
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.inscriptionsService.findInscriptionsByOwner(owner);
+		});
 
 	}
 
@@ -71,20 +74,22 @@ public class InscriptionServiceTests {
 
 	@Test
 	void shouldNotFindInscriptionWithIncorrectId() {
-		Assertions.assertThrows(NoSuchElementException.class, ()->{this.inscriptionsService.findInscriptionById(200);});
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.inscriptionsService.findInscriptionById(200);
+		});
 	}
 
 	@Test
 	@Transactional
 	public void shouldInsertInscriptionIntoDatabaseAndGenerateId() throws Exception {
-		Owner owner3 = this.ownerService.findOwnerById(3);
-		Integer found = IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner3));
-		Pet pet3 = owner3.getPet("Rosy");
-		Course course = this.courseService.findCourseById(2).get();
+		Owner owner6 = this.ownerService.findOwnerById(6);
+		Integer found = IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner6));
+		Pet pet3 = owner6.getPet("Max");
+		Course course = this.courseService.findCourseById(1).get();
 
 		Inscription inscription = new Inscription();
 		inscription.setName("TestInscription");
-		inscription.setOwner(owner3);
+		inscription.setOwner(owner6);
 		inscription.setPet(pet3);
 		inscription.setCourse(course);
 		inscription.setDate(LocalDate.now().minusMonths(1));
@@ -92,7 +97,7 @@ public class InscriptionServiceTests {
 
 		this.inscriptionsService.saveInscription(inscription);
 
-		org.assertj.core.api.Assertions.assertThat(IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner3))).isEqualTo(found + 1);
+		org.assertj.core.api.Assertions.assertThat(IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner6))).isEqualTo(found + 1);
 
 		//Assert personalizado
 		InscriptionAssert.assertThat(inscription).idNotNull();
@@ -116,7 +121,9 @@ public class InscriptionServiceTests {
 		inscription.setDate(LocalDate.now().minusMonths(1));
 		inscription.setIsPaid(false);
 
-		Assertions.assertThrows(Exception.class,()->{this.inscriptionsService.saveInscription(inscription);},"You can not sign up a pet in other pet type course");
+		Assertions.assertThrows(Exception.class, () -> {
+			this.inscriptionsService.saveInscription(inscription);
+		}, "You can not sign up a pet in other pet type course");
 
 	}
 
@@ -137,27 +144,29 @@ public class InscriptionServiceTests {
 		inscription.setDate(LocalDate.now().minusMonths(1));
 		inscription.setIsPaid(false);
 
-		Assertions.assertThrows(Exception.class,()->{this.inscriptionsService.saveInscription(inscription);},"You can not sign up a pet if it is not vaccinated");
+		Assertions.assertThrows(Exception.class, () -> {
+			this.inscriptionsService.saveInscription(inscription);
+		}, "You can not sign up a pet if it is not vaccinated");
 
 	}
 
 	@Test
 	@Transactional
 	public void shouldInsertInscriptionOfDangerousPetInDangerousPetCourse() throws Exception {
-		Owner owner10 = this.ownerService.findOwnerById(10);
+		Owner owner11 = this.ownerService.findOwnerById(11);
 		Integer found = 0;
 		try {
-			found = IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner10));
+			found = IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner11));
 		} catch (NoSuchElementException e) {
 		}
 		//Lucky es una mascota peligrosa
-		Pet pet12 = owner10.getPet("Lucky");
+		Pet pet12 = owner11.getPet("Poppy");
 		//Este curso admite mascotas peligrosas
-		Course course = this.courseService.findCourseById(3).get();
+		Course course = this.courseService.findCourseById(4).get();
 
 		Inscription inscription = new Inscription();
 		inscription.setName("TestInscription");
-		inscription.setOwner(owner10);
+		inscription.setOwner(owner11);
 		inscription.setPet(pet12);
 		inscription.setCourse(course);
 		inscription.setDate(LocalDate.now().minusMonths(1));
@@ -165,7 +174,7 @@ public class InscriptionServiceTests {
 
 		this.inscriptionsService.saveInscription(inscription);
 
-		org.assertj.core.api.Assertions.assertThat(IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner10))).isEqualTo(found + 1);
+		org.assertj.core.api.Assertions.assertThat(IterableUtil.sizeOf(this.inscriptionsService.findInscriptionsByOwner(owner11))).isEqualTo(found + 1);
 
 		//Assert personalizado
 		InscriptionAssert.assertThat(inscription).idNotNull();
@@ -190,7 +199,9 @@ public class InscriptionServiceTests {
 		inscription.setDate(LocalDate.now().minusMonths(1));
 		inscription.setIsPaid(false);
 
-		Assertions.assertThrows(Exception.class,()->{this.inscriptionsService.saveInscription(inscription);},"You can not sign up a dangerous pet in a not-dangerous pet course");
+		Assertions.assertThrows(Exception.class, () -> {
+			this.inscriptionsService.saveInscription(inscription);
+		}, "You can not sign up a dangerous pet in a not-dangerous pet course");
 
 	}
 
@@ -198,23 +209,24 @@ public class InscriptionServiceTests {
 	@Transactional
 	public void shouldNotInsertRepeatedInscription() throws Exception {
 
-		Owner owner1 = this.ownerService.findOwnerById(1);
-		Pet pet1 = owner1.getPet("Leo");
+		Owner owner9 = this.ownerService.findOwnerById(9);
+		Pet pet1 = owner9.getPet("Freddy");
 		//Leo ya está inscrito en este curso
 		Course course = this.courseService.findCourseById(1).get();
 
 		Inscription inscription = new Inscription();
 		inscription.setName("TestInscription");
-		inscription.setOwner(owner1);
+		inscription.setOwner(owner9);
 		inscription.setPet(pet1);
 		inscription.setCourse(course);
 		inscription.setDate(LocalDate.now().minusMonths(1));
 		inscription.setIsPaid(false);
 
-		Assertions.assertThrows(Exception.class,()->{this.inscriptionsService.saveInscription(inscription);},"You can not sign up your pet in the same course twice");
+		Assertions.assertThrows(Exception.class, () -> {
+			this.inscriptionsService.saveInscription(inscription);
+		}, "You can not sign up your pet in the same course twice");
 
 	}
-
 
 	@ParameterizedTest
 	@CsvSource({
@@ -224,17 +236,21 @@ public class InscriptionServiceTests {
 	public void shouldDeleteInscriptionFromDatabase(final int id) {
 		Inscription inscription = this.inscriptionsService.findInscriptionById(id).get();
 		this.inscriptionsService.deleteInscription(inscription);
-		Assertions.assertThrows(NoSuchElementException.class,()->{ this.inscriptionsService.findInscriptionById(id);});
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.inscriptionsService.findInscriptionById(id);
+		});
 	}
 
 	@Test
 	public void shouldNotDeleteInscriptionFromDatabaseWhenNull() {
-		Assertions.assertThrows(InvalidDataAccessApiUsageException.class, ()->{this.inscriptionsService.deleteInscription(null);});
+		Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> {
+			this.inscriptionsService.deleteInscription(null);
+		});
 	}
 
 	@ParameterizedTest
 	@CsvSource({
-		"1", "2", "3"
+		"2", "3"
 	})
 	void shouldFindInscriptionsGivingCourse(final Integer id) {
 		Course course = this.courseService.findCourseById(id).get();
@@ -245,7 +261,9 @@ public class InscriptionServiceTests {
 	@Test
 	void shouldNotFindInscriptionsGivingCourseWithoutThem() {
 		Course course = this.courseService.findCourseById(4).get();
-		Assertions.assertThrows(NoSuchElementException.class, ()->{this.inscriptionsService.findInscriptionsByCourse(course);});
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.inscriptionsService.findInscriptionsByCourse(course);
+		});
 
 	}
 
