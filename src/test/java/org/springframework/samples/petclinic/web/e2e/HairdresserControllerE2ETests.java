@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.samples.petclinic.model.Hairdresser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,14 +25,6 @@ public class HairdresserControllerE2ETests {
 
 	@Autowired
 	private MockMvc				mockMvc;
-
-
-	public Hairdresser createDummyHairdresser(final String firstName, final String lastName) {
-		Hairdresser hairdresser = new Hairdresser();
-		hairdresser.setFirstName(firstName);
-		hairdresser.setLastName(lastName);
-		return hairdresser;
-	}
 
 	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
