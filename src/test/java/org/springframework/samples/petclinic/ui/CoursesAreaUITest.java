@@ -24,7 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class InscriptionUITest {
+public class CoursesAreaUITest {
 
 	@LocalServerPort
 	private int				port;
@@ -55,7 +55,7 @@ public class InscriptionUITest {
 		.whenImLoggedInTheSystem().thenICanNotCreateInscriptionIfThereIsAPetOnTheSameCourse(course, pet, date);
 	}
 
-	//Hisotia de Usuario 16
+	//Historia de Usuario 16
 	@ParameterizedTest
 	@CsvSource({
 		"owner4,Curso para gatos,Iggy,2020/04/03"
@@ -65,7 +65,7 @@ public class InscriptionUITest {
 		.whenImLoggedInTheSystem().thenICanCreteInscription(course, pet, date);
 	}
 
-	//Hisotia de Usuario 16
+	//Historia de Usuario 16
 	@ParameterizedTest
 	@CsvSource({
 		"owner12,Curso para gatos"
@@ -127,7 +127,7 @@ public class InscriptionUITest {
 
 	//Definición de métodos
 
-	private InscriptionUITest as(final String user, final String password) {
+	private CoursesAreaUITest as(final String user, final String password) {
 		this.userName = user;
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
@@ -142,11 +142,11 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	private InscriptionUITest whenImLoggedInTheSystem() {
+	private CoursesAreaUITest whenImLoggedInTheSystem() {
 		Assert.assertEquals(this.userName.toUpperCase(), this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
 		return this;
 	}
-	private InscriptionUITest whenIHaveNoPets(final String ownerName) {
+	private CoursesAreaUITest whenIHaveNoPets(final String ownerName) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li/a/span[2]")).click();
 		this.driver.findElement(By.xpath("//button[@type='submit']")).click();
@@ -156,7 +156,7 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	private InscriptionUITest thenICanCreteInscription(final String course, final String pet, final String date) {
+	private CoursesAreaUITest thenICanCreteInscription(final String course, final String pet, final String date) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.manage().window().setSize(new Dimension(816, 588));
 		this.driver.findElement(By.cssSelector("li:nth-child(6) span:nth-child(2)")).click();
@@ -174,7 +174,7 @@ public class InscriptionUITest {
 
 	}
 
-	private InscriptionUITest thenICanNotCreateInscriptionIfPetIsNotVaccinated(final String course, final String pet, final String date) {
+	private CoursesAreaUITest thenICanNotCreateInscriptionIfPetIsNotVaccinated(final String course, final String pet, final String date) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.cssSelector("li:nth-child(6) > a")).click();
 		this.driver.findElement(By.linkText(course)).click();
@@ -193,7 +193,7 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	private InscriptionUITest thenICanNotCreateInscriptionIfThereIsAPetOnTheSameCourse(final String course, final String pet, final String date) {
+	private CoursesAreaUITest thenICanNotCreateInscriptionIfThereIsAPetOnTheSameCourse(final String course, final String pet, final String date) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.cssSelector("li:nth-child(6) span:nth-child(2)")).click();
 		this.driver.findElement(By.linkText(course)).click();
@@ -210,7 +210,7 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	private InscriptionUITest thenICanNotCreateInscriptionIfThereIsUnpaidCourse(final String course) {
+	private CoursesAreaUITest thenICanNotCreateInscriptionIfThereIsUnpaidCourse(final String course) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.cssSelector("li:nth-child(6) > a")).click();
 		this.driver.findElement(By.linkText("Curso para gatos")).click();
@@ -219,7 +219,7 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	public InscriptionUITest thenCanNotCreateInscriptionIfThePetTypeIsIncorrect(final String course) {
+	public CoursesAreaUITest thenCanNotCreateInscriptionIfThePetTypeIsIncorrect(final String course) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
 		this.driver.findElement(By.linkText("Curso para perros")).click();
@@ -235,7 +235,7 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	public InscriptionUITest thenCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(final String course) {
+	public CoursesAreaUITest thenCanNotCreateInscriptionIfThePetIsDangerousAndCourseIsForNonDangerous(final String course) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
 		this.driver.findElement(By.linkText("Curso para gatos")).click();
@@ -251,7 +251,7 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	public InscriptionUITest thenCanNotCreateInscriptionIfCourseIsFull(final String course) {
+	public CoursesAreaUITest thenCanNotCreateInscriptionIfCourseIsFull(final String course) {
 		this.driver.get("http://localhost:" + this.port);
 		this.driver.findElement(By.cssSelector(".navbar-right > li:nth-child(1) > a")).click();
 
@@ -263,7 +263,7 @@ public class InscriptionUITest {
 		return this;
 	}
 
-	public InscriptionUITest thenCanNotCreateInscriptionWithoutPet(final String course) {
+	public CoursesAreaUITest thenCanNotCreateInscriptionWithoutPet(final String course) {
 		this.driver.get("http://localhost:" + this.port);
 
 		this.driver.findElement(By.cssSelector("li:nth-child(6) span:nth-child(2)")).click();

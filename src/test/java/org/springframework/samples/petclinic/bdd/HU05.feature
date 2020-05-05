@@ -1,5 +1,5 @@
 Feature: Limit of pets by owner
-   I dont want to add a pet if a owner has not a special permission
+   An owner can not add lots of pets if he doesnt have a special permission
   
   Scenario: I add a pet with special permission
     Given I am logged in the system as "owner3" with password "0wn3r"

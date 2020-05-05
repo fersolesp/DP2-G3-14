@@ -1,5 +1,5 @@
 
-package org.springframework.samples.petclinic.web.externalAPI;
+package org.springframework.samples.petclinic.integration;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
