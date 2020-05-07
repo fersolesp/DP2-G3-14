@@ -36,6 +36,7 @@ public class AppointmentServiceTests {
 	protected PetService			petService;
 
 
+	@Transactional
 	@ParameterizedTest
 	@CsvSource({
 		"owner1", "owner2", "owner4"

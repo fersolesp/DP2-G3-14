@@ -224,6 +224,7 @@ class PetServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void shouldFindVisitsByPetId() throws Exception {
 		Collection<Visit> visits = this.petService.findVisitsByPetId(7);
 		org.assertj.core.api.Assertions.assertThat(visits.size()).isEqualTo(2);
