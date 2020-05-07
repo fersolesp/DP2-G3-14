@@ -122,9 +122,9 @@ INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet
 INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,owner_id) VALUES (5,'Cita5','Cita para Iggy','2020-07-06 21:38', false, 5, 5, 4);
 INSERT INTO appointments(id,name,description,datetime,is_paid,hairdresser_id,pet_id,payment_id,owner_id) VALUES (6,'Cita6','Cita para George','2020-07-20 10:39', true, 6, 6, 6, 5);
 
-INSERT INTO ANNOUNCEMENT (ID,NAME,CAN_BE_ADOPTED,DESCRIPTION,PET_NAME,OWNER_ID,TYPE_ID) VALUES (1,'Anuncio1',true,'Hola','Fox',1,1);
-INSERT INTO ANNOUNCEMENT (ID,NAME,CAN_BE_ADOPTED,DESCRIPTION,PET_NAME,OWNER_ID,TYPE_ID) VALUES (2,'Anuncio2',true,'Hola','Fufu',2,3);
-INSERT INTO ANNOUNCEMENT (ID,NAME,CAN_BE_ADOPTED,DESCRIPTION,PET_NAME,OWNER_ID,TYPE_ID) VALUES (3,'Anuncio3',false,'Hola','Lulu',3,2);
+INSERT INTO announcement(ID,NAME,CAN_BE_ADOPTED,DESCRIPTION,PET_NAME,OWNER_ID,TYPE_ID) VALUES (1,'Anuncio1',true,'Hola','Fox',1,1);
+INSERT INTO announcement(ID,NAME,CAN_BE_ADOPTED,DESCRIPTION,PET_NAME,OWNER_ID,TYPE_ID) VALUES (2,'Anuncio2',true,'Hola','Fufu',2,3);
+INSERT INTO announcement(ID,NAME,CAN_BE_ADOPTED,DESCRIPTION,PET_NAME,OWNER_ID,TYPE_ID) VALUES (3,'Anuncio3',false,'Hola','Lulu',3,2);
 
 INSERT INTO ANSWER (ID,NAME,DATE,DESCRIPTION,ANNOUNCEMENT_ID,OWNER_ID) VALUES (1,'Respuesta1','2010-03-09','Hola',1,2);
 INSERT INTO ANSWER (ID,NAME,DATE,DESCRIPTION,ANNOUNCEMENT_ID,OWNER_ID) VALUES (2,'Respuesta2','2010-03-09','Hola',1,3);
