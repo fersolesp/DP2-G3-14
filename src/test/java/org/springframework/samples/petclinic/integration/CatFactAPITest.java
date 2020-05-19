@@ -17,9 +17,9 @@ public class CatFactAPITest {
 
 	@Test
 	public void CatFact() {
-		RestAssured.when().get("https://meowfacts.herokuapp.com/")//
-			.then().statusCode(200)//
-			.assertThat()//
-			.body("data", Matchers.notNullValue());
+		RestAssured.when().get("https://arcane-ocean-65006.herokuapp.com/")//
+		.then().statusCode(200)//
+		.assertThat()//
+		.body("data", Matchers.notNullValue());
 	}
 }
