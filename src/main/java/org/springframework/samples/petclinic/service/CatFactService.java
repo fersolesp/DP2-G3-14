@@ -10,7 +10,7 @@ public class CatFactService {
 
 	public String findcatFactService() {
 		RestTemplate template = new RestTemplate();
-		CatFact catFact = template.getForObject("https://meowfacts.herokuapp.com/", CatFact.class);
+		CatFact catFact = template.getForObject("https://arcane-ocean-65006.herokuapp.com/", CatFact.class);
 		return catFact.getData()[0];
 	}
 }
