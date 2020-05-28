@@ -4,6 +4,7 @@ package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,10 +28,9 @@ public class Course extends NamedEntity {
 
 	private Integer		capacity;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Trainer		trainer;
 
 	private Integer		cost;
-
 
 }
