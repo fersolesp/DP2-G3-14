@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.projections.PetAnnouncement;
 import org.springframework.samples.petclinic.repository.AnnouncementRepository;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AnnouncementService {
 
-	@Autowired
 	private AnnouncementRepository	announcementRepo;
 	private PetRepository			petRepo;
 
@@ -32,6 +32,15 @@ public class AnnouncementService {
 	@Transactional
 	public Iterable<Announcement> findAll() {
 		Iterable<Announcement> res = this.announcementRepo.findAll();
+		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return res;
+	}
+
+	@Transactional(readOnly=true)
+	public Iterable<PetAnnouncement> findAllAnnouncements() {
+		Iterable<PetAnnouncement> res = this.petRepo.findAllPetAnnouncements();
 		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
 			throw new NoSuchElementException();
 		}
