@@ -60,7 +60,7 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner		owner;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.LAZY)
 	private Set<Visit>	visits;
 
 	@Column(name = "dangerous")
@@ -71,6 +71,7 @@ public class Pet extends NamedEntity {
 	@NotNull
 	private Boolean		isVaccinated;
 
+
 	public Boolean getDangerous() {
 		return this.dangerous;
 	}
@@ -80,13 +81,12 @@ public class Pet extends NamedEntity {
 	}
 
 	public void setIsVaccinated(final Boolean isVaccinated) {
-    this.isVaccinated = isVaccinated;
+		this.isVaccinated = isVaccinated;
 	}
-  
+
 	public void setDangerous(final Boolean dangerous) {
 		this.dangerous = dangerous;
 	}
-		
 
 	public void setBirthDate(final LocalDate birthDate) {
 		this.birthDate = birthDate;
