@@ -16,12 +16,14 @@
 
 package org.springframework.samples.petclinic.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.projections.PetAnnouncement;
 
 /**
  * Repository class for <code>Pet</code> domain objects All method names are compliant
@@ -64,4 +66,6 @@ public interface PetRepository {
 	void save(Pet pet) throws DataAccessException;
 
 	Iterable<Pet> findPetsByOwner(String ownerName) throws DataAccessException;
+
+	Collection<PetAnnouncement> findAllPetAnnouncements() throws DataAccessException;
 }

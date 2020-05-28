@@ -12,6 +12,7 @@ import org.springframework.samples.petclinic.model.Announcement;
 import org.springframework.samples.petclinic.model.Answer;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.projections.PetAnnouncement;
 import org.springframework.samples.petclinic.service.AnnouncementService;
 import org.springframework.samples.petclinic.service.AnswerService;
 import org.springframework.samples.petclinic.service.OwnerService;
@@ -50,7 +51,7 @@ public class AnnouncementController {
 		String vista = "announcements/announcementsList";
 		boolean isempty = false;
 		try {
-			Iterable<Announcement> announcements = this.announcementService.findAll();
+			Iterable<PetAnnouncement> announcements = this.announcementService.findAllAnnouncements();
 			modelMap.addAttribute("announcements", announcements);
 			modelMap.addAttribute("isanonymoususer", SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser"));
 

@@ -16,6 +16,7 @@
 
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -23,6 +24,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.projections.PetAnnouncement;
 import org.springframework.samples.petclinic.repository.PetRepository;
 
 /**
@@ -40,5 +42,9 @@ public interface SpringDataPetRepository extends PetRepository, Repository<Pet, 
 	@Override
 	@Query("SELECT pet FROM Pet pet WHERE pet.owner.user.username=?1")
 	Iterable<Pet> findPetsByOwner(String ownerName) throws DataAccessException;
+
+	@Override
+	@Query("SELECT a.id as id, a.name AS name, a.petName AS petName, a.canBeAdopted AS canBeAdopted, t.name AS type FROM Announcement a INNER JOIN a.type t")
+	Collection<PetAnnouncement> findAllPetAnnouncements() throws DataAccessException;
 
 }
