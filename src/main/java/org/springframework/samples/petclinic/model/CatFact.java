@@ -20,7 +20,7 @@ public class CatFact {
 	@JsonProperty("data")
 	private String[]			data					= null;
 	@JsonIgnore
-	private Map<String, Object>	additionalProperties	= new HashMap<String, Object>();
+	private Map<String, Object>	additionalProperties	= new HashMap<>();
 
 
 	@JsonProperty("data")

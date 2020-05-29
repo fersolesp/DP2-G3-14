@@ -49,12 +49,12 @@ public class InscriptionsService {
 		}
 
 		//No puede apuntarse a una mascota a un curso si no está vacunada
-		if (inscription.getPet().getIsVaccinated() == false) {
+		if (Boolean.FALSE.equals(inscription.getPet().getIsVaccinated())) {
 			throw new Exception("You can not sign up a pet if it is not vaccinated");
 		}
 
 		//No puede apuntarse a una mascota peligrosa a un curso que no admita este tipo de mascotas
-		if (inscription.getPet().getDangerous() == true && inscription.getCourse().getDangerousAllowed() == false) {
+		if (Boolean.TRUE.equals(inscription.getPet().getDangerous()) && Boolean.FALSE.equals(inscription.getCourse().getDangerousAllowed())) {
 			throw new Exception("You can not sign up a dangerous pet in a not-dangerous pet course");
 		}
 
@@ -72,7 +72,7 @@ public class InscriptionsService {
 					break;
 				}
 			}
-			if (isThePetInTheCourse == true) {
+			if (Boolean.TRUE.equals(isThePetInTheCourse)) {
 				throw new Exception("You can not sign up your pet in the same course twice");
 			}
 		}

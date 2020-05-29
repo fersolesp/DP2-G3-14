@@ -125,7 +125,7 @@ public class InscriptionController {
 		//Owner no puede crear una inscripción si no ha pagado las anteriores
 		if (inscriptionsByOwner != null && StreamSupport.stream(inscriptionsByOwner.spliterator(), false).count() != 0) {
 			for (Inscription inscriptionit : inscriptionsByOwner) {
-				if (inscriptionit.getIsPaid() != true) {
+				if (Boolean.FALSE.equals(inscriptionit.getIsPaid())) {
 					modelMap.addAttribute("message", "You have to pay previous courses inscriptions");
 					return "exception";
 				}
