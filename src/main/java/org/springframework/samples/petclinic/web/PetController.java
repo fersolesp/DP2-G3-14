@@ -54,6 +54,8 @@ public class PetController {
 	private final PetService	petService;
 	private final OwnerService	ownerService;
 
+	private static final String EXCEPTION = "/exception";
+	private static final String MESSAGE = "message";
 
 	@Autowired
 	public PetController(final PetService petService, final OwnerService ownerService) {
@@ -113,20 +115,21 @@ public class PetController {
 			try {
 				owner = this.ownerService.findOwnerById(ownerId);
 			} catch (NoSuchElementException e) {
-				return "/exception";
+				return PetController.EXCEPTION;
 			}
 
 			if (Boolean.FALSE.equals(owner.getDangerousAnimal()) && pet.getDangerous()) {
-				model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
-				return "/exception";
+				model.put(PetController.MESSAGE, "You can't add a new dangerous pet if you don't have the dangerous animals license");
+				return PetController.EXCEPTION;
 			}
 			if (Boolean.FALSE.equals(owner.getNumerousAnimal()) && Boolean.TRUE.equals(owner.getLivesInCity()) && owner.getPets().size() >= 3) {
-				model.put("message", "You can't add a new pet if you have three pets without the numerous pets license");
-				return "/exception";
+				model.put(PetController.MESSAGE, "You can't add a new pet if you have three pets without the numerous pets license");
+				return PetController.EXCEPTION;
 			}
 			if (Boolean.FALSE.equals(owner.getNumerousAnimal()) && Boolean.FALSE.equals(owner.getLivesInCity()) && owner.getPets().size() >= 5) {
-				model.put("message", "You can't add a new pet if you have five pets without the numerous pets license");
-				return "/exception";
+				model.put(PetController.MESSAGE, "You can't add a new pet if you have five pets without the numerous pets license");
+				return PetController.EXCEPTION;
+
 			}
 
 			try {
@@ -165,8 +168,8 @@ public class PetController {
 			return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
 			if (Boolean.FALSE.equals(owner.getDangerousAnimal()) && Boolean.TRUE.equals(pet.getDangerous())) {
-				model.put("message", "You can't add a new dangerous pet if you don't have the dangerous animals license");
-				return "/exception";
+				model.put(PetController.MESSAGE, "You can't add a new dangerous pet if you don't have the dangerous animals license");
+				return PetController.EXCEPTION;
 			}
 			Pet petToUpdate = this.petService.findPetById(petId);
 			BeanUtils.copyProperties(pet, petToUpdate, "id", "owner", "visits");
