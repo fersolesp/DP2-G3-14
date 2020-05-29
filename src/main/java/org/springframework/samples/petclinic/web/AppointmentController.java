@@ -137,17 +137,19 @@ public class AppointmentController {
 		// Owner no puede crear un appointment si no ha pagado las anteriores
 		if (appointmentsByOwner != null && StreamSupport.stream(appointmentsByOwner.spliterator(), false).count() != 0) {
 			for (Appointment a : appointmentsByOwner) {
-				if (a.getIsPaid() != true) {
+				if (Boolean.FALSE.equals(a.getIsPaid())) {
 					modelMap.addAttribute(AppointmentController.MESSAGE, "You have to pay previous appointments");
 					return AppointmentController.EXCEPTION;
+
 				}
 			}
 		}
 
 		// Owner no puede crear un appointment a un hairdresser que no está activo
-		if (!hairdresser.getActive()) {
+		if (Boolean.FALSE.equals(hairdresser.getActive())) {
 			modelMap.addAttribute(AppointmentController.MESSAGE, "You cannot create an appointment for a inactive hairdresser");
 			return AppointmentController.EXCEPTION;
+
 		}
 
 		String vista = "appointments/editAppointment";

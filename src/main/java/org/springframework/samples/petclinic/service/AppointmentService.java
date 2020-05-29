@@ -40,14 +40,12 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public Collection<Appointment> findAppointmentsByHairdresser(final Hairdresser hairdresser) throws NoSuchElementException {
-		Collection<Appointment> result = this.appointmentRepo.findAppointmentsByHairdresser(hairdresser);
-		return result;
+		return this.appointmentRepo.findAppointmentsByHairdresser(hairdresser);
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Appointment> findAppointmentsByPet(final Pet pet) throws NoSuchElementException {
-		Collection<Appointment> result = this.appointmentRepo.findAppointmentsByPet(pet);
-		return result;
+		return this.appointmentRepo.findAppointmentsByPet(pet);
 	}
 
 	@Transactional(readOnly = true)

@@ -118,17 +118,18 @@ public class PetController {
 				return PetController.EXCEPTION;
 			}
 
-			if (!owner.getDangerousAnimal() && pet.getDangerous()) {
+			if (Boolean.FALSE.equals(owner.getDangerousAnimal()) && pet.getDangerous()) {
 				model.put(PetController.MESSAGE, "You can't add a new dangerous pet if you don't have the dangerous animals license");
 				return PetController.EXCEPTION;
 			}
-			if (!owner.getNumerousAnimal() && owner.getLivesInCity() && owner.getPets().size() >= 3) {
+			if (Boolean.FALSE.equals(owner.getNumerousAnimal()) && Boolean.TRUE.equals(owner.getLivesInCity()) && owner.getPets().size() >= 3) {
 				model.put(PetController.MESSAGE, "You can't add a new pet if you have three pets without the numerous pets license");
 				return PetController.EXCEPTION;
 			}
-			if (!owner.getNumerousAnimal() && !owner.getLivesInCity() && owner.getPets().size() >= 5) {
+			if (Boolean.FALSE.equals(owner.getNumerousAnimal()) && Boolean.FALSE.equals(owner.getLivesInCity()) && owner.getPets().size() >= 5) {
 				model.put(PetController.MESSAGE, "You can't add a new pet if you have five pets without the numerous pets license");
 				return PetController.EXCEPTION;
+
 			}
 
 			try {
@@ -166,7 +167,7 @@ public class PetController {
 			model.put("pet", pet);
 			return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
-			if (!owner.getDangerousAnimal() && pet.getDangerous()) {
+			if (Boolean.FALSE.equals(owner.getDangerousAnimal()) && Boolean.TRUE.equals(pet.getDangerous())) {
 				model.put(PetController.MESSAGE, "You can't add a new dangerous pet if you don't have the dangerous animals license");
 				return PetController.EXCEPTION;
 			}

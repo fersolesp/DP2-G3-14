@@ -60,8 +60,8 @@ public class AnswerController {
 	public String createAnswer(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
 		Announcement announcement = null;
 		Owner owner = null;
-		List<Answer> answers = new ArrayList<Answer>();
-		List<Pet> pets = new ArrayList<Pet>();
+		List<Answer> answers = new ArrayList<>();
+		List<Pet> pets = new ArrayList<>();
 		String view = "/exception";
 
 		try {
@@ -93,13 +93,14 @@ public class AnswerController {
 			return view;
 		}
 
-		if (!announcement.getCanBeAdopted()) {
+		if (Boolean.FALSE.equals(announcement.getCanBeAdopted())) {
 			modelMap.addAttribute(AnswerController.MENSAJE, "You can't adopt this pet because it can't be adopted");
 			return view;
 		}
 
-		if (!owner.getPositiveHistory()) {
+		if (Boolean.FALSE.equals(owner.getPositiveHistory())) {
 			modelMap.addAttribute(AnswerController.MENSAJE, "You can't adopt a pet if you have a bad history");
+
 			return view;
 		}
 
@@ -111,7 +112,7 @@ public class AnswerController {
 		}
 
 		for (int i = 0; i < pets.size(); i++) {
-			if (pets.get(i).getIsVaccinated() != true) {
+			if (Boolean.FALSE.equals(pets.get(i).getIsVaccinated())) {
 				modelMap.addAttribute(AnswerController.MENSAJE, "You can't send an answer if any of your pets aren't vaccinated");
 				return view;
 			}

@@ -37,8 +37,7 @@ public class AnswerService {
 
 	public Answer findAnswerById(final int answerId) throws NoSuchElementException {
 		Optional<Answer> opt = this.answerRepo.findById(answerId);
-		Answer answer = opt.get();
-		return answer;
+		return opt.get();
 	}
 
 	@Transactional
