@@ -41,6 +41,10 @@ public class InscriptionController {
 	@Autowired
 	private OwnerService		ownerService;
 
+	private static final String MESSAGE = "message";
+	private static final String EXCEPTION = "exception";
+	private static final String INSCRIPTION = "inscription";
+
 
 	@GetMapping("/inscriptions")
 	public String mostrarInscriptions(final ModelMap modelMap) {
@@ -67,16 +71,16 @@ public class InscriptionController {
 		try {
 			inscription = this.inscriptionService.findInscriptionById(inscriptionId);
 			if (!authentication.getName().equals(inscription.get().getOwner().getUser().getUsername())) {
-				modelMap.addAttribute("message", "You cannot access another user's inscription details");
-				return "exception";
+				modelMap.addAttribute(InscriptionController.MESSAGE, "You cannot access another user's inscription details");
+				return InscriptionController.EXCEPTION;
 			} else {
 				String vista = "inscriptions/inscriptionDetails";
-				modelMap.addAttribute("inscription", inscription.get());
+				modelMap.addAttribute(InscriptionController.INSCRIPTION, inscription.get());
 				return vista;
 			}
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Inscription not found");
-			return "exception";
+			modelMap.addAttribute(InscriptionController.MESSAGE, "Inscription not found");
+			return InscriptionController.EXCEPTION;
 		}
 	}
 
@@ -101,8 +105,8 @@ public class InscriptionController {
 		try {
 			course = this.courseService.findCourseById(courseId).get();
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "There are errors validating data");
-			return "exception";
+			modelMap.addAttribute(InscriptionController.MESSAGE, "There are errors validating data");
+			return InscriptionController.EXCEPTION;
 		}
 
 		try {
@@ -118,16 +122,16 @@ public class InscriptionController {
 			numeroPets = (int) StreamSupport.stream(pets.spliterator(), false).count();
 		}
 		if (numeroPets == 0) {
-			modelMap.addAttribute("message", "You have no pets to sign up in a course");
-			return "exception";
+			modelMap.addAttribute(InscriptionController.MESSAGE, "You have no pets to sign up in a course");
+			return InscriptionController.EXCEPTION;
 		}
 
 		//Owner no puede crear una inscripción si no ha pagado las anteriores
 		if (inscriptionsByOwner != null && StreamSupport.stream(inscriptionsByOwner.spliterator(), false).count() != 0) {
 			for (Inscription inscriptionit : inscriptionsByOwner) {
 				if (inscriptionit.getIsPaid() != true) {
-					modelMap.addAttribute("message", "You have to pay previous courses inscriptions");
-					return "exception";
+					modelMap.addAttribute(InscriptionController.MESSAGE, "You have to pay previous courses inscriptions");
+					return InscriptionController.EXCEPTION;
 				}
 			}
 		}
@@ -138,14 +142,14 @@ public class InscriptionController {
 			suma = (int) StreamSupport.stream(inscriptionsByCourse.spliterator(), false).count();
 		}
 		if (suma >= course.getCapacity()) {
-			modelMap.addAttribute("message", "The course is full");
-			return "exception";
+			modelMap.addAttribute(InscriptionController.MESSAGE, "The course is full");
+			return InscriptionController.EXCEPTION;
 		}
 
 		String view = "inscriptions/editInscription";
 		Inscription inscription = new Inscription();
 		inscription.setCourse(course);
-		modelMap.addAttribute("inscription", inscription);
+		modelMap.addAttribute(InscriptionController.INSCRIPTION, inscription);
 		modelMap.addAttribute("course", course);
 		return view;
 	}
@@ -156,7 +160,7 @@ public class InscriptionController {
 		String view = "redirect:/inscriptions";
 		if (result.hasErrors()) {
 			modelMap.addAttribute("course", this.courseService.findCourseById(courseId).get());
-			modelMap.put("inscription", inscription);
+			modelMap.put(InscriptionController.INSCRIPTION, inscription);
 			return "inscriptions/editInscription";
 		} else {
 			inscription.setCourse(this.courseService.findCourseById(courseId).get());
@@ -164,10 +168,10 @@ public class InscriptionController {
 			try {
 				this.inscriptionService.saveInscription(inscription);
 			} catch (Exception e) {
-				modelMap.addAttribute("message", "Error: " + e.getMessage());
-				return "exception";
+				modelMap.addAttribute(InscriptionController.MESSAGE, "Error: " + e.getMessage());
+				return InscriptionController.EXCEPTION;
 			}
-			modelMap.addAttribute("message", "Inscription successfully saved!");
+			modelMap.addAttribute(InscriptionController.MESSAGE, "Inscription successfully saved!");
 		}
 		return view;
 	}
@@ -189,15 +193,15 @@ public class InscriptionController {
 		try {
 			inscription = this.inscriptionService.findInscriptionById(inscriptionId);
 			if (!authentication.getName().equals(this.inscriptionService.findInscriptionById(inscriptionId).get().getOwner().getUser().getUsername())) {
-				modelMap.addAttribute("message", "You cannot delete another user's inscription details");
-				return "exception";
+				modelMap.addAttribute(InscriptionController.MESSAGE, "You cannot delete another user's inscription details");
+				return InscriptionController.EXCEPTION;
 			} else {
 				this.inscriptionService.deleteInscription(inscription.get());
-				modelMap.addAttribute("message", "Inscription successfully deleted");
+				modelMap.addAttribute(InscriptionController.MESSAGE, "Inscription successfully deleted");
 			}
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Inscription not found");
-			return "exception";
+			modelMap.addAttribute(InscriptionController.MESSAGE, "Inscription not found");
+			return InscriptionController.EXCEPTION;
 		}
 		return view;
 	}

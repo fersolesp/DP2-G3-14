@@ -37,6 +37,10 @@ public class AppointmentController {
 	private OwnerService		ownerService;
 	private PetService			petService;
 
+	private static final String MESSAGE = "message";
+	private static final String EXCEPTION = "exception";
+	private static final String APPOINTMENT = "appointment";
+
 
 	@Autowired
 	public AppointmentController(final AppointmentService appointmentService, final HairdresserService hairdresserService, final OwnerService ownerService, final PetService petService) {
@@ -81,16 +85,16 @@ public class AppointmentController {
 		try {
 			appointment = this.appointmentService.findAppointmentById(appointmentId).get();
 			if (!authentication.getName().equals(appointment.getOwner().getUser().getUsername())) {
-				modelMap.addAttribute("message", "You cannot access another user's appointment");
-				return "exception";
+				modelMap.addAttribute(AppointmentController.MESSAGE, "You cannot access another user's appointment");
+				return AppointmentController.EXCEPTION;
 			} else {
 				String vista = "appointments/appointmentDetails";
-				modelMap.addAttribute("appointment", appointment);
+				modelMap.addAttribute(AppointmentController.APPOINTMENT, appointment);
 				return vista;
 			}
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Appointment not found");
-			return "exception";
+			modelMap.addAttribute(AppointmentController.MESSAGE, "Appointment not found");
+			return AppointmentController.EXCEPTION;
 		}
 	}
 
@@ -109,8 +113,8 @@ public class AppointmentController {
 		try {
 			hairdresser = this.hairdresserService.findHairdresserById(hairdresserId).get();
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "There are errors validating data");
-			return "exception";
+			modelMap.addAttribute(AppointmentController.MESSAGE, "There are errors validating data");
+			return AppointmentController.EXCEPTION;
 		}
 
 		try {
@@ -126,30 +130,30 @@ public class AppointmentController {
 			numeroPets = (int) StreamSupport.stream(allPets.spliterator(), false).count();
 		}
 		if (numeroPets == 0) {
-			modelMap.addAttribute("message", "You have no pets to make an appointment");
-			return "exception";
+			modelMap.addAttribute(AppointmentController.MESSAGE, "You have no pets to make an appointment");
+			return AppointmentController.EXCEPTION;
 		}
 
 		// Owner no puede crear un appointment si no ha pagado las anteriores
 		if (appointmentsByOwner != null && StreamSupport.stream(appointmentsByOwner.spliterator(), false).count() != 0) {
 			for (Appointment a : appointmentsByOwner) {
 				if (a.getIsPaid() != true) {
-					modelMap.addAttribute("message", "You have to pay previous appointments");
-					return "exception";
+					modelMap.addAttribute(AppointmentController.MESSAGE, "You have to pay previous appointments");
+					return AppointmentController.EXCEPTION;
 				}
 			}
 		}
 
 		// Owner no puede crear un appointment a un hairdresser que no está activo
 		if (!hairdresser.getActive()) {
-			modelMap.addAttribute("message", "You cannot create an appointment for a inactive hairdresser");
-			return "exception";
+			modelMap.addAttribute(AppointmentController.MESSAGE, "You cannot create an appointment for a inactive hairdresser");
+			return AppointmentController.EXCEPTION;
 		}
 
 		String vista = "appointments/editAppointment";
 		Appointment appointment = new Appointment();
 		appointment.setHairdresser(hairdresser);
-		modelMap.addAttribute("appointment", appointment);
+		modelMap.addAttribute(AppointmentController.APPOINTMENT, appointment);
 		modelMap.addAttribute("hairdresser", hairdresser);
 		return vista;
 	}
@@ -160,7 +164,7 @@ public class AppointmentController {
 
 		if (result.hasErrors()) {
 			modelMap.addAttribute("hairdresser", this.hairdresserService.findHairdresserById(hairdresserId).get());
-			modelMap.put("appointment", appointment);
+			modelMap.put(AppointmentController.APPOINTMENT, appointment);
 			return "appointments/editAppointment";
 		} else {
 			appointment.setHairdresser(this.hairdresserService.findHairdresserById(hairdresserId).get());
@@ -175,8 +179,8 @@ public class AppointmentController {
 				if (appointment.getDate().isEqual(fechaExistente)) {
 					// !appointment.getDate().isAfter(fechaExistente.plusMinutes(30)) ||
 					//   !appointment.getDate().isBefore(fechaExistente.minusMinutes(30))
-					modelMap.addAttribute("message", "Hairdresser already has an appointment at that time");
-					return "exception";
+					modelMap.addAttribute(AppointmentController.MESSAGE, "Hairdresser already has an appointment at that time");
+					return AppointmentController.EXCEPTION;
 				}
 			}
 			//Owner no puede coger cita mas de una vez por mascota al día
@@ -186,18 +190,18 @@ public class AppointmentController {
 			for (Appointment a : appointmentsByPet) {
 				LocalDate fechaExistente = LocalDate.from(a.getDate());
 				if (fechaExistente.isEqual(LocalDate.from(appointment.getDate()))) {
-					modelMap.addAttribute("message", "You cannot make more than one appointment per day for the same pet");
-					return "exception";
+					modelMap.addAttribute(AppointmentController.MESSAGE, "You cannot make more than one appointment per day for the same pet");
+					return AppointmentController.EXCEPTION;
 				}
 			}
 
 			try {
 				this.appointmentService.saveAppointment(appointment);
 			} catch (Exception e) {
-				modelMap.addAttribute("message", "Error: " + e.getMessage());
-				return "exception";
+				modelMap.addAttribute(AppointmentController.MESSAGE, "Error: " + e.getMessage());
+				return AppointmentController.EXCEPTION;
 			}
-			modelMap.addAttribute("message", "Appointment successfully saved!");
+			modelMap.addAttribute(AppointmentController.MESSAGE, "Appointment successfully saved!");
 		}
 
 		return vista;
@@ -211,15 +215,15 @@ public class AppointmentController {
 		try {
 			appointment = this.appointmentService.findAppointmentById(appointmentId);
 			if (!authentication.getName().equals(this.appointmentService.findAppointmentById(appointmentId).get().getOwner().getUser().getUsername())) {
-				modelMap.addAttribute("message", "You cannot delete another user's appointment");
-				return "exception";
+				modelMap.addAttribute(AppointmentController.MESSAGE, "You cannot delete another user's appointment");
+				return AppointmentController.EXCEPTION;
 			} else {
 				this.appointmentService.deleteAppointment(appointment.get());
-				modelMap.addAttribute("message", "Appointment successfully deleted");
+				modelMap.addAttribute(AppointmentController.MESSAGE, "Appointment successfully deleted");
 			}
 		} catch (Exception e) {
-			modelMap.addAttribute("message", "Error: " + e.getMessage());
-			return "exception";
+			modelMap.addAttribute(AppointmentController.MESSAGE, "Error: " + e.getMessage());
+			return AppointmentController.EXCEPTION;
 		}
 		return vista;
 	}
