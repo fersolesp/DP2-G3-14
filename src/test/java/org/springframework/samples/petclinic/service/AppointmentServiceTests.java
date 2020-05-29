@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-@AutoConfigureTestDatabase(replace=Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 public class AppointmentServiceTests {
 
 	@Autowired
@@ -115,9 +115,11 @@ public class AppointmentServiceTests {
 		Optional<Appointment> appointment = this.appointmentService.findAppointmentById(id);
 		int count = appointments.size();
 
-		org.assertj.core.api.Assertions.assertThat(appointment.isPresent());
+		org.assertj.core.api.Assertions.assertThat(appointment).isPresent();
 		this.appointmentService.deleteAppointment(appointment.get());
-		org.assertj.core.api.Assertions.assertThat(!appointment.isPresent());
+		Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.appointmentService.findAppointmentById(id);
+		});
 
 		appointments = this.appointmentService.findAppointmentsByOwner(owner);
 		org.assertj.core.api.Assertions.assertThat(appointments.size()).isEqualTo(count - 1);
