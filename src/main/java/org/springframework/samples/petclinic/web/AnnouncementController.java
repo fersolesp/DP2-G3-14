@@ -44,6 +44,14 @@ public class AnnouncementController {
 	@Autowired
 	private AnswerService		answerService;
 
+	private static final String	ESUSUARIOANONIMO	= "isanonymoususer";
+	private static final String	USUARIOANONIMO		= "anonymoususer";
+	private static final String	ANUNCIO				= "announcement";
+	private static final String	ANUNCIONOENCONTRADO	= "Announcement not found";
+	private static final String	MENSAJE				= "message";
+	private static final String	EXCEPCION			= "exception";
+	private static final String	EDICIONANUNCIO		= "announcements/editAnnouncement";
+
 
 	@GetMapping()
 	public String mostrarAnnouncements(final ModelMap modelMap) {
@@ -53,7 +61,7 @@ public class AnnouncementController {
 		try {
 			Iterable<PetAnnouncement> announcements = this.announcementService.findAllAnnouncements();
 			modelMap.addAttribute("announcements", announcements);
-			modelMap.addAttribute("isanonymoususer", SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser"));
+			modelMap.addAttribute(AnnouncementController.ESUSUARIOANONIMO, SecurityContextHolder.getContext().getAuthentication().getName().equals(AnnouncementController.USUARIOANONIMO));
 
 		} catch (NoSuchElementException e) {
 			isempty = true;
@@ -71,16 +79,16 @@ public class AnnouncementController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		try {
 			announcement = this.announcementService.findAnnouncementById(announcementId).get();
-			modelMap.addAttribute("announcement", announcement);
-			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
+			modelMap.addAttribute(AnnouncementController.ANUNCIO, announcement);
+			modelMap.addAttribute(AnnouncementController.ESUSUARIOANONIMO, authentication.getName().equals(AnnouncementController.USUARIOANONIMO));
 
 			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
 
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Announcement not found");
-			return "exception";
+			modelMap.addAttribute(AnnouncementController.MENSAJE, AnnouncementController.ANUNCIONOENCONTRADO);
+			return AnnouncementController.EXCEPCION;
 		}
-		if (authentication.getName() != "anonymousUser") {
+		if (authentication.getName() != AnnouncementController.USUARIOANONIMO) {
 			Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
 			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
 		}
@@ -89,9 +97,9 @@ public class AnnouncementController {
 
 	@GetMapping(path = "new")
 	public String createAnnouncement(final ModelMap modelMap) {
-		String view = "announcements/editAnnouncement";
+		String view = AnnouncementController.EDICIONANUNCIO;
 		Announcement announcement = new Announcement();
-		modelMap.addAttribute("announcement", announcement);
+		modelMap.addAttribute(AnnouncementController.ANUNCIO, announcement);
 		return view;
 	}
 
@@ -99,15 +107,15 @@ public class AnnouncementController {
 	public String saveAnnouncement(@Valid final Announcement announcement, final BindingResult result, final ModelMap modelMap) {
 		String view = "redirect:/announcements";
 		if (result.hasErrors()) {
-			modelMap.addAttribute("announcement", announcement);
-			return "announcements/editAnnouncement";
+			modelMap.addAttribute(AnnouncementController.ANUNCIO, announcement);
+			return AnnouncementController.EDICIONANUNCIO;
 		} else {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String userName = authentication.getName();
 			Owner owner = this.ownerService.findOwnerByUserName(userName);
 			announcement.setOwner(owner);
 			this.announcementService.saveAnnouncement(announcement);
-			modelMap.addAttribute("message", "Announcement successfully saved!");
+			modelMap.addAttribute(AnnouncementController.MENSAJE, "Announcement successfully saved!");
 			return view;
 		}
 	}
@@ -133,14 +141,14 @@ public class AnnouncementController {
 				answers.forEach(a -> this.answerService.delete(a));
 
 				this.announcementService.deleteAnnouncement(announcement.get());
-				modelMap.addAttribute("message", "Announcement successfully deleted");
+				modelMap.addAttribute(AnnouncementController.MENSAJE, "Announcement successfully deleted");
 			} else {
-				modelMap.addAttribute("message", "You cannot delete another user's announcement details");
-				return "exception";
+				modelMap.addAttribute(AnnouncementController.MENSAJE, "You cannot delete another user's announcement details");
+				return AnnouncementController.EXCEPCION;
 			}
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Announcement not found");
-			return "exception";
+			modelMap.addAttribute(AnnouncementController.MENSAJE, AnnouncementController.ANUNCIONOENCONTRADO);
+			return AnnouncementController.EXCEPCION;
 		}
 
 		return view;
@@ -149,17 +157,17 @@ public class AnnouncementController {
 
 	@GetMapping(path = "/update/{announcementId}")
 	public String iniactualizarAnnouncements(@PathVariable("announcementId") final int announcementId, final ModelMap modelMap) {
-		String vista = "announcements/editAnnouncement";
+		String vista = AnnouncementController.EDICIONANUNCIO;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		Announcement announcement = null;
 		try {
 			announcement = this.announcementService.findAnnouncementById(announcementId).get();
-			modelMap.addAttribute("announcement", announcement);
+			modelMap.addAttribute(AnnouncementController.ANUNCIO, announcement);
 
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Announcement not found");
-			return "exception";
+			modelMap.addAttribute(AnnouncementController.MENSAJE, AnnouncementController.ANUNCIONOENCONTRADO);
+			return AnnouncementController.EXCEPCION;
 		}
 
 		Owner owner = this.ownerService.findOwnerByUserName(authentication.getName());
@@ -168,7 +176,7 @@ public class AnnouncementController {
 		String userNameAnnouncement = user.getUsername();
 
 		if (owner.getUser().getUsername() != userNameAnnouncement) {
-			modelMap.addAttribute("message", "You can't update another owner's announcement");
+			modelMap.addAttribute(AnnouncementController.MENSAJE, "You can't update another owner's announcement");
 			vista = "/exception";
 		}
 		modelMap.addAttribute("user", userNameAnnouncement);
@@ -187,17 +195,17 @@ public class AnnouncementController {
 			announcement.setOwner(owner);
 			announcement.setId(announcementId);
 			this.announcementService.saveAnnouncement(announcement);
-			modelMap.addAttribute("message", "Announcement successfully updated");
+			modelMap.addAttribute(AnnouncementController.MENSAJE, "Announcement successfully updated");
 
-			modelMap.addAttribute("isanonymoususer", authentication.getName().equals("anonymousUser"));
+			modelMap.addAttribute(AnnouncementController.ESUSUARIOANONIMO, authentication.getName().equals(AnnouncementController.USUARIOANONIMO));
 			modelMap.addAttribute("positiveHistory", owner.getPositiveHistory());
 			modelMap.addAttribute("ismine", announcement.getOwner().getUser().getUsername().equals(authentication.getName()));
 
 		} else {
 			announcement.setOwner(owner);
 			announcement.setId(announcementId);
-			modelMap.put("announcement", announcement);
-			vista = "announcements/editAnnouncement";
+			modelMap.put(AnnouncementController.ANUNCIO, announcement);
+			vista = AnnouncementController.EDICIONANUNCIO;
 		}
 		return vista;
 	}
