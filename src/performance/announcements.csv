@@ -1,0 +1,1001 @@
+id,name,petName,description,canBeAdopted,type
+5,Kota Kinabalu,Tomasina,Serbia and Montenegro,True,snake
+6,Port of Spain,Lusa,Holy See (Vatican City State),False,lizard
+7,Valdivia,Alisha,"Tanzania, United Republic of",True,lizard
+8,Turin,Antonietta,United Arab Emirates,True,lizard
+9,El Aaiún,Emylee,El Salvador,False,dog
+10,Magadan,Tracey,Papua New Guinea,True,dog
+11,Rabat,Lanna,Jersey,True,bird
+12,New Delhi,Dorothy,"Moldova, Republic of",True,lizard
+13,Conakry,Diena,Australia,True,dog
+14,Amman,Ada,Qatar,False,dog
+15,Leeds,Jere,Romania,True,hamster
+16,San Diego,Joceline,Costa Rica,True,lizard
+17,Innsbruck,Rosabelle,Croatia,True,bird
+18,Portland,Chastity,Fiji,True,bird
+19,Nuuk,Blake,Guernsey,False,dog
+20,Greenwich,Marika,Guadeloupe,True,lizard
+21,Belgrade,Beverley,Italy,False,bird
+22,Chennai,Britte,Malaysia,False,lizard
+23,New Delhi,Ana,Somalia,True,bird
+24,Konya,Audrie,Saudi Arabia,False,hamster
+25,Yaoundé,Mariann,Guernsey,False,snake
+26,Longyearbyen,Sheelagh,Isle of Man,False,hamster
+27,Belmopan,Nadine,Guam,False,snake
+28,Atlanta,Ira,Peru,False,cat
+29,Conakry,Kenna,Martinique,True,dog
+30,Multan,Tersina,Nepal,False,hamster
+31,Nagoya,Sonni,Slovenia,False,bird
+32,Cockburn Town,Catharine,French Guiana,False,hamster
+33,Alor Star,Nariko,Falkland Islands (Malvinas),False,bird
+34,Wuhan,Kaia,Greenland,False,dog
+35,Adana,Sara-Ann,Italy,True,cat
+36,La Serena,Luci,Tuvalu,True,bird
+37,Arbil,Sharai,Sweden,True,cat
+38,Palma,Elmira,Croatia,True,dog
+39,Baghdad,Claresta,Brunei Darussalam,True,dog
+40,Beirut,Jackie,"Taiwan, Province of China",True,cat
+41,Koror,Concettina,Argentina,False,lizard
+42,Townsville,Siana,"Cote D""Ivoire",True,dog
+43,Rockhampton,Peri,Grenada,True,hamster
+44,Basra,Gusty,Malta,False,snake
+45,Phoenix,Vevay,Palau,True,lizard
+46,Odessa,Romona,Italy,True,lizard
+47,Kiev,Nyssa,Isle of Man,True,snake
+48,Budapest,Tori,Bahrain,False,cat
+49,Hat Yai,Linet,Georgia,False,hamster
+50,Abu Dhabi,Gale,Philippines,False,lizard
+51,San Fernando,Marsiella,Papua New Guinea,False,cat
+52,Chişinău,Mallory,Gambia,False,hamster
+53,Brikama,Candi,French Southern Territories,True,cat
+54,Turin,Belva,Azerbaijan,False,dog
+55,Bratsk,Gui,Mozambique,True,lizard
+56,Brikama,Rivalee,Cayman Islands,False,cat
+57,Memphis,Rubie,Albania,True,cat
+58,Praia,Letizia,Equatorial Guinea,True,lizard
+59,Yokohama,Celisse,Gambia,True,lizard
+60,Casablanca,Allyce,Martinique,True,cat
+61,Livingstone,Hope,Fiji,True,bird
+62,Shillong,Clementine,Kiribati,True,lizard
+63,Sapporo,Tomasina,Lebanon,True,lizard
+64,St. John's,Melisent,Monaco,False,hamster
+65,Belgrade,Quintina,Svalbard and Jan Mayen,False,snake
+66,Hat Yai,Liana,Latvia,True,hamster
+67,Rotterdam,Anallese,"Macedonia, The Former Yugoslav Republic of",False,bird
+68,Gaziantep,Dede,Peru,False,bird
+69,Vatican City,Mady,Greece,False,cat
+70,Busan,Sabina,Liberia,False,snake
+71,Lima,Desirae,Tokelau,False,dog
+72,Bucharest,Basia,"Tanzania, United Republic of",False,lizard
+73,Split (city),Antonietta,Zimbabwe,False,dog
+74,Bissau,Jennica,Guinea-Bissau,True,lizard
+75,Cologne,Nita,New Zealand,False,dog
+76,Vaduz,Regina,Honduras,True,bird
+77,Yaren District,Gisela,Bangladesh,True,hamster
+78,Funafuti,Priscilla,Afghanistan,True,lizard
+79,Jinan,Margette,Switzerland,False,hamster
+80,Maceió,Ivett,India,True,hamster
+81,Kunming,Alyda,China,False,hamster
+82,Nice,Blinni,Swaziland,True,cat
+83,Saint Petersburg,Dari,Sweden,False,hamster
+84,Abu Dhabi,Clo,Mauritius,True,lizard
+85,Bursa,Dolli,United States,False,bird
+86,Wellington,Andree,Sudan,False,cat
+87,Da Nang,Ericka,San Marino,False,bird
+88,Belmopan,Cathie,"Moldova, Republic of",False,lizard
+89,Tiraspol,Blake,Djibouti,True,bird
+90,Hamburg,Meg,Papua New Guinea,False,lizard
+91,Nairobi,Desirae,Saint Pierre and Miquelon,False,snake
+92,Tucson,Kirbee,Brazil,False,dog
+93,Tashkent,Blondelle,Honduras,True,lizard
+94,Innsbruck,Melisent,Cambodia,False,hamster
+95,Aarhus,Dorthy,South Africa,False,cat
+96,Serekunda,Letizia,Maldives,True,bird
+97,Antwerp,Gratia,Latvia,False,lizard
+98,Marrakech,Emelina,Israel,False,hamster
+99,Thessaloniki,Rubie,Kenya,True,snake
+100,Birmingham,Felice,Slovakia,False,bird
+101,Ahmedabad,Tomasina,Niger,True,cat
+102,Bujumbura,Lanae,Heard Island and Mcdonald Islands,True,hamster
+103,Louisville,Ofilia,Congo,True,dog
+104,Sacramento,Beatriz,Mongolia,False,lizard
+105,Nagoya,Joleen,Suriname,False,lizard
+106,Singapore,Elise,Nigeria,False,hamster
+107,Cardiff,Leontine,Suriname,True,cat
+108,Sabha,Starla,Denmark,True,lizard
+109,Dunedin,Jobi,Sudan,False,dog
+110,London,Charmaine,Saint Pierre and Miquelon,True,lizard
+111,Colombo,Chrystel,Austria,True,hamster
+112,Birmingham,Lila,Papua New Guinea,False,hamster
+113,Barcelona,Amara,Congo,True,snake
+114,Bangalore,Giustina,Isle of Man,False,hamster
+115,Washington,Marnia,Puerto Rico,False,cat
+116,Lahore,Tabbatha,Philippines,False,hamster
+117,Surat,Robinia,Netherlands Antilles,True,cat
+118,Rabi Island,Imojean,United States,False,lizard
+119,Cork (city),Emelina,Albania,True,cat
+120,Alexandria,Nariko,Mongolia,False,hamster
+121,Austin,Micheline,Kiribati,False,hamster
+122,Basse-Terre,Lulita,Zambia,True,bird
+123,Nukus,Noelle,Ghana,False,hamster
+124,Yekaterinburg,Kathy,Nepal,False,snake
+125,Ashgabat,Cecile,Japan,True,snake
+126,Hanga Roa,Norine,"Taiwan, Province of China",True,lizard
+127,Islamabad,Ninnetta,Swaziland,False,bird
+128,Dodoma,Cam,Cameroon,True,cat
+129,Daegu,Meriel,Portugal,True,dog
+130,Ndola,Claresta,Bahrain,False,hamster
+131,Naples,Orelia,Armenia,True,hamster
+132,Shijiazhuang,Laurene,Indonesia,False,bird
+133,Adelaide,Gusella,Vanuatu,True,bird
+134,Jeddah,Karina,Faroe Islands,False,lizard
+135,Maracaibo,Melina,Western Sahara,False,hamster
+136,Milwaukee,Dawn,Egypt,False,lizard
+137,Castries,Fidelia,Greenland,True,hamster
+138,Geelong,Melodie,Saint Vincent and the Grenadines,True,snake
+139,Wichita,Carolina,Hungary,True,hamster
+140,Lubumbashi,Doralynne,Bangladesh,False,bird
+141,Singapore,Pierette,Canada,False,lizard
+142,Dhaka,Lory,Turkmenistan,True,hamster
+143,Davao City,Clo,Guernsey,True,hamster
+144,Milwaukee,Corly,Poland,False,dog
+145,Asunción,Minne,United States,False,hamster
+146,Kinshasa,Penelopa,Chad,False,snake
+147,Tbilisi,Rosaline,Paraguay,True,lizard
+148,Tbilisi,Letizia,Japan,False,lizard
+149,Turin,Violet,Mozambique,False,snake
+150,Rabi Island,Aili,Germany,False,dog
+151,Montreal,Daune,Tonga,True,cat
+152,Barranquilla,Lelah,Antarctica,False,lizard
+153,Graz,Melina,Djibouti,False,lizard
+154,Minneapolis,Benita,Maldives,False,cat
+155,Harbin,Joy,"Palestinian Territory, Occupied",True,dog
+156,Petropavlovsk-Kamchatsky,Jere,Uganda,False,lizard
+157,Tashkent,Lauryn,Netherlands Antilles,True,lizard
+158,Shenzhen,Margalo,Denmark,True,dog
+159,Bucharest,Nannie,Madagascar,True,bird
+160,Vitória,Valeda,Anguilla,False,hamster
+161,Mogadishu,Frances,Maldives,False,dog
+162,Tallinn,Susette,Burundi,True,lizard
+163,Moroni,Sadie,Belarus,False,lizard
+164,Cape Town,Ida,Greece,True,hamster
+165,Cayenne,Winifred,Ukraine,True,hamster
+166,Lviv,Edee,Eritrea,False,dog
+167,Oslo,Sibella,Viet Nam,True,dog
+168,Greenwich,Tomasina,Austria,True,dog
+169,Asunción,Dacia,Tonga,False,dog
+170,Alofi,Tobe,Guinea-Bissau,False,dog
+171,Singapore,Dyann,American Samoa,False,bird
+172,Charlottetown,Joelly,Denmark,True,bird
+173,Pontianak,Annora,Mexico,False,dog
+174,Rawalpindi,Darlleen,Iraq,True,dog
+175,Yaoundé,Margalo,Angola,False,cat
+176,Busan,Lynde,Gambia,True,cat
+177,Abu Dhabi,Rosaline,"Korea, Democratic People""S Republic of",False,dog
+178,Port Vila,Melodie,Saint Helena,True,lizard
+179,Mendoza,Wileen,Belarus,False,snake
+180,Jeddah,Isa,Ecuador,False,dog
+181,Kyoto,Ellette,Slovenia,True,bird
+182,Singapore,Berta,Grenada,True,snake
+183,Tartu,Karolina,Tunisia,True,lizard
+184,Tabriz,Gratia,Jamaica,True,bird
+185,Santiago de Cuba,Deirdre,Pitcairn,True,cat
+186,Tashkent,Blinni,Kuwait,False,dog
+187,Zhengzhou,Shel,"Congo, The Democratic Republic of the",True,cat
+188,Birkirkara,Madelle,Venezuela,False,snake
+189,Bogotá,Romona,Antigua and Barbuda,True,snake
+190,Hanover,Mureil,Australia,False,cat
+191,Tehran,Nollie,Saint Kitts and Nevis,True,hamster
+192,St. George's,Ottilie,Suriname,False,hamster
+193,Iloilo City,Kalina,Western Sahara,False,hamster
+194,İzmir,Dianemarie,Nigeria,True,lizard
+195,Bergen,Elka,United States,False,bird
+196,Banjul,Desirae,Iceland,True,dog
+197,Ahmedabad,Karly,Turkmenistan,False,lizard
+198,Nukulaelae,Aimil,Holy See (Vatican City State),True,snake
+199,Kuala Lumpur,Gratia,"Taiwan, Province of China",True,hamster
+200,Yokohama,Tracey,Viet Nam,False,dog
+201,Nukuʻalofa,Demetris,Barbados,True,hamster
+202,Nakhon Ratchasima,Marylou,Ethiopia,True,dog
+203,La Serena,Glynnis,Liberia,True,lizard
+204,Medina,Kristan,French Guiana,False,cat
+205,Christchurch,Charlena,Faroe Islands,True,snake
+206,San Diego,Deane,Martinique,False,cat
+207,Vatican City,Willetta,Heard Island and Mcdonald Islands,True,lizard
+208,Apia,Jerry,South Africa,False,cat
+209,Kigali,Donnie,Congo,False,dog
+210,Port Louis,Carmencita,Kuwait,False,lizard
+211,St. Louis,Wilma,Cook Islands,False,hamster
+212,Majuro,Lexine,Mayotte,False,cat
+213,Port Vila,Wynne,Botswana,False,lizard
+214,Charlotte,Arlina,Jordan,False,snake
+215,Ankara,Jerry,Dominican Republic,False,bird
+216,Manila,Kristina,Latvia,True,lizard
+217,Belmopan,Verla,Nepal,True,hamster
+218,Baku,Christy,Uruguay,False,hamster
+219,Glasgow,Lucille,"Tanzania, United Republic of",False,hamster
+220,Belmopan,Elmira,"Congo, The Democratic Republic of the",True,hamster
+221,Houston,Darci,Monaco,False,hamster
+222,San Antonio,Camile,Norfolk Island,False,lizard
+223,Beirut,Edith,Hungary,True,lizard
+224,Kuala Lumpur,Ada,Antarctica,True,cat
+225,Apia,Nadine,Estonia,True,lizard
+226,Maceió,Allis,Greenland,True,cat
+227,Las Palmas de Gran Canaria,Gusty,Samoa,False,snake
+228,Saint-Denis,Fawne,Kiribati,True,lizard
+229,Wollongong,Silvana,Kiribati,True,bird
+230,Nagoya,Gerrie,Netherlands,True,bird
+231,Dar es Salaam,Karina,Kazakhstan,False,bird
+232,Oranjestad,Joane,"Macedonia, The Former Yugoslav Republic of",True,bird
+233,Bratislava,Deedee,AndorrA,False,bird
+234,Louisville,Siana,Australia,False,cat
+235,Manila,Gabi,Tuvalu,False,dog
+236,Porto-Novo,Tobe,Netherlands Antilles,False,bird
+237,Da Nang,Alex,Cameroon,False,bird
+238,Lviv,June,Estonia,False,hamster
+239,Palembang,Paola,Ireland,True,cat
+240,Tabriz,Marjie,Cayman Islands,False,bird
+241,Hagåtña,Tilly,Heard Island and Mcdonald Islands,False,snake
+242,Hanga Roa,Nickie,South Georgia and the South Sandwich Islands,True,dog
+243,Belém,Tani,Mauritania,False,lizard
+244,Bissau,Nessie,AndorrA,False,lizard
+245,Ulan Bator,Jenilee,Bhutan,True,snake
+246,Stanley,Myrtice,South Georgia and the South Sandwich Islands,False,snake
+247,Liverpool,Ursulina,Gambia,True,hamster
+248,Shanghai,Daune,Colombia,True,dog
+249,Graz,Karina,United Arab Emirates,True,snake
+250,Atlanta,Charmaine,Gabon,True,snake
+251,Algiers,Layla,Norway,True,bird
+252,Dili,Rivalee,Dominican Republic,True,lizard
+253,Chişinău,Collen,Maldives,False,bird
+254,Osaka,Gale,Viet Nam,True,snake
+255,Yellowknife,Carmencita,Malawi,True,dog
+256,Minneapolis,Maridel,Germany,False,hamster
+257,Denpasar,Linzy,Saint Pierre and Miquelon,False,bird
+258,Campo Grande,Jenilee,Austria,True,cat
+259,Ndola,Dominga,Vanuatu,False,snake
+260,Honiara,Maurene,Mauritania,False,dog
+261,Iloilo City,Jinny,Chad,True,dog
+262,Barranquilla,Silvana,Saint Vincent and the Grenadines,False,snake
+263,Norilsk,Penelopa,United Arab Emirates,False,lizard
+264,Ndola,Melanie,Yemen,True,lizard
+265,Nouméa,Jacenta,Bolivia,True,bird
+266,Shillong,Elfreda,Jamaica,False,lizard
+267,Sapporo,Ellette,Malaysia,True,snake
+268,Iloilo City,Gabi,Montserrat,False,bird
+269,The Valley,Ekaterina,Israel,False,bird
+270,South Tarawa,Elie,Heard Island and Mcdonald Islands,True,cat
+271,Taipei,Rhoda,Greenland,False,dog
+272,Manchester,Catharine,Panama,False,hamster
+273,Ilhéus,Goldie,Antarctica,False,bird
+274,Shigatse,Malina,Ireland,True,lizard
+275,Mbabane,Kerrin,Belarus,False,snake
+276,Bishkek,Marcelline,Lesotho,True,snake
+277,Maceió,Elyssa,Guernsey,True,dog
+278,Port of Spain,Farrah,Liberia,True,bird
+279,Toronto,Arlina,Burkina Faso,True,hamster
+280,Atlanta,Alisha,Chile,True,dog
+281,Cairns,Justinn,Tunisia,False,hamster
+282,Luanda,Millie,Niger,False,lizard
+283,Fortaleza,Dania,Croatia,True,dog
+284,Bulawayo,Danika,Madagascar,False,dog
+285,Port Blair,Kerrin,Swaziland,True,snake
+286,Singapore,Bernardine,Guatemala,False,snake
+287,Zürich,Keelia,Guinea-Bissau,False,lizard
+288,Managua,Violet,Pitcairn,False,hamster
+289,Nassau,Zaria,Antigua and Barbuda,True,bird
+290,Kansas City,Dorene,Indonesia,False,hamster
+291,City of San Marino,Celestyna,Latvia,False,dog
+292,Port Louis,Fayre,Costa Rica,True,dog
+293,Jeddah,Christal,"Iran, Islamic Republic Of",False,bird
+294,Fredericton,Belinda,Uganda,True,dog
+295,Sofia,Merci,"Taiwan, Province of China",True,hamster
+296,Miami,Gwyneth,Antigua and Barbuda,False,snake
+297,Phnom Penh,Janis,Ghana,True,dog
+298,Kharkiv,Brianna,Haiti,True,dog
+299,Denpasar,Elora,Ghana,True,bird
+300,Sapporo,Caryl,Guyana,True,snake
+301,Tirana,Marcy,Cayman Islands,True,dog
+302,Warsaw,Robinia,Svalbard and Jan Mayen,True,lizard
+303,Damascus,Tracey,Nauru,False,cat
+304,Naypyidaw,Joy,Colombia,False,lizard
+305,Medellín,Emmey,Grenada,True,bird
+306,Gdańsk,Grier,Singapore,True,dog
+307,Lubumbashi,Augustine,Iraq,True,bird
+308,Los Angeles,Emma,Bhutan,True,dog
+309,Taichung,Lyssa,Sao Tome and Principe,False,hamster
+310,Djibouti (city),Gale,Indonesia,True,bird
+311,Santa Cruz de la Sierra,Gertrud,Morocco,True,snake
+312,Honiara,Sheree,Bosnia and Herzegovina,False,dog
+313,Split (city),Merrie,Bangladesh,False,lizard
+314,Lhasa,Teriann,Azerbaijan,False,cat
+315,Bangalore,Clo,Dominica,True,hamster
+316,Perth,Merry,Saint Lucia,True,lizard
+317,Jinan,Ardys,Marshall Islands,False,hamster
+318,Malé,Mathilda,"Congo, The Democratic Republic of the",False,cat
+319,Maseru,Ekaterina,Costa Rica,True,hamster
+320,Barcelona,Angelique,Norway,False,lizard
+321,Kolkata,Philis,Turkey,True,hamster
+322,Newcastle,Caressa,Spain,True,cat
+323,Birmingham,Shandie,Tokelau,True,lizard
+324,Berlin,Angela,"Taiwan, Province of China",True,bird
+325,Stuttgart,Krystle,Netherlands,False,snake
+326,İzmir,Sherrie,Luxembourg,True,cat
+327,Kuala Lumpur,Alie,AndorrA,False,bird
+328,Shigatse,Dania,Equatorial Guinea,False,snake
+329,Nagpur,Alyda,Finland,False,lizard
+330,Perm,Catharine,Swaziland,True,snake
+331,Guwahati,Olwen,Eritrea,False,cat
+332,Petropavlovsk-Kamchatsky,Annabela,Portugal,True,bird
+333,Thimphu,Nannie,"Moldova, Republic of",True,lizard
+334,Tijuana,Lelah,Christmas Island,True,bird
+335,Portland,Leeanne,United States,False,lizard
+336,Canberra,Lynde,Israel,False,lizard
+337,Taipei,Perry,Grenada,True,cat
+338,Roseau,Berta,Azerbaijan,True,hamster
+339,Livingstone,Thalia,Jersey,False,hamster
+340,Milan,Kirstin,Israel,True,cat
+341,Thiès,Meg,Colombia,False,lizard
+342,Ljubljana,Lita,Afghanistan,False,bird
+343,Adelaide,Gusty,Paraguay,False,dog
+344,Chicago,Candi,"Palestinian Territory, Occupied",True,lizard
+345,Willemstad,Mariann,Colombia,True,snake
+346,Albuquerque,Gwyneth,Malawi,False,cat
+347,Lusaka,Sadie,Malaysia,False,dog
+348,Leipzig,Addia,Liberia,True,cat
+349,Hong Kong,Lauryn,Armenia,True,dog
+350,Chuí,Celestyna,Cameroon,False,hamster
+351,Handan,Winifred,"Congo, The Democratic Republic of the",False,snake
+352,Incheon,Dianemarie,Nepal,True,hamster
+353,Tagbilaran,Ira,Honduras,False,snake
+354,Saint John,Berget,Burundi,False,snake
+355,San Antonio,Giustina,Philippines,True,bird
+356,Cairo,Trixi,Liechtenstein,False,cat
+357,Port Blair,Frieda,Cook Islands,False,lizard
+358,Dakar,Carree,Bangladesh,True,dog
+359,Whitehorse,Fawne,Czech Republic,False,cat
+360,Apia,Rivalee,Central African Republic,False,hamster
+361,Tiraspol,Jordan,Canada,True,cat
+362,New York City,Shauna,Egypt,True,bird
+363,Ilhéus,Talya,Reunion,False,cat
+364,Macau,Brietta,Lebanon,False,dog
+365,Vaduz,Layla,Portugal,False,lizard
+366,Gdańsk,Deirdre,Cocos (Keeling) Islands,True,hamster
+367,Belmopan,Tressa,Albania,True,dog
+368,Maracaibo,Sallie,Colombia,True,hamster
+369,Yaren District,Tori,Kiribati,True,bird
+370,Chengdu,Ernesta,Malaysia,True,bird
+371,Doha,Catrina,Kuwait,False,cat
+372,Belize City,Beth,Heard Island and Mcdonald Islands,False,bird
+373,Calama,Willetta,Northern Mariana Islands,True,lizard
+374,Shenyang,Correy,Jersey,False,snake
+375,Nakhon Ratchasima,Jackie,Turkmenistan,True,hamster
+376,Darwin,Maud,Italy,True,snake
+377,Rabat,Carlie,Guinea-Bissau,True,lizard
+378,Forked River,Jsandye,"Iran, Islamic Republic Of",False,bird
+379,Astana,Gaylene,Ghana,False,hamster
+380,Reykjavík,Ezmeralda,Dominican Republic,False,dog
+381,Nukus,Shandie,Mongolia,False,dog
+382,Kingston,Chastity,Montserrat,True,bird
+383,Longyearbyen,Livvyy,"Taiwan, Province of China",True,hamster
+384,Assis,Liana,Switzerland,True,dog
+385,Tagbilaran,Trixi,Serbia and Montenegro,False,hamster
+386,Greenwich,Ilse,Ecuador,True,snake
+387,Bangalore,Ketti,Turks and Caicos Islands,True,bird
+388,Ho Chi Minh City,Brana,Nauru,False,lizard
+389,Kaesong,Concettina,Seychelles,True,dog
+390,Gaziantep,Corene,Ireland,False,lizard
+391,Phoenix,Myrtice,Antarctica,False,hamster
+392,Fredericton,Clo,New Caledonia,False,hamster
+393,Vaduz,Nicoli,Guadeloupe,False,dog
+394,Tallinn,Nelle,Swaziland,False,bird
+395,Kathmandu,Rosabelle,Turkey,False,snake
+396,Chicago,Albertina,Tunisia,True,hamster
+397,Oklahoma City,Roz,Seychelles,True,bird
+398,Kigali,Katuscha,Myanmar,True,bird
+399,Maseru,Dominga,Liberia,False,hamster
+400,Chongjin,Shannah,Australia,False,dog
+401,Albuquerque,Dode,Eritrea,True,lizard
+402,Brazzaville,Gavrielle,Chad,False,hamster
+403,Guadalajara,Alia,Turkmenistan,False,dog
+404,Las Vegas,Aili,Maldives,True,bird
+405,Bilbao,Hollie,Japan,True,bird
+406,Salzburg,Molli,Ecuador,True,cat
+407,Manama,Rubie,Bahamas,True,snake
+408,La Paz,Claudina,Trinidad and Tobago,False,lizard
+409,Riverside,Audrie,San Marino,True,lizard
+410,Cardiff,Olivette,Mauritania,False,cat
+411,İzmir,Tatiania,Egypt,True,hamster
+412,Cincinnati,Corry,Israel,True,cat
+413,Luanda,Penelopa,Central African Republic,False,cat
+414,Lyon,Ingrid,Somalia,True,lizard
+415,Makassar,Micheline,Indonesia,True,snake
+416,Riga,Mamie,Madagascar,True,hamster
+417,Nuuk,Leeanne,Egypt,True,lizard
+418,San Diego,Clary,Maldives,True,snake
+419,Mbabane,Marylou,Spain,True,bird
+420,Saipan,Annice,United States Minor Outlying Islands,False,lizard
+421,Petropavlovsk-Kamchatsky,Angelique,Guadeloupe,False,snake
+422,Córdoba,Kamilah,Gambia,True,snake
+423,Majuro,Gilda,United Kingdom,True,dog
+424,Port Hedland,Felice,Saint Kitts and Nevis,False,hamster
+425,Islamabad,Therine,"Korea, Democratic People""S Republic of",True,lizard
+426,Vilnius,Nelle,Haiti,True,snake
+427,Kaliningrad,Raina,AndorrA,True,bird
+428,N'Djamena,Farrah,Belize,True,snake
+429,Minneapolis,Ricky,Pakistan,True,hamster
+430,Perth,Miquela,Denmark,False,cat
+431,Banjul,Madeleine,RWANDA,True,snake
+432,Santo Domingo,Tarra,Ecuador,True,cat
+433,Copenhagen,Melisent,Reunion,False,lizard
+434,Mecca,Selia,Guadeloupe,False,bird
+435,Thimphu,Anestassia,Spain,False,lizard
+436,Chongjin,Dianemarie,Serbia and Montenegro,True,hamster
+437,Koulikoro,Feliza,Barbados,False,lizard
+438,Yamoussoukro,Lelah,Azerbaijan,True,cat
+439,Thessaloniki,Desirae,Italy,True,cat
+440,Yokohama,Myrtice,French Polynesia,False,dog
+441,New Orleans,Kimmy,Mongolia,False,bird
+442,Kaesong,Mahalia,Uganda,True,dog
+443,Singapore,Marleah,Mali,True,hamster
+444,Mérida,Flo,Thailand,False,bird
+445,Nassau,Wendi,Georgia,True,hamster
+446,Kanpur,Netty,Guernsey,False,hamster
+447,Angra do Heroísmo,Carmencita,Cuba,False,dog
+448,Sydney,Karolina,"Iran, Islamic Republic Of",False,cat
+449,Hyderabad,Jinny,Azerbaijan,False,bird
+450,Los Angeles,Laure,Hong Kong,False,cat
+451,Singapore,Jacquetta,Philippines,False,hamster
+452,Portland,Rubie,"Macedonia, The Former Yugoslav Republic of",True,snake
+453,Innsbruck,Lindie,Dominica,False,bird
+454,Makati City,Benita,Cook Islands,True,hamster
+455,Maputo,Merle,Norfolk Island,False,snake
+456,São José dos Campos,Alex,Solomon Islands,False,cat
+457,Bissau,Annaliese,Oman,True,hamster
+458,Milan,Gabriellia,Cyprus,False,bird
+459,Guwahati,Vivia,Timor-Leste,True,snake
+460,Nukuʻalofa,Trixi,Myanmar,True,lizard
+461,Lyon,Ada,Namibia,True,hamster
+462,Lviv,Amalie,Greenland,True,dog
+463,Castries,Perry,Bangladesh,False,dog
+464,İzmir,Meriel,Turkmenistan,False,bird
+465,Harbin,Correy,Sudan,True,snake
+466,Durango,Sharai,Guadeloupe,False,cat
+467,Kobe,Maud,Morocco,True,snake
+468,Tallinn,Karina,"Taiwan, Province of China",False,hamster
+469,Chihuahua,Rhoda,Norfolk Island,False,bird
+470,Yakutsk,Frank,RWANDA,True,hamster
+471,Harare,Dominga,Reunion,True,snake
+472,Porto Alegre,Vinita,Italy,True,lizard
+473,Hobart,Neila,"Macedonia, The Former Yugoslav Republic of",False,lizard
+474,Peshawar,Pierette,Reunion,False,bird
+475,Kano,Dania,Sweden,False,cat
+476,Almaty,Angela,South Africa,False,snake
+477,Kaesong,Kirbee,Netherlands Antilles,True,cat
+478,Banjul,Noelle,Syrian Arab Republic,True,hamster
+479,Ushuaia,Gwyneth,Greece,False,bird
+480,San José,Charissa,RWANDA,True,bird
+481,Koulikoro,Roxane,"Korea, Republic of",False,lizard
+482,Ibiza,Gabriellia,Poland,False,bird
+483,Moscow,Rochette,Armenia,False,lizard
+484,Koror,Bobbi,Hong Kong,True,lizard
+485,Manila,Mignon,AndorrA,False,cat
+486,Taiyuan,Lolita,Bangladesh,False,bird
+487,San Juan,Ulrike,Lithuania,True,bird
+488,Fort-de-France,Consuela,Belize,True,cat
+489,Fukuoka,Ivett,Nicaragua,False,lizard
+490,Zhengzhou,Lexine,Albania,True,cat
+491,Chongjin,Merry,Ghana,True,bird
+492,Gaborone,Karina,Uzbekistan,True,lizard
+493,Cairo,Katleen,Saint Vincent and the Grenadines,True,snake
+494,Jinan,Dede,Tajikistan,False,hamster
+495,Gaborone,Barbi,Cyprus,False,cat
+496,Columbus,Tersina,Namibia,False,lizard
+497,Campinas,Alejandra,Kazakhstan,False,dog
+498,Chiang Mai,Brietta,Mauritius,True,lizard
+499,Santiago de Cuba,Gilda,Belarus,True,snake
+500,Salt Lake City,Clementine,Fiji,False,lizard
+501,Alexandria,Marnia,Anguilla,False,snake
+502,Bilbao,Eadie,Jamaica,False,snake
+503,Surat Thani,Maryellen,Kyrgyzstan,True,snake
+504,Atlanta,Roseline,South Africa,True,cat
+505,São Paulo,Marguerite,Guyana,False,snake
+506,Chaguanas,Daphne,Brunei Darussalam,False,bird
+507,Innsbruck,Renae,South Africa,False,dog
+508,Makassar,Catrina,Venezuela,False,snake
+509,Yerevan,Babita,Guinea,False,hamster
+510,Mecca,Karena,Guatemala,False,lizard
+511,Makassar,Atlanta,Tonga,True,lizard
+512,Batticaloa,Dione,Iceland,True,dog
+513,Douglas,Rosabelle,Zimbabwe,False,cat
+514,Riga,Estell,Botswana,False,lizard
+515,Maracaibo,Yvonne,Latvia,False,cat
+516,Bergen,Angela,Bahrain,True,bird
+517,Bahía Blanca,Cristine,Iceland,False,snake
+518,Kharkiv,Thalia,Saint Lucia,True,snake
+519,Majuro,Ashlee,Hong Kong,True,lizard
+520,Seville,Max,Maldives,True,lizard
+521,Tirana,Mariann,Turks and Caicos Islands,True,bird
+522,Dublin,Tori,Kazakhstan,False,cat
+523,Mérida,Teriann,Congo,True,hamster
+524,Nanning,Tami,Northern Mariana Islands,True,hamster
+525,Maceió,Basia,Isle of Man,True,cat
+526,Kraków,Cathie,Palau,False,lizard
+527,Wuhan,Steffane,Mauritius,False,bird
+528,Newcastle,Susette,Brunei Darussalam,True,hamster
+529,Barcelona,Sallie,Western Sahara,True,lizard
+530,Dalian,Mady,Mexico,False,hamster
+531,Weno,Rani,French Guiana,True,dog
+532,Chişinău,Edyth,AndorrA,False,lizard
+533,Yamoussoukro,Augustine,Papua New Guinea,False,cat
+534,Ludhiana,Trudie,Guinea,False,hamster
+535,Aarhus,Fredericka,"Lao People""S Democratic Republic",True,lizard
+536,Cuiabá,Eolanda,"Lao People""S Democratic Republic",True,snake
+537,Denver,Randa,Estonia,True,snake
+538,Chongjin,Loree,Falkland Islands (Malvinas),True,lizard
+539,Luxembourg (city),Siana,Anguilla,False,cat
+540,Okinawa,Melodie,Malaysia,True,snake
+541,Cotonou,Almeta,British Indian Ocean Territory,False,bird
+542,Busan,Darci,"Cote D""Ivoire",True,lizard
+543,Kharkiv,Marcy,Haiti,False,snake
+544,Ipoh,Coral,Togo,False,dog
+545,Ilhéus,Chandra,Peru,True,dog
+546,Taipei,Nicoli,Nigeria,False,cat
+547,Vaduz,Gwenneth,Timor-Leste,False,snake
+548,Dar es Salaam,Selia,Nepal,True,lizard
+549,Pago Pago,Aubrie,Trinidad and Tobago,True,lizard
+550,Ludhiana,Joleen,Sudan,False,snake
+551,Zapopan,Bobbi,Bosnia and Herzegovina,True,lizard
+552,Baku,Jillayne,Honduras,False,dog
+553,Huế,Caritta,Belarus,False,snake
+554,Kansas City,Nadine,Egypt,False,cat
+555,Jakarta,Melodie,"Congo, The Democratic Republic of the",False,bird
+556,Minneapolis,Monika,Antigua and Barbuda,False,bird
+557,Pyongyang,Angelique,Reunion,True,hamster
+558,Tokyo,Constance,Tuvalu,False,bird
+559,Pune,Cyndie,Mali,False,dog
+560,Sucre,Rivalee,Switzerland,False,lizard
+561,Nantes,Albertina,Sao Tome and Principe,True,cat
+562,Shillong,Concettina,Swaziland,False,dog
+563,El Aaiún,Magdalena,Spain,False,snake
+564,Suez,Felice,Mali,False,hamster
+565,Lyon,Adelle,Kyrgyzstan,True,lizard
+566,Sucre,Rivalee,Turks and Caicos Islands,False,bird
+567,Birmingham,Oralee,New Caledonia,False,snake
+568,Tirana,Helsa,Argentina,True,cat
+569,São Paulo,Hope,Syrian Arab Republic,True,bird
+570,Phnom Penh,Dorice,Indonesia,True,cat
+571,Kuching,Robinia,United Arab Emirates,False,hamster
+572,Mecca,Kristan,Bermuda,True,cat
+573,Jayapura,Viviene,Croatia,False,cat
+574,Zapopan,Imojean,Gibraltar,False,lizard
+575,Handan,Benita,Barbados,True,bird
+576,Aberdeen,Tybie,Togo,False,bird
+577,Kyoto,Janenna,United Arab Emirates,False,dog
+578,Liverpool,Deane,Tuvalu,True,dog
+579,Maceió,Ardenia,Ghana,False,snake
+580,Shanghai,Odessa,Falkland Islands (Malvinas),False,dog
+581,Hanover,Kathy,Australia,False,dog
+582,Hangzhou,Phedra,Kazakhstan,True,lizard
+583,Manama,Brynna,Sweden,True,dog
+584,Gdańsk,Millie,Northern Mariana Islands,True,hamster
+585,Rotterdam,Xylina,Cocos (Keeling) Islands,True,hamster
+586,Pune,Shel,San Marino,False,snake
+587,Shijiazhuang,Caryl,Zimbabwe,False,lizard
+588,Palma,Atlanta,Mexico,False,dog
+589,Kaesong,Gretal,Belarus,False,bird
+590,Bangalore,Candi,Australia,False,lizard
+591,Abidjan,Nickie,Mayotte,False,hamster
+592,Dalian,Roz,Central African Republic,True,cat
+593,Atlanta,Steffane,Mozambique,False,dog
+594,Jamestown,Daphne,Lithuania,True,dog
+595,Perm,Nelle,Denmark,False,bird
+596,Graz,Deedee,Bhutan,False,dog
+597,Ho Chi Minh City,Albertina,Poland,False,cat
+598,Shanghai,Carree,Morocco,True,lizard
+599,Vancouver,Aubrie,United Kingdom,True,cat
+600,Xi'an,June,Vanuatu,True,dog
+601,Concepción,Cecile,Namibia,True,hamster
+602,Harare,Pollyanna,Colombia,False,hamster
+603,Chittagong,Goldie,Sudan,False,hamster
+604,Pittsburgh,Hannis,Isle of Man,False,bird
+605,Malmö,Celestyna,Guyana,True,dog
+606,Antananarivo,Glenda,Jordan,False,bird
+607,Surat Thani,Dede,Honduras,True,cat
+608,Odessa,Romona,"Virgin Islands, British",True,snake
+609,Manama,Bill,Montserrat,True,snake
+610,Gdańsk,Loree,Lithuania,True,hamster
+611,Andorra la Vella,Hollie,British Indian Ocean Territory,False,dog
+612,Chuí,Amara,"Korea, Democratic People""S Republic of",True,lizard
+613,Huế,Rayna,Panama,False,cat
+614,Ottawa,Brietta,Nigeria,True,dog
+615,Miri,Helena,"Korea, Democratic People""S Republic of",True,dog
+616,Pittsburgh,Joelly,Qatar,True,cat
+617,Miami,Eolanda,Turkmenistan,True,dog
+618,Marseille,Alexine,Mongolia,False,snake
+619,Manchester,Ariela,Malawi,True,bird
+620,Jamestown,Viki,Kyrgyzstan,True,lizard
+621,Batticaloa,Alleen,Lesotho,True,bird
+622,Ludhiana,Paola,Saint Lucia,True,snake
+623,Almaty,Thalia,Grenada,False,lizard
+624,Wellington,Halette,"Virgin Islands, British",True,snake
+625,Vatican City,Gabi,"Tanzania, United Republic of",False,bird
+626,Jinan,Elka,Togo,True,hamster
+627,Fukuoka,Britte,Sri Lanka,False,snake
+628,Sri Jayawardenapura-Kotte,Alie,Italy,False,lizard
+629,Townsville,Ronna,French Guiana,False,hamster
+630,Aarhus,Brooks,"Korea, Republic of",True,dog
+631,Sacramento,Jere,Nauru,True,bird
+632,Koror,Glenda,Kyrgyzstan,True,bird
+633,Papeete,Frank,"Cote D""Ivoire",True,dog
+634,Alofi,Renae,Svalbard and Jan Mayen,False,lizard
+635,Sucre,Stacey,Angola,True,lizard
+636,Malang,Halette,Singapore,False,bird
+637,Longyearbyen,Elka,China,False,hamster
+638,George Town,Shauna,Malawi,True,lizard
+639,Fort-de-France,Kirbee,Cook Islands,True,lizard
+640,Ahmedabad,Isa,Kuwait,False,hamster
+641,Luxor,Clementine,Pitcairn,True,dog
+642,Asunción,Cassondra,Brazil,False,bird
+643,Maracaibo,Sissy,RWANDA,False,bird
+644,Mecca,Rebeca,Hong Kong,False,dog
+645,Recife,Briney,Cocos (Keeling) Islands,True,cat
+646,Kansas City,Tersina,Guyana,False,dog
+647,Saipan,Verla,Peru,True,bird
+648,Saint John,Elie,United Arab Emirates,True,snake
+649,Naypyidaw,Lelah,Chad,False,lizard
+650,Havana,Lisette,Lesotho,True,snake
+651,Durango,Silvana,Iraq,True,dog
+652,Melbourne,Emmey,Reunion,False,dog
+653,Pune,Viki,Togo,False,cat
+654,Wuhan,Binny,Greenland,True,snake
+655,City of San Marino,Karena,Hungary,False,dog
+656,Stanley,Tomasina,Liechtenstein,False,cat
+657,Yekaterinburg,Cristine,Papua New Guinea,False,bird
+658,Kaesong,Vita,Christmas Island,False,cat
+659,Zanzibar City,Merle,Mexico,True,hamster
+660,Maceió,Lynde,Egypt,True,lizard
+661,Shillong,Fanny,Belize,True,snake
+662,Lobamba,Renie,"Tanzania, United Republic of",True,bird
+663,Medellín,Arlena,Haiti,False,hamster
+664,Linz,Claresta,Argentina,True,hamster
+665,Balikpapan,Lulita,French Guiana,False,cat
+666,Brikama,Nataline,Uruguay,False,lizard
+667,Chihuahua,Annabela,Malta,False,dog
+668,Apia,Elfreda,Guinea,False,dog
+669,İzmir,Meriel,Morocco,False,cat
+670,Zagreb,Georgina,Brazil,False,lizard
+671,Jakarta,Libbie,San Marino,True,cat
+672,Medellín,Lucy,Jersey,True,lizard
+673,Bissau,Agathe,Maldives,False,cat
+674,Bratislava,Aimil,Georgia,True,dog
+675,Padang,Lisette,Senegal,True,snake
+676,Palma,Dale,Mayotte,True,dog
+677,Stockholm,Cecile,Lithuania,True,dog
+678,Praia,Etta,Myanmar,True,hamster
+679,Prague,Deloria,Australia,False,hamster
+680,Tskhinvali,Eolanda,Botswana,False,lizard
+681,Madrid,Stacey,Papua New Guinea,False,snake
+682,Incheon,Elka,Belgium,True,bird
+683,Ibiza,Cordi,Pakistan,False,dog
+684,Hiroshima,Charmaine,"Virgin Islands, U.S.",True,bird
+685,Vienna,Karina,Lesotho,True,bird
+686,Koror,Viviene,Portugal,False,dog
+687,Siem Reap,Roberta,Turkey,False,snake
+688,The Valley,Heddie,New Zealand,True,snake
+689,Omdurman,Jenda,Timor-Leste,True,snake
+690,Geelong,Melisent,Sudan,False,lizard
+691,Glasgow,Dorene,Svalbard and Jan Mayen,False,snake
+692,Ahmedabad,Chrystel,Bosnia and Herzegovina,True,lizard
+693,Chengdu,Lesly,Heard Island and Mcdonald Islands,False,lizard
+694,Francistown,Sissy,Turkmenistan,True,bird
+695,Sofia,Ezmeralda,Papua New Guinea,True,bird
+696,Zamboanga City,Jasmina,Central African Republic,False,bird
+697,Naples,Marylou,Mayotte,True,bird
+698,Adamstown,Dominga,Czech Republic,False,cat
+699,Rotterdam,Elfreda,Holy See (Vatican City State),True,bird
+700,Newcastle,Alisha,Norfolk Island,False,cat
+701,Amsterdam,Arlena,Saint Vincent and the Grenadines,True,lizard
+702,Riga,Berget,"Moldova, Republic of",True,cat
+703,Sri Jayawardenapura-Kotte,Peri,Kazakhstan,True,snake
+704,Lomé,Nannie,Slovakia,False,dog
+705,New Orleans,Ericka,Serbia and Montenegro,True,bird
+706,Sitka,Kassey,Nicaragua,True,snake
+707,Road Town,Inga,Ireland,True,dog
+708,Dededo,Moyna,Swaziland,False,dog
+709,Stanley,Lulita,Saint Vincent and the Grenadines,False,bird
+710,Sitka,Verla,Liberia,False,snake
+711,Shenyang,Dorthy,Lesotho,True,bird
+712,Newcastle,Alameda,Niger,False,dog
+713,Seoul,Isa,Somalia,False,cat
+714,Boston,Abbie,Jamaica,True,dog
+715,Bogor,Cassandra,Guadeloupe,True,bird
+716,Yokohama,Tarra,"Palestinian Territory, Occupied",True,bird
+717,Lyon,Stephanie,Estonia,True,lizard
+718,Forked River,Hermione,British Indian Ocean Territory,False,snake
+719,Vancouver,Ninnetta,Tajikistan,False,bird
+720,Cleveland,Aaren,Gabon,False,bird
+721,Suva,Lindie,Marshall Islands,True,cat
+722,Lahore,Cyndie,Nicaragua,True,lizard
+723,Dushanbe,Chandra,Ecuador,False,lizard
+724,Weno,Basia,Aruba,True,snake
+725,Hai Phong,Viki,Saint Pierre and Miquelon,False,dog
+726,Casablanca,Angela,Colombia,False,snake
+727,Kuwait City,Caritta,"Moldova, Republic of",False,hamster
+728,Madrid,Brana,Tokelau,True,snake
+729,Miri,June,Malaysia,True,lizard
+730,Kaliningrad,Zaria,Ethiopia,True,dog
+731,Mexico City,Fina,Sri Lanka,False,cat
+732,Gaza,Lorenza,Swaziland,True,snake
+733,Adak,Fina,Somalia,True,bird
+734,Longyearbyen,Ashlee,Gabon,False,snake
+735,Labasa,Elbertina,Bahamas,False,hamster
+736,Honolulu,Tori,Falkland Islands (Malvinas),True,bird
+737,Dalian,Inga,Cambodia,False,bird
+738,Zamboanga City,Sue,Falkland Islands (Malvinas),True,snake
+739,Multan,Kary,Saudi Arabia,True,bird
+740,Quito,Alia,Tunisia,True,snake
+741,Dublin,Jerry,Saint Helena,True,hamster
+742,Hangzhou,Joane,Belize,False,snake
+743,Bangkok,Tilly,Turkmenistan,False,bird
+744,Belém,Cristabel,Palau,False,cat
+745,Dalian,Adriana,Brunei Darussalam,True,hamster
+746,Jinan,Edyth,Nigeria,True,cat
+747,Damascus,Vanessa,Honduras,False,cat
+748,Jamestown,Harmonia,Cyprus,False,cat
+749,Puerto Williams,Valeda,Mozambique,True,snake
+750,Frankfurt,Vere,Suriname,True,lizard
+751,Yakutsk,Ardys,Benin,False,lizard
+752,Phoenix,Viviene,Bermuda,False,bird
+753,Shenyang,Claudina,Nauru,True,hamster
+754,Tbilisi,Ada,French Guiana,False,dog
+755,Curitiba,Netty,Denmark,False,bird
+756,Palembang,Aili,Belgium,False,dog
+757,Wellington,Nollie,Ecuador,False,cat
+758,Birkirkara,Raf,Timor-Leste,False,snake
+759,Beijing,Aubrie,Marshall Islands,True,bird
+760,Singapore,Kassey,Madagascar,False,dog
+761,Nanning,Lita,Brazil,False,dog
+762,Odessa,Theodora,Samoa,False,lizard
+763,Bamako,Rivalee,Venezuela,False,cat
+764,Malang,Gianina,Switzerland,False,hamster
+765,Amman,Amalie,"Korea, Republic of",True,cat
+766,Nassau,Thalia,Egypt,True,dog
+767,Fredericton,Anthia,Swaziland,True,snake
+768,Chaguanas,Melina,Aruba,False,dog
+769,Makati City,Iseabal,Holy See (Vatican City State),True,lizard
+770,El Aaiún,Shel,Germany,False,snake
+771,Bissau,Viviene,New Caledonia,True,dog
+772,Brasília,Dennie,Wallis and Futuna,False,bird
+773,Algiers,June,Cameroon,False,snake
+774,Handan,Cherilyn,Northern Mariana Islands,False,lizard
+775,Edmonton,Dennie,Viet Nam,False,hamster
+776,Yellowknife,Berta,Benin,True,lizard
+777,Nantes,Taffy,Cameroon,True,lizard
+778,Andorra la Vella,Courtnay,Qatar,True,hamster
+779,New Delhi,Bobbi,Maldives,True,lizard
+780,Durango,Andeee,Kiribati,True,cat
+781,Saint John,Olwen,Philippines,True,cat
+782,Jaipur,Chrystel,"Korea, Democratic People""S Republic of",True,snake
+783,Edmonton,Jany,Macao,True,bird
+784,Espoo,Wilma,Åland Islands,True,snake
+785,Birkirkara,Genovera,Palau,True,cat
+786,Nantes,Charmaine,Viet Nam,False,hamster
+787,Anchorage,Concettina,"Macedonia, The Former Yugoslav Republic of",False,snake
+788,Kawasaki,Viviene,Belize,False,lizard
+789,Malacca Town,Deirdre,Germany,True,lizard
+790,Leeds,Andree,Algeria,True,cat
+791,Bogor,Blinni,Iceland,True,bird
+792,Amsterdam,Roz,Cayman Islands,True,lizard
+793,Milwaukee,Cordi,"Iran, Islamic Republic Of",False,lizard
+794,Chengdu,Louella,Hong Kong,False,lizard
+795,Las Palmas de Gran Canaria,Dennie,Åland Islands,True,lizard
+796,Kota Kinabalu,Lila,"Virgin Islands, U.S.",False,snake
+797,Banjul,Henriette,American Samoa,True,bird
+798,Nouméa,Etta,Uganda,True,cat
+799,Multan,Elvira,Panama,True,cat
+800,Brazzaville,Kayla,Samoa,False,dog
+801,Durango,Nonnah,Suriname,True,dog
+802,Pristina,Hyacinthe,Turks and Caicos Islands,False,hamster
+803,Port Moresby,Catrina,Zimbabwe,False,cat
+804,Weno,Petronia,Saint Helena,False,cat
+805,Rockhampton,Consuela,Comoros,True,bird
+806,Las Palmas de Gran Canaria,Katleen,Djibouti,True,cat
+807,Djibouti (city),Melanie,Equatorial Guinea,False,bird
+808,Suez,Rochette,Slovenia,False,dog
+809,Philadelphia,Gianina,Svalbard and Jan Mayen,True,cat
+810,New Orleans,Concettina,Ecuador,False,cat
+811,Palembang,Marti,Mauritania,False,lizard
+812,El Paso,Bee,Namibia,True,snake
+813,Columbus,Corina,Egypt,False,hamster
+814,Valdivia,Etta,Congo,True,bird
+815,Islamabad,Nyssa,Kazakhstan,False,lizard
+816,Lomé,Chloris,Niger,False,bird
+817,Gaziantep,Audrie,Haiti,False,lizard
+818,Barranquilla,Caritta,Åland Islands,False,bird
+819,Guatemala City,Alia,Namibia,False,lizard
+820,Harbin,Dulce,Pakistan,False,bird
+821,Kunming,Frances,Uzbekistan,True,hamster
+822,Cardiff,Gilligan,Spain,False,bird
+823,Nairobi,Shandie,Singapore,True,snake
+824,Xi'an,Ana,Hungary,False,hamster
+825,Kigali,Lorne,Saint Pierre and Miquelon,False,cat
+826,Longyearbyen,Libbie,Cuba,False,hamster
+827,Surat,Dagmar,Indonesia,False,bird
+828,Shenzhen,Nerta,Solomon Islands,False,snake
+829,Saipan,Keelia,Liechtenstein,True,lizard
+830,Malmö,Claresta,El Salvador,True,cat
+831,Chiang Mai,Dorothy,Costa Rica,False,hamster
+832,Curitiba,Kimmy,United States,False,bird
+833,Mérida,Tarra,Israel,True,lizard
+834,Vatican City,Agnese,Djibouti,True,cat
+835,Taipei,Dorthy,Ecuador,True,snake
+836,Abu Dhabi,Daune,Ecuador,True,dog
+837,Manama,Kalina,Yemen,False,bird
+838,Campo Grande,Layla,Venezuela,True,lizard
+839,Washington,Ginnie,China,True,dog
+840,Jerusalem,Debee,Paraguay,False,lizard
+841,Mogadishu,Renie,Singapore,True,bird
+842,Qingdao,Siana,Ethiopia,True,bird
+843,Vitória,Helena,Liberia,False,bird
+844,La Paz,Henriette,Bolivia,True,cat
+845,Mandurah,Ninnetta,Grenada,True,dog
+846,Bratsk,Gilligan,Sao Tome and Principe,False,bird
+847,Medellín,Hannis,Gibraltar,True,lizard
+848,Geelong,Harmonia,Ghana,True,hamster
+849,Amritsar,Gusella,Senegal,False,bird
+850,Bratislava,Karolina,"Palestinian Territory, Occupied",True,bird
+851,Beirut,Fayre,Thailand,False,cat
+852,Quito,Corina,Benin,False,lizard
+853,San Salvador,Louella,China,False,snake
+854,Mendoza,Augustine,Zimbabwe,True,hamster
+855,Palma,Dennie,Netherlands,True,hamster
+856,Cebu City,Amalie,Montserrat,True,snake
+857,Srinagar,Deirdre,Qatar,False,bird
+858,Mogadishu,Gilligan,Faroe Islands,False,dog
+859,Monterrey,Donetta,"Tanzania, United Republic of",True,snake
+860,Casablanca,Emilia,Hong Kong,False,bird
+861,Road Town,Verla,Guyana,False,hamster
+862,Yellowknife,Maye,Myanmar,True,lizard
+863,Pelotas,Perry,"Cote D""Ivoire",False,bird
+864,Djibouti (city),Sindee,Samoa,True,lizard
+865,Xining,Antonietta,Kuwait,False,cat
+866,Port Elizabeth,Layla,Morocco,False,bird
+867,Rabat,Collen,Sao Tome and Principe,True,dog
+868,Moscow,Olwen,Western Sahara,True,lizard
+869,Manila,Althea,Togo,False,dog
+870,Iqaluit,Olwen,Latvia,True,hamster
+871,Minneapolis,Pierette,Sierra Leone,False,lizard
+872,Pune,Katleen,Argentina,False,bird
+873,Assis,Fanny,Suriname,True,dog
+874,Jinan,Fanny,Algeria,True,bird
+875,Arbil,Jolyn,Djibouti,True,snake
+876,Valencia,Brietta,"Micronesia, Federated States of",True,hamster
+877,Durban,Jacquetta,Bouvet Island,False,cat
+878,Road Town,Cherrita,Montserrat,False,lizard
+879,Santa Cruz de la Sierra,Blinni,Liechtenstein,False,bird
+880,Stockholm,Nonnah,Libyan Arab Jamahiriya,False,cat
+881,Nukus,Aurore,British Indian Ocean Territory,True,dog
+882,Assis,Arlina,Northern Mariana Islands,True,bird
+883,Rochester,Leia,Papua New Guinea,True,snake
+884,Pune,Elise,Denmark,True,lizard
+885,Nice,Annaliese,Malaysia,False,cat
+886,Nouméa,Bernardine,Oman,True,snake
+887,Sydney,Jolyn,Qatar,False,hamster
+888,St. George's,Caryl,Paraguay,True,lizard
+889,Chennai,Kylynn,Uruguay,False,snake
+890,San Carlos de Bariloche,Jemie,Cyprus,False,cat
+891,Hagåtña,Roberta,Greenland,False,dog
+892,Simferopol,Vivia,Philippines,False,hamster
+893,Taipei,Ana,Nigeria,False,cat
+894,Lahore,Etta,Iraq,True,hamster
+895,Charlotte,Morganica,Vanuatu,False,cat
+896,Manila,Deedee,Falkland Islands (Malvinas),False,snake
+897,Birkirkara,Zsa Zsa,Gabon,True,cat
+898,Cuiabá,Ana,Bermuda,True,hamster
+899,Lilongwe,Nariko,Nigeria,True,dog
+900,Abu Dhabi,Elena,Pakistan,False,snake
+901,Seville,Allis,Lebanon,False,hamster
+902,South Tarawa,Carlie,Latvia,True,snake
+903,Batticaloa,Wynne,Croatia,True,cat
+904,Batticaloa,Selma,Montserrat,True,hamster
+905,Cuiabá,Jasmina,Norfolk Island,False,cat
+906,Bandar Seri Begawan,Nananne,Seychelles,False,snake
+907,Fredericton,Elbertina,"Virgin Islands, U.S.",True,lizard
+908,Riyadh,Cassondra,Holy See (Vatican City State),True,lizard
+909,Quito,Ann-Marie,Lesotho,False,bird
+910,Dubai,Raf,Algeria,False,lizard
+911,Milwaukee,Charmaine,Congo,False,dog
+912,George Town,Tobe,Central African Republic,True,snake
+913,Lobamba,Gabriellia,Mauritius,True,hamster
+914,Namangan,Cyndie,Reunion,True,bird
+915,Port Blair,Shel,Seychelles,False,bird
+916,The Hague,Luci,Armenia,True,bird
+917,Prague,Tracey,France,True,cat
+918,Malabo,Ulrike,Romania,True,bird
+919,Qingdao,Susette,"Iran, Islamic Republic Of",True,dog
+920,Mbabane,Larine,Lithuania,False,dog
+921,Córdoba,Norine,Finland,True,cat
+922,Mbabane,Suzette,"Macedonia, The Former Yugoslav Republic of",False,bird
+923,Nantes,Joeann,"Macedonia, The Former Yugoslav Republic of",True,lizard
+924,Abu Dhabi,Fayre,Denmark,False,bird
+925,Yerevan,Chickie,Georgia,False,cat
+926,Vladivostok,Adele,Papua New Guinea,False,bird
+927,Ulan Bator,Winifred,United States,True,snake
+928,Turin,Adore,Turks and Caicos Islands,True,lizard
+929,Incheon,Belva,San Marino,False,hamster
+930,Bratsk,Annecorinne,"Virgin Islands, British",False,bird
+931,Sabha,Emylee,Northern Mariana Islands,True,cat
+932,Nouméa,Lonnie,Maldives,True,bird
+933,Canberra,Louella,Greece,True,lizard
+934,Reykjavík,Chandra,Romania,True,snake
+935,Munich,Mariele,Madagascar,True,bird
+936,Road Town,Misha,Chad,True,dog
+937,Amsterdam,Mamie,"Taiwan, Province of China",True,snake
+938,Kunming,Feliza,Saint Pierre and Miquelon,True,lizard
+939,Xining,Maridel,New Zealand,True,lizard
+940,Monterrey,Philis,Wallis and Futuna,False,cat
+941,Yerevan,Fanchon,Antigua and Barbuda,True,lizard
+942,Anchorage,Allyce,Saint Vincent and the Grenadines,False,bird
+943,Shenyang,Lory,Luxembourg,True,lizard
+944,Ndola,Ana,Uruguay,False,hamster
+945,Rockhampton,Fred,Namibia,True,hamster
+946,Panama City,Sean,Malta,True,lizard
+947,City of Halifax,Olivette,Mauritania,False,snake
+948,Maseru,Romona,Uzbekistan,True,hamster
+949,Livingstone,Annaliese,Central African Republic,True,cat
+950,Townsville,Carly,French Polynesia,False,cat
+951,Sapporo,Larine,Swaziland,True,dog
+952,Juneau,Roxane,Jamaica,True,bird
+953,Papeete,Ebonee,Ireland,True,dog
+954,Vaduz,Nariko,Switzerland,False,bird
+955,Harare,Amelia,Isle of Man,False,lizard
+956,Semarang,Fredericka,Russian Federation,True,cat
+957,Guwahati,Teriann,Indonesia,False,snake
+958,Cologne,Molli,Burundi,True,dog
+959,Novosibirsk,Gwyneth,Cook Islands,False,bird
+960,Dodoma,Maud,Bolivia,True,dog
+961,Ürümqi,Barbi,French Polynesia,False,dog
+962,St. John's,Renie,Saint Helena,False,cat
+963,Campinas,Kaja,Niue,True,lizard
+964,Chennai,Elie,United Kingdom,True,dog
+965,Guadalajara,Fernande,Samoa,True,snake
+966,Serekunda,Adelle,Germany,False,dog
+967,Manaus,Alexine,New Caledonia,True,lizard
+968,Udon Thani,Collen,Tajikistan,True,lizard
+969,Yekaterinburg,Amalie,Monaco,False,hamster
+970,Hilo,Josephine,Libyan Arab Jamahiriya,False,lizard
+971,Espoo,Pollyanna,Hong Kong,True,lizard
+972,Pune,Elmira,"Korea, Republic of",False,cat
+973,N'Djamena,Keelia,Fiji,False,hamster
+974,Cuiabá,Marika,Tuvalu,True,hamster
+975,Riyadh,Leeanne,Swaziland,False,cat
+976,Almaty,Brietta,"Congo, The Democratic Republic of the",True,snake
+977,Chennai,Berta,South Africa,True,hamster
+978,Gaza,Konstance,Ireland,False,cat
+979,Naypyidaw,Bobinette,Kuwait,False,snake
+980,Ankara,Daryl,Colombia,True,dog
+981,Geneva,Marnia,Sudan,False,lizard
+982,Belmopan,Carolina,Venezuela,False,lizard
+983,Shenyang,Dulce,Niger,False,bird
+984,Gothenburg,Gerrie,Haiti,False,dog
+985,Bulawayo,Deloria,Christmas Island,False,cat
+986,Lubumbashi,Cissiee,Turks and Caicos Islands,True,bird
+987,Da Nang,Ashlee,"Korea, Democratic People""S Republic of",True,snake
+988,Kuching,Molli,United Kingdom,False,cat
+989,Indianapolis,Jinny,Palau,False,dog
+990,San Fernando,Fawne,Saint Lucia,False,bird
+991,City of San Marino,Pollyanna,Cuba,True,bird
+992,Makassar,Claresta,Costa Rica,True,cat
+993,Port Hedland,Kimmy,Namibia,False,hamster
+994,Gaborone,Amii,Macao,False,lizard
+995,Rockhampton,Robinia,French Guiana,False,hamster
+996,Faisalabad,Tersina,Bermuda,True,snake
+997,Jakarta,Verla,Colombia,True,snake
+998,Oslo,Dorothy,Myanmar,True,lizard
+999,La Serena,Bibby,Niue,True,hamster
+1000,Brasília,Chickie,Yemen,True,cat
+1001,Konya,Coral,Malta,False,lizard
+1002,Labasa,Kirbee,"Micronesia, Federated States of",False,lizard
+1003,Managua,Teriann,Svalbard and Jan Mayen,True,cat
+1004,Yakutsk,Ermengarde,Norway,False,lizard
