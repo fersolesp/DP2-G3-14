@@ -74,16 +74,19 @@ public class AnswerController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			owner = this.ownerService.findOwnerByUserName(auth.getName());
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		try {
 			answers = this.answerService.findAnswerByOwner(owner);
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		try {
 			pets = (List<Pet>) this.petService.findPets(owner.getUser().getUsername());
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		if (announcement.getOwner().equals(owner)) {

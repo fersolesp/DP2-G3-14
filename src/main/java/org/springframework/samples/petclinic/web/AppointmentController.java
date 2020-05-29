@@ -104,6 +104,7 @@ public class AppointmentController {
 		try {
 			allPets = this.petService.findPets(authentication.getName());
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		try {
@@ -116,6 +117,7 @@ public class AppointmentController {
 		try {
 			appointmentsByOwner = this.appointmentService.findAppointmentsByOwner(this.ownerService.findOwnerByUserName(authentication.getName()));
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		// ------------Validación de reglas de negocio--------------//
