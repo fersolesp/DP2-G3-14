@@ -51,6 +51,8 @@ public class OwnerController {
 
 	private final OwnerService	ownerService;
 
+	private static final String OWNER = "owner";
+
 
 	@Autowired
 	public OwnerController(final OwnerService ownerService, final UserService userService, final AuthoritiesService authoritiesService) {
@@ -65,7 +67,7 @@ public class OwnerController {
 	@GetMapping(value = "/owners/new")
 	public String initCreationForm(final Map<String, Object> model) {
 		Owner owner = new Owner();
-		model.put("owner", owner);
+		model.put(OwnerController.OWNER, owner);
 		return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
@@ -83,7 +85,7 @@ public class OwnerController {
 
 	@GetMapping(value = "/owners/find")
 	public String initFindForm(final Map<String, Object> model) {
-		model.put("owner", new Owner());
+		model.put(OwnerController.OWNER, new Owner());
 		return "owners/findOwners";
 	}
 
@@ -118,7 +120,7 @@ public class OwnerController {
 		Owner owner = this.ownerService.findOwnerById(ownerId);
 		String res = OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		if (authentication.getName().equals(owner.getUser().getUsername())) {
-			model.addAttribute("owner", owner);
+			model.addAttribute(OwnerController.OWNER, owner);
 		} else {
 			model.addAttribute("message", "You can't update data from other users");
 			res = "/exception";
