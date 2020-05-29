@@ -95,11 +95,13 @@ public class InscriptionController {
 		try {
 			inscriptionsByOwner = this.inscriptionService.findInscriptionsByOwner(this.ownerService.findOwnerByUserName(authentication.getName()));
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		try {
 			pets = this.petService.findPets(authentication.getName());
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		try {
@@ -112,6 +114,7 @@ public class InscriptionController {
 		try {
 			inscriptionsByCourse = this.inscriptionService.findInscriptionsByCourse(course);
 		} catch (NoSuchElementException e) {
+			modelMap.addAttribute("message", "There are errors validating data");
 		}
 
 		// --------- Validación de reglas de negocio ---------

@@ -16,18 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class InscriptionsService {
 
-	InscriptionRepository inscriptionRepository;
+	InscriptionRepository	inscriptionRepository;
 
-	CourseRepository courseRepository;
+	CourseRepository		courseRepository;
+
 
 	@Autowired
 	public InscriptionsService(final InscriptionRepository inscriptionRepository) {
 		this.inscriptionRepository = inscriptionRepository;
 	}
 
-	public Iterable<Inscription> findInscriptionsByOwner(final org.springframework.samples.petclinic.model.Owner owner) throws NoSuchElementException{
+	public Iterable<Inscription> findInscriptionsByOwner(final org.springframework.samples.petclinic.model.Owner owner) throws NoSuchElementException {
 		Iterable<Inscription> res = this.inscriptionRepository.findInscriptionsByOwner(owner);
-		if (StreamSupport.stream(res.spliterator(), false).count() == 0	) {
+		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
 			throw new NoSuchElementException();
 		}
 		return res;
@@ -63,10 +64,11 @@ public class InscriptionsService {
 		try {
 			inscriptions = this.findInscriptionsByCourse(inscription.getCourse());
 		} catch (NoSuchElementException e) {
+			System.out.println(e);
 		}
 		if (inscriptions != null) {
 			Boolean isThePetInTheCourse = false;
-			for(Inscription inscriptionit: inscriptions) {
+			for (Inscription inscriptionit : inscriptions) {
 				if (inscriptionit.getPet().equals(inscription.getPet())) {
 					isThePetInTheCourse = true;
 					break;
@@ -77,7 +79,6 @@ public class InscriptionsService {
 			}
 		}
 
-
 		this.inscriptionRepository.save(inscription);
 	}
 
@@ -86,9 +87,9 @@ public class InscriptionsService {
 		this.inscriptionRepository.delete(inscription);
 	}
 
-	public Iterable<Inscription> findInscriptionsByCourse(final Course course) throws NoSuchElementException{
+	public Iterable<Inscription> findInscriptionsByCourse(final Course course) throws NoSuchElementException {
 		Iterable<Inscription> res = this.inscriptionRepository.findInscriptionsByCourse(course);
-		if (StreamSupport.stream(res.spliterator(), false).count() == 0	) {
+		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
 			throw new NoSuchElementException();
 		}
 		return res;
