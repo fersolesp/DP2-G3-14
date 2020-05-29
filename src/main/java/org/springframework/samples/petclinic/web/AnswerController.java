@@ -40,6 +40,8 @@ public class AnswerController {
 
 	private PetService			petService;
 
+	private static final String	MENSAJE	= "message";
+
 
 	@Autowired
 	private AnswerController(final AnswerService answerService, final AnnouncementService announcementService, final OwnerService ownerService, final PetService petService) {
@@ -66,7 +68,7 @@ public class AnswerController {
 			Optional<Announcement> opt = this.announcementService.findAnnouncementById(announcementId);
 			announcement = opt.get();
 		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "There are errors validating data");
+			modelMap.addAttribute(AnswerController.MENSAJE, "There are errors validating data");
 			return view;
 		}
 
@@ -87,30 +89,30 @@ public class AnswerController {
 		}
 
 		if (announcement.getOwner().equals(owner)) {
-			modelMap.addAttribute("message", "You can't answer your own announcement");
+			modelMap.addAttribute(AnswerController.MENSAJE, "You can't answer your own announcement");
 			return view;
 		}
 
 		if (!announcement.getCanBeAdopted()) {
-			modelMap.addAttribute("message", "You can't adopt this pet because it can't be adopted");
+			modelMap.addAttribute(AnswerController.MENSAJE, "You can't adopt this pet because it can't be adopted");
 			return view;
 		}
 
 		if (!owner.getPositiveHistory()) {
-			modelMap.addAttribute("message", "You can't adopt a pet if you have a bad history");
+			modelMap.addAttribute(AnswerController.MENSAJE, "You can't adopt a pet if you have a bad history");
 			return view;
 		}
 
 		for (Answer answerIni : answers) {
 			if (answerIni.getAnnouncement().equals(announcement)) {
-				modelMap.addAttribute("message", "You can't send more than one answer to the same announcement");
+				modelMap.addAttribute(AnswerController.MENSAJE, "You can't send more than one answer to the same announcement");
 				return view;
 			}
 		}
 
 		for (int i = 0; i < pets.size(); i++) {
 			if (pets.get(i).getIsVaccinated() != true) {
-				modelMap.addAttribute("message", "You can't send an answer if any of your pets aren't vaccinated");
+				modelMap.addAttribute(AnswerController.MENSAJE, "You can't send an answer if any of your pets aren't vaccinated");
 				return view;
 			}
 		}
@@ -136,7 +138,7 @@ public class AnswerController {
 				answer.setOwner(this.ownerService.findOwnerByUserName(auth.getName()));
 				this.answerService.saveAnswer(answer);
 			} catch (Exception e) {
-				model.addAttribute("message", e.getMessage());
+				model.addAttribute(AnswerController.MENSAJE, e.getMessage());
 				return "/exception";
 			}
 			return "redirect:/announcements/{announcementId}";
@@ -150,7 +152,7 @@ public class AnswerController {
 		boolean isempty = false;
 		try {
 			if (!authentication.getName().equals(this.announcementService.findAnnouncementById(announcementId).get().getOwner().getUser().getUsername())) {
-				modelMap.addAttribute("message", "You cannot access another user's announcement answers");
+				modelMap.addAttribute(AnswerController.MENSAJE, "You cannot access another user's announcement answers");
 				return "exception";
 			} else {
 				Optional<Announcement> announcement = this.announcementService.findAnnouncementById(announcementId);
