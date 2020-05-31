@@ -108,16 +108,6 @@ public class InscriptionE2EControllerTests {
 		.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
-	// Post createInscription
-
-	//	@WithMockUser(username = "owner5", password = "0wn3r")
-	//	@Test
-	//	void shouldSaveInscription() throws Exception {
-	//
-	//		this.mockMvc.perform(MockMvcRequestBuilders.post("/courses/{courseId}/inscription/new", 1).with(SecurityMockMvcRequestPostProcessors.csrf()).param("date", "2020/02/12").param("isPaid", "false").param("pet.id", "6"))
-	//			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/inscriptions"));
-	//	}
-
 	@WithMockUser(username = "owner1", password = "0wn3r")
 	@Test
 	void shouldNotSaveInscriptionWhenServiceErrors() throws Exception {
